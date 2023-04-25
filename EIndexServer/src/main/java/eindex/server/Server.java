@@ -70,9 +70,22 @@ public class Server {
     
     public static void main(String[] args) {
         Server server;
+        DatabaseHandler db;
+        
         final int port = 8080;
         
         try {
+            db = new DatabaseHandler();
+            Collection<User> users = db.readAllUsers();
+            
+            for (User user : users) {
+                System.out.println(
+                        "User name: " + user.getUsername() + " ; " +
+                        "password: " + user.getPassword() + " ; " +
+                        "role: " + user.getRole()
+                );
+            }
+            
             server = new Server(port);
             server.acceptClients();
         } catch (IOException ex) {

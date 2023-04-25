@@ -1,0 +1,4 @@
+btodorovic;password;student
+ppetrovic;lozinka1234;student
+mmiric;student45;student
+pteodorovic;root;admin
