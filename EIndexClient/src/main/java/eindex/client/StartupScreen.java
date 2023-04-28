@@ -9,15 +9,28 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.security.InvalidKeyException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
 import java.text.NumberFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.ImageIcon;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.text.NumberFormatter;
 import org.apache.commons.validator.routines.InetAddressValidator;
+import org.json.simple.JSONObject;
 
 
 /**
@@ -50,6 +63,34 @@ public class StartupScreen extends javax.swing.JFrame {
     
     public void setUsername(String username) {
         this.userName = username;
+    }
+    
+    private String encrypt(String inputStr) {
+        try {
+            // Creating KeyPair generator object
+            KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
+            // Initializing the KeyPairGenerator
+            keyPairGen.initialize(2048);
+            //Generate the pair of keys
+            KeyPair pair = keyPairGen.generateKeyPair();
+            // Getting the public key from the key pair
+            PublicKey publicKey = pair.getPublic();
+            // Creating a Cipher object
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            // Initializing a Cipher object
+            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+            // Adding data to the cipher
+            byte[] input = inputStr.getBytes();	  
+            cipher.update(input);
+            // Encrypting the data
+            byte[] cipherText = cipher.doFinal();
+            
+            return new String(cipherText, "UTF8");
+        } catch (NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException | InvalidKeyException | UnsupportedEncodingException | NoSuchPaddingException ex) {
+            // encryption failed -> proceed with regular password
+            Logger.getLogger(StartupScreen.class.getName()).log(Level.SEVERE, null, ex);
+            return inputStr;
+        }
     }
     
     /**
@@ -88,8 +129,11 @@ public class StartupScreen extends javax.swing.JFrame {
         formatter.setCommitsOnValidEdit(true);
         jInputPort = new javax.swing.JFormattedTextField(formatter);
         bLogin = new javax.swing.JButton();
+        bLogin.setEnabled(false);
         jInputUsername = new javax.swing.JTextField();
+        jInputUsername.setEnabled(false);
         jInputPassword = new javax.swing.JPasswordField();
+        jInputPassword.setEnabled(false);
         bShowPass = new javax.swing.JButton();
         bShowPass.setIcon(showIcon);
         bShowPass.setBorder(javax.swing.BorderFactory.createEmptyBorder());
@@ -105,8 +149,10 @@ public class StartupScreen extends javax.swing.JFrame {
         });
 
         jInputIp.setText("127.0.0.1");
+        jInputIp.setToolTipText("Enter server IP address");
 
         jInputPort.setText("5050");
+        jInputPort.setToolTipText("Enter server port");
 
         bLogin.setText("Uloguj se");
         bLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -117,6 +163,7 @@ public class StartupScreen extends javax.swing.JFrame {
 
         bShowPass.setRolloverEnabled(true);
         bShowPass.setRolloverIcon(showIconHover);
+        bShowPass.setVisible(false);
         bShowPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bShowPassActionPerformed(evt);
@@ -205,7 +252,16 @@ public class StartupScreen extends javax.swing.JFrame {
         btnConnect.setEnabled(false);
         btnConnect.setVisible(false);
         jInputIp.setEnabled(false);
+        jInputIp.setToolTipText("");
         jInputPort.setEnabled(false);
+        jInputPort.setToolTipText("");
+        
+        jInputUsername.setEnabled(true);
+        jInputUsername.setToolTipText("Enter username");
+        jInputPassword.setEnabled(true);
+        jInputPassword.setToolTipText("Enter password");
+        bLogin.setEnabled(true);
+        bShowPass.setVisible(true);
         
         JOptionPane.showMessageDialog(
                 this,
@@ -216,7 +272,28 @@ public class StartupScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConnectActionPerformed
 
     private void bLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoginActionPerformed
-       
+        String username = jInputUsername.getText();
+        String password = jInputPassword.getText();
+        if ((username == null || username.contentEquals("")) ||
+            (password == null || password.contentEquals(""))) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "You must enter credentials",
+                    "Credentials",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+        // password encryption
+        password = encrypt(password);
+        
+        // packing userinfo to JSON
+        JSONObject obj = new JSONObject();
+        obj.put("username", username);
+        obj.put("password", password);
+        obj.put("request", "login");
+
+        pw.println(obj);
     }//GEN-LAST:event_bLoginActionPerformed
 
     private void bShowPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bShowPassActionPerformed

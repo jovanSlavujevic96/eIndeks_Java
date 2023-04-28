@@ -83,6 +83,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="127.0.0.1"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jInputIp.setToolTipText(&quot;Enter server IP address&quot;);"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="jInputPort">
       <Properties>
@@ -91,6 +94,7 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatter);"/>
         <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat format = NumberFormat.getInstance();&#xa;format.setGroupingUsed(false);&#xa;NumberFormatter formatter = new NumberFormatter(format);&#xa;formatter.setValueClass(Integer.class);&#xa;formatter.setMinimum(0);&#xa;formatter.setMaximum(Integer.MAX_VALUE);&#xa;formatter.setAllowsInvalid(false);&#xa;formatter.setCommitsOnValidEdit(true);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jInputPort.setToolTipText(&quot;Enter server port&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="bLogin">
@@ -100,12 +104,19 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bLoginActionPerformed"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="bLogin.setEnabled(false);"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="jInputUsername">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jInputUsername.setEnabled(false);"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="jInputPassword">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPasswordField()"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jInputPassword.setEnabled(false);"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="bShowPass">
@@ -114,7 +125,7 @@
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="bShowPass.setIcon(showIcon);&#xd;&#xa;bShowPass.setBorder(javax.swing.BorderFactory.createEmptyBorder());&#xd;&#xa;bShowPass.setContentAreaFilled(false);"/>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="bShowPass.setRolloverEnabled(true);&#xa;bShowPass.setRolloverIcon(showIconHover);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="bShowPass.setRolloverEnabled(true);&#xa;bShowPass.setRolloverIcon(showIconHover);&#xa;bShowPass.setVisible(false);"/>
       </AuxValues>
     </Component>
   </SubComponents>

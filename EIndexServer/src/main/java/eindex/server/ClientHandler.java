@@ -85,6 +85,8 @@ public class ClientHandler implements Runnable {
                 System.out.println("Message rcv for client \"" + userName + "\" is null");
                 break;
             }
+            
+            System.out.println(msg);
 
             // process
             msg = processMessage(msg);
