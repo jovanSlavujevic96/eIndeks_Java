@@ -4,22 +4,21 @@
  */
 package eindex.client;
 
-import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.text.NumberFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.text.NumberFormatter;
 import org.apache.commons.validator.routines.InetAddressValidator;
+
 
 /**
  *
@@ -107,7 +106,7 @@ public class StartupScreen extends javax.swing.JFrame {
 
         jInputIp.setText("127.0.0.1");
 
-        jInputPort.setText("8080");
+        jInputPort.setText("5050");
 
         bLogin.setText("Uloguj se");
         bLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -175,27 +174,45 @@ public class StartupScreen extends javax.swing.JFrame {
         // Validate an IPv4 address
         InetAddressValidator validator = InetAddressValidator.getInstance();
         if (!validator.isValidInet4Address(ip)) {
-            JOptionPane.showMessageDialog(this, "The IP address \"" + ip + "\" is invalid", "Bad IP", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "The IP address \"" + ip + "\" is invalid",
+                    "Bad IP",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
         
         try {
-            this.socket = new Socket(ip, port);
+            this.socket = new Socket();
+            socket.connect(new InetSocketAddress(ip, port), 2000);
             this.br = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             this.pw = new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream()), true);
-
-            this.rmfs = new MessageReceiver(this);
-            Thread thr = new Thread(rmfs);
-            thr.start();
-
-            btnConnect.setEnabled(false);
-            btnConnect.setVisible(false);
-            jInputIp.setEditable(false);
-            jInputPort.setEditable(false);
         } catch (IOException ex) {
-            Logger.getLogger(StartupScreen.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Failed to connect to \"" + ip + ":" + port + "\"",
+                    "Connection failed",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
         }
-
+        
+        this.rmfs = new MessageReceiver(this);
+        Thread thr = new Thread(rmfs);
+        thr.start();
+        
+        btnConnect.setEnabled(false);
+        btnConnect.setVisible(false);
+        jInputIp.setEnabled(false);
+        jInputPort.setEnabled(false);
+        
+        JOptionPane.showMessageDialog(
+                this,
+                "Succeed to connect to \"" + ip + ":" + port + "\"",
+                "Connection succeed",
+                JOptionPane.INFORMATION_MESSAGE
+        );
     }//GEN-LAST:event_btnConnectActionPerformed
 
     private void bLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoginActionPerformed

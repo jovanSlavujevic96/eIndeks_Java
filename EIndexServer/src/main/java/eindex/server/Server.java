@@ -72,7 +72,7 @@ public class Server {
         Server server;
         DatabaseHandler db;
         
-        final int port = 8080;
+        final int port = 5050;
         
         try {
             db = new DatabaseHandler();
