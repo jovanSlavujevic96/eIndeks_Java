@@ -4,6 +4,7 @@
  */
 package eindex.client;
 
+import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,8 +14,10 @@ import java.net.Socket;
 import java.text.NumberFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
+import javax.swing.JPasswordField;
 import javax.swing.text.NumberFormatter;
 
 /**
@@ -27,6 +30,9 @@ public class StartupScreen extends javax.swing.JFrame {
     private PrintWriter pw;
     private MessageReceiver rmfs;
     private String userName;
+    private boolean showPassword = false;
+    final static private ImageIcon showIcon = new ImageIcon("./resources/show_pass_small.png");
+    final static private ImageIcon hideIcon = new ImageIcon("./resources/hide_pass_small.png");
     
     public BufferedReader getBr() {
         return br;
@@ -78,11 +84,18 @@ public class StartupScreen extends javax.swing.JFrame {
         formatter.setMaximum(Integer.MAX_VALUE);
         formatter.setAllowsInvalid(false);
         formatter.setCommitsOnValidEdit(true);
-        jInputPort = new JFormattedTextField(formatter);
+        jInputPort = new javax.swing.JFormattedTextField(formatter);
+        bLogin = new javax.swing.JButton();
+        jInputUsername = new javax.swing.JTextField();
+        jInputPassword = new javax.swing.JPasswordField();
+        bShowPass = new javax.swing.JButton();
+        bShowPass.setIcon(showIcon);
+        bShowPass.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        bShowPass.setContentAreaFilled(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnConnect.setText("Konektuj se");
+        btnConnect.setText("Povezi se");
         btnConnect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConnectActionPerformed(evt);
@@ -90,16 +103,19 @@ public class StartupScreen extends javax.swing.JFrame {
         });
 
         jInputIp.setText("127.0.0.1");
-        jInputIp.addActionListener(new java.awt.event.ActionListener() {
+
+        jInputPort.setText("8080");
+
+        bLogin.setText("Uloguj se");
+        bLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jInputIpActionPerformed(evt);
+                bLoginActionPerformed(evt);
             }
         });
 
-        jInputPort.setText("8080");
-        jInputPort.addActionListener(new java.awt.event.ActionListener() {
+        bShowPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jInputPortActionPerformed(evt);
+                bShowPassActionPerformed(evt);
             }
         });
 
@@ -109,12 +125,22 @@ public class StartupScreen extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(btnConnect)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jInputIp, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jInputPort, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 221, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnConnect)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jInputIp, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jInputPort, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(bLogin)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jInputUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jInputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bShowPass, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 200, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,9 +148,15 @@ public class StartupScreen extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jInputPort, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jInputIp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(320, Short.MAX_VALUE))
+                    .addComponent(btnConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jInputIp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jInputUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jInputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bShowPass, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(278, Short.MAX_VALUE))
         );
 
         pack();
@@ -154,13 +186,21 @@ public class StartupScreen extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnConnectActionPerformed
 
-    private void jInputIpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jInputIpActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jInputIpActionPerformed
+    private void bLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoginActionPerformed
+       
+    }//GEN-LAST:event_bLoginActionPerformed
 
-    private void jInputPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jInputPortActionPerformed
+    private void bShowPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bShowPassActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jInputPortActionPerformed
+        showPassword = !showPassword;
+        if (showPassword) {
+            bShowPass.setIcon(hideIcon);
+            ((JPasswordField)jInputPassword).setEchoChar('\u0000');
+        } else {
+            bShowPass.setIcon(showIcon);
+            ((JPasswordField)jInputPassword).setEchoChar('*');
+        }
+    }//GEN-LAST:event_bShowPassActionPerformed
         
     /**
      * @param args the command line arguments
@@ -199,8 +239,12 @@ public class StartupScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bLogin;
+    private javax.swing.JButton bShowPass;
     private javax.swing.JButton btnConnect;
     private javax.swing.JTextField jInputIp;
+    private javax.swing.JTextField jInputPassword;
     private javax.swing.JTextField jInputPort;
+    private javax.swing.JTextField jInputUsername;
     // End of variables declaration//GEN-END:variables
 }

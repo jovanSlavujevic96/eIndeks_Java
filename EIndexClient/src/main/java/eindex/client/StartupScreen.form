@@ -23,14 +23,27 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-              <Component id="btnConnect" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jInputIp" min="-2" pref="93" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jInputPort" min="-2" pref="93" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="221" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="btnConnect" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jInputIp" min="-2" pref="93" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                      <Component id="jInputPort" min="-2" pref="93" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="bLogin" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jInputUsername" min="-2" pref="93" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jInputPassword" min="-2" pref="93" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="bShowPass" min="-2" pref="27" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="0" pref="200" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -40,10 +53,17 @@
               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jInputPort" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                  <Component id="jInputIp" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                   <Component id="btnConnect" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="jInputIp" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="320" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="bLogin" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="jInputUsername" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="jInputPassword" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="bShowPass" alignment="1" min="-2" pref="23" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="278" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -51,7 +71,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btnConnect">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Konektuj se"/>
+        <Property name="text" type="java.lang.String" value="Povezi se"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConnectActionPerformed"/>
@@ -61,20 +81,37 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="127.0.0.1"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jInputIpActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="jInputPort">
       <Properties>
         <Property name="text" type="java.lang.String" value="8080"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatter);"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat format = NumberFormat.getInstance();&#xa;format.setGroupingUsed(false);&#xa;NumberFormatter formatter = new NumberFormatter(format);&#xa;formatter.setValueClass(Integer.class);&#xa;formatter.setMinimum(0);&#xa;formatter.setMaximum(Integer.MAX_VALUE);&#xa;formatter.setAllowsInvalid(false);&#xa;formatter.setCommitsOnValidEdit(true);"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="bLogin">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Uloguj se"/>
+      </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jInputPortActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bLoginActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jInputUsername">
+    </Component>
+    <Component class="javax.swing.JTextField" name="jInputPassword">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPasswordField()"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="bShowPass">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bShowPassActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatter);"/>
-        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat format = NumberFormat.getInstance();&#xa;format.setGroupingUsed(false);&#xa;NumberFormatter formatter = new NumberFormatter(format);&#xa;formatter.setValueClass(Integer.class);&#xa;formatter.setMinimum(0);&#xa;formatter.setMaximum(Integer.MAX_VALUE);&#xa;formatter.setAllowsInvalid(false);&#xa;formatter.setCommitsOnValidEdit(true);"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="bShowPass.setIcon(showIcon);&#xd;&#xa;bShowPass.setBorder(javax.swing.BorderFactory.createEmptyBorder());&#xd;&#xa;bShowPass.setContentAreaFilled(false);"/>
       </AuxValues>
     </Component>
   </SubComponents>
