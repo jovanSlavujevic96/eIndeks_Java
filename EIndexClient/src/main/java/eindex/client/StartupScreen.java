@@ -14,11 +14,12 @@ import java.net.Socket;
 import java.text.NumberFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.text.NumberFormatter;
+import org.apache.commons.validator.routines.InetAddressValidator;
 
 /**
  *
@@ -32,7 +33,9 @@ public class StartupScreen extends javax.swing.JFrame {
     private String userName;
     private boolean showPassword = false;
     final static private ImageIcon showIcon = new ImageIcon("./resources/show_pass_small.png");
+    final static private ImageIcon showIconHover = new ImageIcon("./resources/show_pass_small_framed.png");
     final static private ImageIcon hideIcon = new ImageIcon("./resources/hide_pass_small.png");
+    final static private ImageIcon hideIconHover = new ImageIcon("./resources/hide_pass_small_framed.png");
     
     public BufferedReader getBr() {
         return br;
@@ -113,6 +116,8 @@ public class StartupScreen extends javax.swing.JFrame {
             }
         });
 
+        bShowPass.setRolloverEnabled(true);
+        bShowPass.setRolloverIcon(showIconHover);
         bShowPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bShowPassActionPerformed(evt);
@@ -151,11 +156,12 @@ public class StartupScreen extends javax.swing.JFrame {
                     .addComponent(btnConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jInputIp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jInputUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jInputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bShowPass, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bShowPass, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jInputUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jInputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(278, Short.MAX_VALUE))
         );
 
@@ -165,8 +171,14 @@ public class StartupScreen extends javax.swing.JFrame {
     private void btnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectActionPerformed
         String ip = jInputIp.getText();
         Integer port = (Integer)((JFormattedTextField)jInputPort).getValue();
-        System.out.println(ip);
-        System.out.println(port);
+        
+        // Validate an IPv4 address
+        InetAddressValidator validator = InetAddressValidator.getInstance();
+        if (!validator.isValidInet4Address(ip)) {
+            JOptionPane.showMessageDialog(this, "The IP address \"" + ip + "\" is invalid", "Bad IP", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         try {
             this.socket = new Socket(ip, port);
             this.br = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
@@ -194,9 +206,11 @@ public class StartupScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
         showPassword = !showPassword;
         if (showPassword) {
+            bShowPass.setRolloverIcon(hideIconHover);
             bShowPass.setIcon(hideIcon);
             ((JPasswordField)jInputPassword).setEchoChar('\u0000');
         } else {
+            bShowPass.setRolloverIcon(showIconHover);
             bShowPass.setIcon(showIcon);
             ((JPasswordField)jInputPassword).setEchoChar('*');
         }

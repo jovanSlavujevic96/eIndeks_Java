@@ -11,4 +11,11 @@
         <maven.compiler.target>18</maven.compiler.target>
     </properties>
     <name>eIndexClient</name>
+    <dependencies>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.7</version>
+        </dependency>
+    </dependencies>
 </project>
