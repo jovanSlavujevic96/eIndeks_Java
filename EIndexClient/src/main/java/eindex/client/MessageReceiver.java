@@ -14,7 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -44,12 +43,13 @@ public class MessageReceiver implements Runnable {
 
             String status = (in.get("status") != null) ? in.get("status").toString() : "";
             String message = (in.get("message") != null) ? in.get("message").toString() : "";
+            String role = (in.get("role") != null) ? in.get("role").toString() : "";
             
-            if (status.contentEquals("") || message.contentEquals("")) {
+            if (status.contentEquals("") || message.contentEquals("") || role.contentEquals("")) {
                 JOptionPane.showMessageDialog(
                     parent,
-                    "No response from server",
-                    "No status",
+                    "Na poslati zahtev nema odgovora od strane servera",
+                    "Bez statusa",
                     JOptionPane.WARNING_MESSAGE
                 );
             } else {
@@ -61,20 +61,19 @@ public class MessageReceiver implements Runnable {
                 );
             }
             
+            // if status is OK
             if (status.charAt(0) == '2') {
-                JSONObject jIndex = (JSONObject)in.get("index");
-                String firstName = jIndex.get("first name").toString();
-                String lastName = jIndex.get("last name").toString();
-                String jmbg = jIndex.get("jmbg").toString();
-                String index = jIndex.get("index").toString();
-                JSONArray subjects = (JSONArray)jIndex.get("subjects");
-                
-                System.out.println(firstName + " " + lastName);
-                System.out.println(jmbg);
-                System.out.println(index);
-                for (Object sub : subjects) {
-                    JSONObject jSub = (JSONObject)sub;
-                    System.out.println(jSub);
+                if (role.equalsIgnoreCase("student")) {
+                    JSONObject jIndex = (JSONObject)in.get("index");
+
+                    /* Create and display the form */
+                    java.awt.EventQueue.invokeLater(() -> {
+                        MenuScreen menu = new MenuScreen(parent, jIndex);
+                        menu.setVisible(true);
+                        menu.setAlwaysOnTop(true);
+                    });
+                } else if (role.equalsIgnoreCase("admin")) {
+                    
                 }
             }
         } catch (ParseException ex) {

@@ -25,28 +25,25 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jFirstname" min="-2" pref="92" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jLastName" min="-2" pref="92" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jIndex" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
-                          <Component id="jJMBG" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" attributes="0">
                       <Component id="jUsername" min="-2" pref="92" max="-2" attributes="0"/>
-                      <EmptySpace pref="333" max="32767" attributes="0"/>
-                      <Component id="SelectSubject" min="-2" pref="80" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="SelectSubject" min="-2" pref="96" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jSelectSubject" min="-2" pref="155" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jIndex" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
+                          <Component id="jFullname" alignment="0" min="-2" pref="207" max="-2" attributes="0"/>
+                          <Component id="jJmbg" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="78" max="32767" attributes="0"/>
+                      <Component id="jGradesPanel" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -61,40 +58,165 @@
                       <Component id="jSelectSubject" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jFirstname" min="-2" pref="27" max="-2" attributes="0"/>
-                  <Component id="jLastName" min="-2" pref="27" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jFullname" min="-2" pref="27" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jIndex" min="-2" pref="27" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jJmbg" min="-2" pref="27" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="jGradesPanel" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jIndex" min="-2" pref="27" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jJMBG" min="-2" pref="27" max="-2" attributes="0"/>
-              <EmptySpace pref="267" max="32767" attributes="0"/>
+              <EmptySpace pref="84" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jUsername">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jUsername.setText(userName);&#xd;&#xa;jUsername.setToolTipText(&quot;korisnicko ime&quot;);&#xd;&#xa;"/>
+      </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="jFirstname">
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLastName">
+    <Component class="javax.swing.JLabel" name="jFullname">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jFullname.setText(firstName + &quot; &quot; + lastName);&#xd;&#xa;jFullname.setToolTipText(&quot;puno ime&quot;);&#xd;&#xa;Font fFullname = jFullname.getFont();&#xd;&#xa;jFullname.setFont(fFullname.deriveFont(fFullname.getStyle() | Font.BOLD));"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jIndex">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jIndex.setText(index);&#xd;&#xa;jIndex.setToolTipText(&quot;index&quot;);&#xd;&#xa;"/>
+      </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="jJMBG">
+    <Component class="javax.swing.JLabel" name="jJmbg">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jJmbg.setText(jmbg);&#xd;&#xa;jJmbg.setToolTipText(&quot;JMBG&quot;);&#xd;&#xa;Font fJmbg = jJmbg.getFont();&#xd;&#xa;jJmbg.setFont(fJmbg.deriveFont(fJmbg.getStyle() | Font.BOLD));"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JComboBox" name="jSelectSubject">
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jSelectSubjectItemStateChanged"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="SelectSubject">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Select Subject"/>
+        <Property name="text" type="java.lang.String" value="Izaberi Predmet"/>
       </Properties>
     </Component>
+    <Container class="javax.swing.JPanel" name="jGradesPanel">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="T1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jT1" min="-2" pref="25" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="Z1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jZ1" min="-2" pref="25" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="T2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jT2" min="-2" pref="25" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="Z2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jZ2" min="-2" pref="25" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace pref="264" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="T1" min="-2" pref="29" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="T2" min="-2" pref="29" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jT1" min="-2" pref="29" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jT2" min="-2" pref="29" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="Z1" min="-2" pref="29" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="Z2" min="-2" pref="29" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="jZ1" min="-2" pref="29" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jZ2" min="-2" pref="29" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <EmptySpace pref="174" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="T1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="T1:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="T2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="T2:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="Z1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Z1:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="Z2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Z2:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jT1">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="Font fT1 = jT1.getFont();&#xd;&#xa;jT1.setFont(new Font(fT1.getName(), fT1.getStyle() | Font.BOLD, 18));"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jT2">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="Font fT2 = jT2.getFont();&#xd;&#xa;jT2.setFont(new Font(fT2.getName(), fT2.getStyle() | Font.BOLD, 18));"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jZ1">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="Font fZ1 = jZ1.getFont();&#xd;&#xa;jZ1.setFont(new Font(fZ1.getName(), fZ1.getStyle() | Font.BOLD, 18));"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jZ2">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="Font fZ2 = jZ2.getFont();&#xd;&#xa;jZ2.setFont(new Font(fZ2.getName(), fZ2.getStyle() | Font.BOLD, 18));"/>
+          </AuxValues>
+        </Component>
+      </SubComponents>
+    </Container>
   </SubComponents>
 </Form>

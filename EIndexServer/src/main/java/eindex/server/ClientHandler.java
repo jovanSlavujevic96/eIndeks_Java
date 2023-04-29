@@ -9,22 +9,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.Socket;
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.xml.bind.DatatypeConverter;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -110,7 +101,7 @@ public class ClientHandler implements Runnable {
                 method = in.get("method").toString();
             } else {
                 out.put("status", "400");
-                out.put("message", "Method is missing");
+                out.put("message", "Zahtev nije poslat");
                 return out.toJSONString();
             }
 
@@ -123,7 +114,7 @@ public class ClientHandler implements Runnable {
                     userName = in.get("username").toString();
                 } else {
                     out.put("status", "400");
-                    out.put("message", "Username is missing");
+                    out.put("message", "Korisnicko ime nije poslato");
                     return out.toJSONString();
                 }
                 
@@ -133,7 +124,7 @@ public class ClientHandler implements Runnable {
                     password = in.get("password").toString();
                 } else {
                     out.put("status", "400");
-                    out.put("message", "Password is missing");
+                    out.put("message", "Lozinka nije poslata");
                     return out.toJSONString();
                 }
                 
@@ -143,14 +134,14 @@ public class ClientHandler implements Runnable {
                     role = in.get("role").toString();
                 } else {
                     out.put("status", "400");
-                    out.put("message", "Role not found");
+                    out.put("message", "Korisnicka rola nije poslata");
                     return out.toJSONString();
                 }
                 
                 // check is role a good one
                 if (!role.equalsIgnoreCase("admin") && !role.equalsIgnoreCase("student")) {
                     out.put("status", "401");
-                    out.put("message", "Bad role for user " + userName);
+                    out.put("message", "Poslata je nepostojeca rola " + role);
                     return out.toJSONString();
                 }
                 
@@ -163,31 +154,34 @@ public class ClientHandler implements Runnable {
                         // check does password match
                         if (hashedDbPass.contentEquals(password)) {
                             out.put("status", "200");
-                            out.put("message", user.getRole() + " " + userName + " succesfully logged in");
+                            out.put("message", user.getRole() + " " + userName + " je uspesno prijavljen");
+                            out.put("role", role);
 
-                            JSONObject userIndex = dbHandler.readUserIndexPer(userName, "username");
-                            out.put("index", userIndex);
+                            if (role.equalsIgnoreCase("student")) {
+                                JSONObject userIndex = dbHandler.readUserIndexPer(userName, "username");
+                                out.put("index", userIndex);
+                            }
                         } else {
                             out.put("status", "401");
-                            out.put("message", "Bad password for user " + userName);
+                            out.put("message", "Nije uneta dobra lozinka za korisnika " + userName);
                         }
                     } else {
                         out.put("status", "401");
-                        out.put("message", "Bad role for user " + userName);
+                        out.put("message", "Nije uneta dobra rola za korisnika " + userName);
                     }
                 } else {
                     out.put("status", "404");
-                    out.put("message", "User " + userName + " has not been found");
+                    out.put("message", "Korisnik " + userName + " nije pronadjen");
                     userName = "";
                 }
             } else {
                 out.put("status", "405");
-                out.put("message", "Method not allowed or not exist");
+                out.put("message", "Uneti zahtev nije podrzan ili ne postoji");
             }
         } catch (ParseException | IOException pe) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, pe);
             out.put("status", "500");
-            out.put("message", "Internal server error");
+            out.put("message", "Interna serverska greska... Pokusajte kasnije");
         }
         return out.toJSONString();
     }

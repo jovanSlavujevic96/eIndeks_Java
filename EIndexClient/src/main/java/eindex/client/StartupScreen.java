@@ -128,12 +128,12 @@ public class StartupScreen extends javax.swing.JFrame {
         });
 
         jInputIp.setText("127.0.0.1");
-        jInputIp.setToolTipText("Enter server IP address");
+        jInputIp.setToolTipText("Unesite IP adresu servera");
 
         jInputPort.setText("5050");
-        jInputPort.setToolTipText("Enter server port");
+        jInputPort.setToolTipText("Unesite port servera");
 
-        bLogin.setText("Uloguj se");
+        bLogin.setText("Prijavi se");
         bLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bLoginActionPerformed(evt);
@@ -156,32 +156,31 @@ public class StartupScreen extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(bLogin)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSelectRole, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jInputUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnConnect)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jInputIp, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jInputPort, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jInputIp, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSelectRole, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jInputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bShowPass, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jInputPort, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnConnect))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jInputUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jInputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bShowPass, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bLogin)))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(bShowPass, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jInputPort, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -189,11 +188,12 @@ public class StartupScreen extends javax.swing.JFrame {
                             .addComponent(jInputIp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(bLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jSelectRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jInputUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jInputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(290, Short.MAX_VALUE))
+                            .addComponent(jInputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(bShowPass, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(291, Short.MAX_VALUE))
         );
 
         pack();
@@ -208,8 +208,8 @@ public class StartupScreen extends javax.swing.JFrame {
         if (!validator.isValidInet4Address(ip)) {
             JOptionPane.showMessageDialog(
                     this,
-                    "The IP address \"" + ip + "\" is invalid",
-                    "Bad IP",
+                    "Uneta IP adresa \"" + ip + "\" nije validna",
+                    "IP",
                     JOptionPane.ERROR_MESSAGE
             );
             return;
@@ -223,8 +223,8 @@ public class StartupScreen extends javax.swing.JFrame {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(
                     this,
-                    "Failed to connect to \"" + ip + ":" + port + "\"",
-                    "Connection failed",
+                    "Neuspesno povezivanje sa \"" + ip + ":" + port + "\" serverom",
+                    "Konekcija neuspesna",
                     JOptionPane.ERROR_MESSAGE
             );
             return;
@@ -242,17 +242,17 @@ public class StartupScreen extends javax.swing.JFrame {
         jInputPort.setToolTipText("");
         
         jInputUsername.setEnabled(true);
-        jInputUsername.setToolTipText("Enter username");
+        jInputUsername.setToolTipText("Unesite korisnicko ime");
         jInputPassword.setEnabled(true);
-        jInputPassword.setToolTipText("Enter password");
+        jInputPassword.setToolTipText("Unesite lozinku");
         bLogin.setEnabled(true);
         bShowPass.setVisible(true);
         jSelectRole.setEnabled(true);
         
         JOptionPane.showMessageDialog(
                 this,
-                "Succeed to connect to \"" + ip + ":" + port + "\"",
-                "Connection succeed",
+                "Uspesno povezivanje sa \"" + ip + ":" + port + "\" serverom",
+                "Konekcija uspesna",
                 JOptionPane.INFORMATION_MESSAGE
         );
     }//GEN-LAST:event_btnConnectActionPerformed
@@ -265,8 +265,8 @@ public class StartupScreen extends javax.swing.JFrame {
             (password == null || password.contentEquals(""))) {
             JOptionPane.showMessageDialog(
                     this,
-                    "You must enter credentials",
-                    "Credentials",
+                    "Morate uneti kredencijale",
+                    "Kredencijali",
                     JOptionPane.ERROR_MESSAGE
             );
             return;
