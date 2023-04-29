@@ -16,7 +16,6 @@ import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
 import java.text.NumberFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,24 +66,27 @@ public class StartupScreen extends javax.swing.JFrame {
     
     private String encrypt(String inputStr) {
         try {
-            // Creating KeyPair generator object
+            //Creating KeyPair generator object
             KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
-            // Initializing the KeyPairGenerator
+
+            //Initializing the key pair generator
             keyPairGen.initialize(2048);
-            //Generate the pair of keys
-            KeyPair pair = keyPairGen.generateKeyPair();
-            // Getting the public key from the key pair
-            PublicKey publicKey = pair.getPublic();
-            // Creating a Cipher object
+
+            //Generating the pair of keys
+            KeyPair pair = keyPairGen.generateKeyPair();      
+
+            //Creating a Cipher object
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-            // Initializing a Cipher object
-            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-            // Adding data to the cipher
-            byte[] input = inputStr.getBytes();	  
+
+            //Initializing a Cipher object
+            cipher.init(Cipher.ENCRYPT_MODE, pair.getPublic());
+
+            //Adding data to the cipher
+            byte[] input = "Welcome to Tutorialspoint".getBytes();	  
             cipher.update(input);
-            // Encrypting the data
+
+            //encrypting the data
             byte[] cipherText = cipher.doFinal();
-            
             return new String(cipherText, "UTF8");
         } catch (NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException | InvalidKeyException | UnsupportedEncodingException | NoSuchPaddingException ex) {
             // encryption failed -> proceed with regular password
@@ -289,9 +291,9 @@ public class StartupScreen extends javax.swing.JFrame {
         
         // packing userinfo to JSON
         JSONObject obj = new JSONObject();
-        obj.put("username", username);
+        obj.put("username", username.toLowerCase());
         obj.put("password", password);
-        obj.put("request", "login");
+        obj.put("method", "login");
 
         pw.println(obj);
     }//GEN-LAST:event_bLoginActionPerformed

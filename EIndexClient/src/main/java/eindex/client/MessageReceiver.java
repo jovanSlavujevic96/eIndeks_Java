@@ -13,9 +13,11 @@ import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class MessageReceiver implements Runnable {
     final private StartupScreen parent;
@@ -36,9 +38,32 @@ public class MessageReceiver implements Runnable {
     }
     
     private String processMessage(String msg) {
-        String out = null;
-        
-        return out;
+        JSONParser parser = new JSONParser();
+        try {
+            JSONObject in = (JSONObject)parser.parse(msg);
+
+            String status = (in.get("status") != null) ? in.get("status").toString() : "";
+            String message = (in.get("message") != null) ? in.get("message").toString() : "";
+            
+            if (status.contentEquals("") || message.contentEquals("")) {
+                JOptionPane.showMessageDialog(
+                    parent,
+                    "No response from server",
+                    "No status",
+                    JOptionPane.WARNING_MESSAGE
+                );
+            } else {
+                JOptionPane.showMessageDialog(
+                    parent,
+                    message,
+                    status,
+                    (status.charAt(0) == '2') ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
+                );
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(MessageReceiver.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override

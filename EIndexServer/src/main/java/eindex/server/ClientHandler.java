@@ -9,10 +9,23 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.Socket;
+import java.security.InvalidKeyException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -24,6 +37,7 @@ public class ClientHandler implements Runnable {
     private BufferedReader br;  // for recv
     private PrintWriter pw;     // for send
     private Consumer<ClientHandler> logoutMethod;
+    private DatabaseHandler dbHandler;
     
     public String getUserName() {
         return this.userName;
@@ -45,8 +59,43 @@ public class ClientHandler implements Runnable {
         return pw;
     }
     
+    public void bindDbHandler(DatabaseHandler dbHandler) {
+        this.dbHandler = dbHandler;
+    }
+    
     public static int generateRandomNum(int min, int max) {
         return (int)Math.floor(Math.random()*(max-min+1) + min);
+    }
+    
+    private String encrypt(String inputStr) {
+        try {
+            //Creating KeyPair generator object
+            KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
+
+            //Initializing the key pair generator
+            keyPairGen.initialize(2048);
+
+            //Generating the pair of keys
+            KeyPair pair = keyPairGen.generateKeyPair();      
+
+            //Creating a Cipher object
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+
+            //Initializing a Cipher object
+            cipher.init(Cipher.ENCRYPT_MODE, pair.getPublic());
+
+            //Adding data to the cipher
+            byte[] input = "Welcome to Tutorialspoint".getBytes();	  
+            cipher.update(input);
+
+            //encrypting the data
+            byte[] cipherText = cipher.doFinal();
+            return new String(cipherText, "UTF8");
+        } catch (NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException | InvalidKeyException | UnsupportedEncodingException | NoSuchPaddingException ex) {
+            // encryption failed -> proceed with regular password
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+            return inputStr;
+        }
     }
     
     public ClientHandler(Socket socket, Consumer<ClientHandler> logoutMethod) throws IOException {
@@ -64,9 +113,64 @@ public class ClientHandler implements Runnable {
     }
     
     public String processMessage(String msg) {
-        String out = "";
+        JSONObject out = new JSONObject();
+        JSONParser parser = new JSONParser();
+		
+        try {
+            JSONObject in = (JSONObject)parser.parse(msg);
 
-        return out;
+            String method;
+            if (in.get("method") != null) {
+                method = in.get("method").toString();
+            } else {
+                out.put("status", "400");
+                out.put("message", "Method is missing");
+                return out.toJSONString();
+            }
+
+            if (method.contentEquals("login")) {
+                String username;
+                if (in.get("username") != null) {
+                    username = in.get("username").toString();
+                } else {
+                    out.put("status", "400");
+                    out.put("message", "Username is missing");
+                    return out.toJSONString();
+                }
+                
+                String password;
+                if (in.get("password") != null) {
+                    password = in.get("password").toString();
+                } else {
+                    out.put("status", "400");
+                    out.put("message", "Password is missing");
+                    return out.toJSONString();
+                }
+
+                User user = dbHandler.readUser(username, 1);
+                if (user != null) {
+                    String encryptDbPass = encrypt(user.getPassword());
+                    if (encryptDbPass.contentEquals(password)) {
+                        out.put("status", "200");
+                        out.put("message", user.getRole() + " " + username + " succesfully logged in");
+                    } else {
+                        out.put("status", "401");
+                        out.put("message", "Bad password for user " + username);
+                    }
+                } else {
+                    out.put("status", "404");
+                    out.put("message", "User " + username + " has not been found");
+                }
+            } else {
+                out.put("status", "405");
+                out.put("message", "Method not allowed or not exist");
+            }
+        } catch (ParseException | IOException pe) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, pe);
+            out.put("status", "500");
+            out.put("message", "Internal server error");
+        }
+        return out.toJSONString();
     }
     
     @Override
@@ -85,8 +189,6 @@ public class ClientHandler implements Runnable {
                 System.out.println("Message rcv for client \"" + userName + "\" is null");
                 break;
             }
-            
-            System.out.println(msg);
 
             // process
             msg = processMessage(msg);

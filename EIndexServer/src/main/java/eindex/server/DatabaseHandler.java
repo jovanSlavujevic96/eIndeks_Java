@@ -33,6 +33,7 @@ public class DatabaseHandler {
     public Collection<User> readAllUsers() throws IOException {
         Collection<User> users = new ArrayList<>();
         String line;
+        br.mark(0);
         br.reset();
         while ((line = br.readLine())!= null) {
             String[] userInfo = line.split(";");
@@ -43,6 +44,23 @@ public class DatabaseHandler {
             }
         }
         return users;
+    }
+    
+    public User readUser(String data, int data_index) throws IOException {
+        String line;
+        br.mark(0);
+        br.reset();
+        while ((line = br.readLine())!= null) {
+            String[] userInfo = line.split(";");
+            if (userInfo.length == 3) {
+                if (userInfo[data_index].equalsIgnoreCase(data)) {
+                    return new User(userInfo[0], userInfo[1], userInfo[2]);
+                }
+            } else {
+                throw new IOException("There is missing/too much user info");
+            }
+        }
+        return null;
     }
     
     @Override

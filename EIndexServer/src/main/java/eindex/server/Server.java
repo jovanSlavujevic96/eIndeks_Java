@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 public class Server {
     private ServerSocket acceptSocket;
     private final Collection<ClientHandler> clients;
+    private DatabaseHandler dbHandler;
     
     public void acceptClients() throws IOException {
         Socket client_socket;
@@ -40,6 +41,7 @@ public class Server {
             }
             try {
                 client_handler = new ClientHandler(client_socket, (n) -> { clients.remove(n); });
+                client_handler.bindDbHandler(this.getDbHandler());
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                 break;
@@ -56,6 +58,14 @@ public class Server {
             client.getSocket().close();
         }
         acceptSocket.close();
+    }
+    
+    void bindDbHandler(DatabaseHandler dbHandler) {
+        this.dbHandler = dbHandler;
+    }
+    
+    DatabaseHandler getDbHandler() {
+        return dbHandler;
     }
     
     public Server(int port) throws IOException {
@@ -87,6 +97,7 @@ public class Server {
             }
             
             server = new Server(port);
+            server.bindDbHandler(db);
             server.acceptClients();
         } catch (IOException ex) {
             System.out.println("StickerServer create failed: " + ex.toString());
