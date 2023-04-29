@@ -24,7 +24,7 @@ public class MessageReceiver implements Runnable {
     final private StartupScreen parent;
     final private BufferedReader br;
     final private PrintWriter pw;
-    private MenuScreen menu;
+    private StudentMenuScreen menu;
     
     public MessageReceiver(StartupScreen parent) {
         this.parent = parent;
@@ -77,7 +77,7 @@ public class MessageReceiver implements Runnable {
 
                         // Create and display the form
                         java.awt.EventQueue.invokeLater(() -> {
-                            menu = new MenuScreen(parent, jIndex);
+                            menu = new StudentMenuScreen(parent, jIndex);
                             menu.setVisible(true);
 
                             parent.handleLoginAssets(false);

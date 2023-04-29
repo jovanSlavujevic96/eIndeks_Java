@@ -15,7 +15,7 @@ import org.json.simple.JSONObject;
  *
  * @author Jovan
  */
-public class MenuScreen extends javax.swing.JFrame {
+public class StudentMenuScreen extends javax.swing.JFrame {
 
     final private StartupScreen parent;
     final private PrintWriter pw;
@@ -34,7 +34,7 @@ public class MenuScreen extends javax.swing.JFrame {
      * @param parent
      * @param jIndex
      */
-    public MenuScreen(StartupScreen parent, JSONObject jIndex) {
+    public StudentMenuScreen(StartupScreen parent, JSONObject jIndex) {
         super("E-Index Meni");
 
         this.parent = parent;
