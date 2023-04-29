@@ -35,7 +35,7 @@ public class StudentMenuScreen extends javax.swing.JFrame {
      * @param jIndex
      */
     public StudentMenuScreen(StartupScreen parent, JSONObject jIndex) {
-        super("E-Index Meni");
+        super("Studentski Meni");
 
         this.parent = parent;
         pw = parent.getPw();

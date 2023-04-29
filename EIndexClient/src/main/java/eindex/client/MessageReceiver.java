@@ -8,6 +8,7 @@ package eindex.client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashSet;
 import java.util.List;
 import java.util.function.Function;
 import java.util.logging.Level;
@@ -25,11 +26,13 @@ public class MessageReceiver implements Runnable {
     final private BufferedReader br;
     final private PrintWriter pw;
     private StudentMenuScreen menu;
+    private JFrame focusedScreen;
     
     public MessageReceiver(StartupScreen parent) {
         this.parent = parent;
         this.br = parent.getBr();
         this.pw = parent.getPw();
+        focusedScreen = parent;
     }
     
     public static <T, U> List<U> convertStringListToIntList(List<T> listOfString, Function<T, U> function)
@@ -48,21 +51,21 @@ public class MessageReceiver implements Runnable {
             String message = (in.get("message") != null) ? in.get("message").toString() : "";
             String role = (in.get("role") != null) ? in.get("role").toString() : "";
             String method = (in.get("method") != null) ? in.get("method").toString() : "";
-            JFrame target = (method.equalsIgnoreCase("login")) ?
+            focusedScreen = (method.equalsIgnoreCase("login")) ?
                     parent : (method.equalsIgnoreCase("refreshGrades")) ?
                     menu : null;
             
             if (status.contentEquals("") || message.contentEquals("") || method.contentEquals("") ||
                (method.equalsIgnoreCase("login") && role.contentEquals(""))) {
                 JOptionPane.showMessageDialog(
-                    target,
+                    focusedScreen,
                     "Na poslati zahtev nema odgovora od strane servera",
                     "Bez statusa",
                     JOptionPane.WARNING_MESSAGE
                 );
             } else {
                 JOptionPane.showMessageDialog(
-                    target,
+                    focusedScreen,
                     message,
                     status,
                     (status.charAt(0) == '2') ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
@@ -109,7 +112,6 @@ public class MessageReceiver implements Runnable {
             try {
                 recvMsg = this.br.readLine();
             } catch (IOException ex) {
-                Logger.getLogger(MessageReceiver.class.getName()).log(Level.SEVERE, null, ex);
                 break;
             }
             if (recvMsg == null) {
@@ -123,6 +125,18 @@ public class MessageReceiver implements Runnable {
                 pw.println(sendMsg);
             }
         }
+        JOptionPane.showMessageDialog(
+            focusedScreen,
+            "Konekcija sa serverom je prekinuta... Pokusajte se povezati ponovo",
+            "Pukla veza",
+            JOptionPane.ERROR_MESSAGE
+        );
+        focusedScreen = parent;
+        parent.setEnabled(true);
+        parent.handleConnectAssets(true);
+        menu.dispose();
+        menu = null;
+        parent.toFront();
+        parent.requestFocus();
     }
-
 }
