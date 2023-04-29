@@ -16,6 +16,7 @@ import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.DatatypeConverter;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -105,8 +106,7 @@ public class ClientHandler implements Runnable {
                 return out.toJSONString();
             }
 
-            // "login" method
-            if (method.contentEquals("login")) {
+            if (method.equalsIgnoreCase("login")) { // login method
                 
                 // get username
                 userName = "";
@@ -156,6 +156,7 @@ public class ClientHandler implements Runnable {
                             out.put("status", "200");
                             out.put("message", user.getRole() + " " + userName + " je uspesno prijavljen");
                             out.put("role", role);
+                            out.put("method", "login");
 
                             if (role.equalsIgnoreCase("student")) {
                                 JSONObject userIndex = dbHandler.readUserIndexPer(userName, "username");
@@ -168,6 +169,38 @@ public class ClientHandler implements Runnable {
                     } else {
                         out.put("status", "401");
                         out.put("message", "Nije uneta dobra rola za korisnika " + userName);
+                    }
+                } else {
+                    out.put("status", "404");
+                    out.put("message", "Korisnik " + userName + " nije pronadjen");
+                    userName = "";
+                }
+            } else if (method.equalsIgnoreCase("refreshGrades")) { // refreshGrade method
+
+                // get username
+                userName = "";
+                if (in.get("username") != null) {
+                    userName = in.get("username").toString();
+                } else {
+                    out.put("status", "400");
+                    out.put("message", "Korisnicko ime nije poslato");
+                    return out.toJSONString();
+                }
+                
+                User user = dbHandler.readUserPer(userName, 0);
+                if (user != null) {
+                    if (user.getRole().equalsIgnoreCase("student")) {
+                        out.put("status", "200");
+                        out.put("message", "Student" + " " + userName + " je uspesno azurirao ocene");
+                        out.put("role", "student");
+                        out.put("method", "refreshGrades");
+
+                        JSONObject userIndex = dbHandler.readUserIndexPer(userName, "username");
+                        JSONArray userSubjects = (JSONArray)userIndex.get("subjects");
+                        out.put("subjects", userSubjects);
+                    } else {
+                        out.put("status", "401");
+                        out.put("message", "Korisnik " + userName + " nije student");
                     }
                 } else {
                     out.put("status", "404");

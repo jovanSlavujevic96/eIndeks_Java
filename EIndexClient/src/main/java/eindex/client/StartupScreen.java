@@ -70,9 +70,48 @@ public class StartupScreen extends javax.swing.JFrame {
         return "";
     }
     
-    /**
-     * Creates new form StickerClientMainWindow
-     */
+    public void handleLoginAssets(boolean enable) {
+        if (enable) {
+            jInputUsername.setEnabled(true);
+            jInputUsername.setToolTipText("Unesite korisnicko ime");
+            jInputPassword.setEnabled(true);
+            jInputPassword.setToolTipText("Unesite lozinku");
+            bLogin.setEnabled(true);
+            bLogin.setVisible(true);
+            bShowPass.setEnabled(true);
+            bShowPass.setVisible(true);
+            jSelectRole.setEnabled(true);
+        } else {
+            jInputUsername.setEnabled(false);
+            jInputUsername.setToolTipText("");
+            jInputPassword.setEnabled(false);
+            jInputPassword.setToolTipText("");
+            bLogin.setEnabled(false);
+            bLogin.setVisible(false);
+            bShowPass.setEnabled(false);
+            bShowPass.setVisible(false);
+            jSelectRole.setEnabled(false);
+        }
+    }
+    
+    public void handleConnectAssets(boolean enable) {
+        if (enable) {
+            btnConnect.setEnabled(true);
+            btnConnect.setVisible(true);
+            jInputIp.setEnabled(true);
+            jInputIp.setToolTipText("Unesite IP adresu servera");
+            jInputPort.setEnabled(true);
+            jInputPort.setToolTipText("Unesi port servera");
+        } else {
+            btnConnect.setEnabled(false);
+            btnConnect.setVisible(false);
+            jInputIp.setEnabled(false);
+            jInputIp.setToolTipText("");
+            jInputPort.setEnabled(false);
+            jInputPort.setToolTipText("");
+        }
+    }
+    
     public StartupScreen() {
         initComponents();
         
@@ -163,17 +202,17 @@ public class StartupScreen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jInputPort, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnConnect))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jInputUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jInputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bShowPass, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bLogin)))
+                        .addComponent(bShowPass, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jInputPort, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnConnect)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bLogin)
                 .addContainerGap(115, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -234,20 +273,8 @@ public class StartupScreen extends javax.swing.JFrame {
         Thread thr = new Thread(rmfs);
         thr.start();
         
-        btnConnect.setEnabled(false);
-        btnConnect.setVisible(false);
-        jInputIp.setEnabled(false);
-        jInputIp.setToolTipText("");
-        jInputPort.setEnabled(false);
-        jInputPort.setToolTipText("");
-        
-        jInputUsername.setEnabled(true);
-        jInputUsername.setToolTipText("Unesite korisnicko ime");
-        jInputPassword.setEnabled(true);
-        jInputPassword.setToolTipText("Unesite lozinku");
-        bLogin.setEnabled(true);
-        bShowPass.setVisible(true);
-        jSelectRole.setEnabled(true);
+        handleConnectAssets(false);
+        handleLoginAssets(true);
         
         JOptionPane.showMessageDialog(
                 this,

@@ -51,9 +51,10 @@ public class MenuScreen extends javax.swing.JFrame {
         setSubjects((JSONArray)jIndex.get("subjects"));
     }
     
-    void updateSubjectsReq() {
+    void requestUpdateGrades() {
         JSONObject req = new JSONObject();
-        req.put("method", "updateSubs");
+        req.put("method", "refreshGrades");
+        req.put("username", userName);
         pw.println(req);
     }
     
@@ -185,6 +186,7 @@ public class MenuScreen extends javax.swing.JFrame {
         ));
         Grade = new javax.swing.JLabel();
         Summary = new javax.swing.JLabel();
+        jUpdateGrades = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -280,6 +282,13 @@ public class MenuScreen extends javax.swing.JFrame {
                 .addGap(11, 11, 11))
         );
 
+        jUpdateGrades.setText("Azuriranje podataka");
+        jUpdateGrades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jUpdateGradesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -299,7 +308,9 @@ public class MenuScreen extends javax.swing.JFrame {
                             .addComponent(jFullname, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jJmbg, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
-                        .addComponent(jGradesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jUpdateGrades)
+                            .addComponent(jGradesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(27, 27, 27))
         );
         layout.setVerticalGroup(
@@ -322,7 +333,9 @@ public class MenuScreen extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addComponent(jGradesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jUpdateGrades)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
@@ -332,6 +345,11 @@ public class MenuScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
         updateExamResults();
     }//GEN-LAST:event_jSelectSubjectItemStateChanged
+
+    private void jUpdateGradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jUpdateGradesActionPerformed
+        // TODO add your handling code here:
+        requestUpdateGrades();
+    }//GEN-LAST:event_jUpdateGradesActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -351,6 +369,7 @@ public class MenuScreen extends javax.swing.JFrame {
     private javax.swing.JTextField jSummary;
     private javax.swing.JLabel jT1;
     private javax.swing.JLabel jT2;
+    private javax.swing.JButton jUpdateGrades;
     private javax.swing.JLabel jUsername;
     private javax.swing.JLabel jZ1;
     private javax.swing.JLabel jZ2;

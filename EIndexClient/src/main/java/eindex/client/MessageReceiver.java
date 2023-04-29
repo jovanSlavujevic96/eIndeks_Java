@@ -13,7 +13,9 @@ import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -22,6 +24,7 @@ public class MessageReceiver implements Runnable {
     final private StartupScreen parent;
     final private BufferedReader br;
     final private PrintWriter pw;
+    private MenuScreen menu;
     
     public MessageReceiver(StartupScreen parent) {
         this.parent = parent;
@@ -44,36 +47,50 @@ public class MessageReceiver implements Runnable {
             String status = (in.get("status") != null) ? in.get("status").toString() : "";
             String message = (in.get("message") != null) ? in.get("message").toString() : "";
             String role = (in.get("role") != null) ? in.get("role").toString() : "";
+            String method = (in.get("method") != null) ? in.get("method").toString() : "";
+            JFrame target = (method.equalsIgnoreCase("login")) ?
+                    parent : (method.equalsIgnoreCase("refreshGrades")) ?
+                    menu : null;
             
-            if (status.contentEquals("") || message.contentEquals("") || role.contentEquals("")) {
+            if (status.contentEquals("") || message.contentEquals("") || method.contentEquals("") ||
+               (method.equalsIgnoreCase("login") && role.contentEquals(""))) {
                 JOptionPane.showMessageDialog(
-                    parent,
+                    target,
                     "Na poslati zahtev nema odgovora od strane servera",
                     "Bez statusa",
                     JOptionPane.WARNING_MESSAGE
                 );
             } else {
                 JOptionPane.showMessageDialog(
-                    parent,
+                    target,
                     message,
                     status,
                     (status.charAt(0) == '2') ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
                 );
             }
             
-            // if status is OK
+            // check if status is OK
             if (status.charAt(0) == '2') {
-                if (role.equalsIgnoreCase("student")) {
-                    JSONObject jIndex = (JSONObject)in.get("index");
+                if (method.equalsIgnoreCase("login")) {
+                    if (role.equalsIgnoreCase("student")) {
+                        JSONObject jIndex = (JSONObject)in.get("index");
 
-                    /* Create and display the form */
-                    java.awt.EventQueue.invokeLater(() -> {
-                        MenuScreen menu = new MenuScreen(parent, jIndex);
-                        menu.setVisible(true);
-                        menu.setAlwaysOnTop(true);
-                    });
-                } else if (role.equalsIgnoreCase("admin")) {
-                    
+                        // Create and display the form
+                        java.awt.EventQueue.invokeLater(() -> {
+                            menu = new MenuScreen(parent, jIndex);
+                            menu.setVisible(true);
+
+                            parent.handleLoginAssets(false);
+                            parent.setEnabled(false);
+                        });
+                    } else if (role.equalsIgnoreCase("admin")) {
+
+                    }
+                } else if (method.equalsIgnoreCase("refreshGrades")) {
+                    if (role.equalsIgnoreCase("student")) {
+                        JSONArray jSubjects = (JSONArray)in.get("subjects");
+                        menu.setSubjects(jSubjects);
+                    }
                 }
             }
         } catch (ParseException ex) {
