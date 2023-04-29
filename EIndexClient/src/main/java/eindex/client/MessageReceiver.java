@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -59,6 +59,23 @@ public class MessageReceiver implements Runnable {
                     status,
                     (status.charAt(0) == '2') ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
                 );
+            }
+            
+            if (status.charAt(0) == '2') {
+                JSONObject jIndex = (JSONObject)in.get("index");
+                String firstName = jIndex.get("first name").toString();
+                String lastName = jIndex.get("last name").toString();
+                String jmbg = jIndex.get("jmbg").toString();
+                String index = jIndex.get("index").toString();
+                JSONArray subjects = (JSONArray)jIndex.get("subjects");
+                
+                System.out.println(firstName + " " + lastName);
+                System.out.println(jmbg);
+                System.out.println(index);
+                for (Object sub : subjects) {
+                    JSONObject jSub = (JSONObject)sub;
+                    System.out.println(jSub);
+                }
             }
         } catch (ParseException ex) {
             Logger.getLogger(MessageReceiver.class.getName()).log(Level.SEVERE, null, ex);

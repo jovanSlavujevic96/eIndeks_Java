@@ -10,6 +10,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -17,15 +21,16 @@ import java.util.Collection;
  */
 public class DatabaseHandler {
     final private static String USERS_FILENAME = "users.txt";
+    final private static String USERS_INDEX_FILENAME = "users_index.txt";
     
     public DatabaseHandler() {}
     
-    static private BufferedReader createBr() throws FileNotFoundException {
+    static private BufferedReader createUsersBr() throws FileNotFoundException {
         return new BufferedReader(new FileReader("./data/" + USERS_FILENAME));
     }
     
     public Collection<User> readAllUsers() throws IOException {
-        BufferedReader br = createBr();
+        BufferedReader br = createUsersBr();
         Collection<User> users = new ArrayList<>();
         String line;
         while (true) {
@@ -49,8 +54,8 @@ public class DatabaseHandler {
         return users;
     }
     
-    public User readUser(String data, int data_index) throws IOException {
-        BufferedReader br = createBr();
+    public User readUserPer(String data, int data_index) throws IOException {
+        BufferedReader br = createUsersBr();
         String line;
         while (true) {
             try {
@@ -73,5 +78,25 @@ public class DatabaseHandler {
             }
         }
         return null;
+    }
+    
+    static private FileReader createIndexFr() throws FileNotFoundException {
+        return new FileReader("./data/" + USERS_INDEX_FILENAME);
+    }
+    
+    public JSONArray readAllUserIndex() throws IOException, ParseException {
+        JSONParser parser = new JSONParser();
+        return (JSONArray)parser.parse(createIndexFr());
+    }
+    
+    public JSONObject readUserIndexPer(String value, String key) throws IOException, ParseException {
+        JSONArray array = readAllUserIndex();
+        for (Object obj : array) {
+            JSONObject jObj = (JSONObject)obj;
+            if (jObj.get(key).toString().equalsIgnoreCase(value)) {
+                return jObj;
+            }
+        }
+        return new JSONObject();
     }
 }

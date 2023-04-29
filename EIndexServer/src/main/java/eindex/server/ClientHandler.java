@@ -101,8 +101,10 @@ public class ClientHandler implements Runnable {
         JSONParser parser = new JSONParser();
 		
         try {
+            // parse JSON Object
             JSONObject in = (JSONObject)parser.parse(msg);
 
+            // look for method
             String method;
             if (in.get("method") != null) {
                 method = in.get("method").toString();
@@ -112,16 +114,20 @@ public class ClientHandler implements Runnable {
                 return out.toJSONString();
             }
 
+            // "login" method
             if (method.contentEquals("login")) {
-                String username;
+                
+                // get username
+                userName = "";
                 if (in.get("username") != null) {
-                    username = in.get("username").toString();
+                    userName = in.get("username").toString();
                 } else {
                     out.put("status", "400");
                     out.put("message", "Username is missing");
                     return out.toJSONString();
                 }
                 
+                // get password
                 String password;
                 if (in.get("password") != null) {
                     password = in.get("password").toString();
@@ -130,20 +136,49 @@ public class ClientHandler implements Runnable {
                     out.put("message", "Password is missing");
                     return out.toJSONString();
                 }
-
-                User user = dbHandler.readUser(username, 0);
+                
+                // get role
+                String role;
+                if (in.get("role") != null) {
+                    role = in.get("role").toString();
+                } else {
+                    out.put("status", "400");
+                    out.put("message", "Role not found");
+                    return out.toJSONString();
+                }
+                
+                // check is role a good one
+                if (!role.equalsIgnoreCase("admin") && !role.equalsIgnoreCase("student")) {
+                    out.put("status", "401");
+                    out.put("message", "Bad role for user " + userName);
+                    return out.toJSONString();
+                }
+                
+                // try to find a user within database
+                User user = dbHandler.readUserPer(userName, 0);
                 if (user != null) {
-                    String hashedDbPass = hash(user.getPassword());
-                    if (hashedDbPass.contentEquals(password)) {
-                        out.put("status", "200");
-                        out.put("message", user.getRole() + " " + username + " succesfully logged in");
+                    if (role.equalsIgnoreCase(user.getRole())) {
+                        // hash password from database to compare it to hashed password from client
+                        String hashedDbPass = hash(user.getPassword());
+                        // check does password match
+                        if (hashedDbPass.contentEquals(password)) {
+                            out.put("status", "200");
+                            out.put("message", user.getRole() + " " + userName + " succesfully logged in");
+
+                            JSONObject userIndex = dbHandler.readUserIndexPer(userName, "username");
+                            out.put("index", userIndex);
+                        } else {
+                            out.put("status", "401");
+                            out.put("message", "Bad password for user " + userName);
+                        }
                     } else {
                         out.put("status", "401");
-                        out.put("message", "Bad password for user " + username);
+                        out.put("message", "Bad role for user " + userName);
                     }
                 } else {
                     out.put("status", "404");
-                    out.put("message", "User " + username + " has not been found");
+                    out.put("message", "User " + userName + " has not been found");
+                    userName = "";
                 }
             } else {
                 out.put("status", "405");
@@ -166,7 +201,7 @@ public class ClientHandler implements Runnable {
             try {
                 msg = this.br.readLine();
             } catch (IOException ex) {
-                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Client \"" + userName + "\" disconnected");
                 break;
             }
             if (msg == null) {

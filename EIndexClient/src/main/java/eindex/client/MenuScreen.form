@@ -23,31 +23,78 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnSendRequest" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="591" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jFirstname" min="-2" pref="92" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jLastName" min="-2" pref="92" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jIndex" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
+                          <Component id="jJMBG" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jUsername" min="-2" pref="92" max="-2" attributes="0"/>
+                      <EmptySpace pref="333" max="32767" attributes="0"/>
+                      <Component id="SelectSubject" min="-2" pref="80" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jSelectSubject" min="-2" pref="155" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-              <Component id="btnSendRequest" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="355" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jUsername" min="-2" pref="27" max="-2" attributes="0"/>
+                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                      <Component id="SelectSubject" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jSelectSubject" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jFirstname" min="-2" pref="27" max="-2" attributes="0"/>
+                  <Component id="jLastName" min="-2" pref="27" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jIndex" min="-2" pref="27" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jJMBG" min="-2" pref="27" max="-2" attributes="0"/>
+              <EmptySpace pref="267" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="btnSendRequest">
+    <Component class="javax.swing.JLabel" name="jUsername">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jFirstname">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLastName">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jIndex">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jJMBG">
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jSelectSubject">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="SelectSubject">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Posalji zahtev"/>
+        <Property name="text" type="java.lang.String" value="Select Subject"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSendRequestActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>
