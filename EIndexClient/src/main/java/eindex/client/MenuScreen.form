@@ -118,27 +118,49 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="T1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jT1" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="T2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jT2" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="T1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jT1" min="-2" pref="40" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="Z1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jZ1" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="Z2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jZ2" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="Z1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jZ1" min="-2" pref="40" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Component id="T2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="218" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="Summary" max="32767" attributes="0"/>
+                              <Component id="Grade" min="-2" pref="49" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jT2" min="-2" pref="25" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="Z2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jZ2" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jSummary" min="-2" max="-2" attributes="0"/>
+                              <Component id="jGrade" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="264" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -170,7 +192,17 @@
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="174" max="32767" attributes="0"/>
+                  <EmptySpace pref="113" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jSummary" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Summary" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jGrade" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Grade" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -215,6 +247,26 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="Font fZ2 = jZ2.getFont();&#xd;&#xa;jZ2.setFont(new Font(fZ2.getName(), fZ2.getStyle() | Font.BOLD, 18));"/>
           </AuxValues>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jSummary">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jSummary.setEditable(false);&#xd;&#xa;Font fSummary = jSummary.getFont();&#xd;&#xa;jSummary.setFont(new Font(&#xd;&#xa;        jSummary.getName(),&#xd;&#xa;        fSummary.getStyle() | Font.BOLD,&#xd;&#xa;        18&#xd;&#xa;));"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jGrade">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jGrade.setEditable(false);&#xd;&#xa;Font fGrade = jGrade.getFont();&#xd;&#xa;jGrade.setFont(new Font(&#xd;&#xa;        jGrade.getName(),&#xd;&#xa;        fGrade.getStyle() | Font.BOLD,&#xd;&#xa;        18&#xd;&#xa;));"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="Grade">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ocena:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="Summary">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ukupno:"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
