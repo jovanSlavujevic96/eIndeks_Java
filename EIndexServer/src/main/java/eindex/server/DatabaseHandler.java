@@ -10,36 +10,39 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Jovan
  */
 public class DatabaseHandler {
-    private BufferedReader br;
-    final private static String usersFilename = "users.txt";
+    final private static String USERS_FILENAME = "users.txt";
     
-    public DatabaseHandler() throws FileNotFoundException {
-        try {
-            br = new BufferedReader(new FileReader("./data/" + usersFilename));
-            br.mark(0);
-        } catch (IOException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public DatabaseHandler() {}
+    
+    static private BufferedReader createBr() throws FileNotFoundException {
+        return new BufferedReader(new FileReader("./data/" + USERS_FILENAME));
     }
     
     public Collection<User> readAllUsers() throws IOException {
+        BufferedReader br = createBr();
         Collection<User> users = new ArrayList<>();
         String line;
-        br.mark(0);
-        br.reset();
-        while ((line = br.readLine())!= null) {
+        while (true) {
+            try {
+                line = br.readLine();
+            } catch (IOException ex) {
+                br.close();
+                throw ex;
+            }
+            if (line == null) {
+                break;
+            }
             String[] userInfo = line.split(";");
             if (userInfo.length == 3) {
                 users.add(new User(userInfo[0], userInfo[1], userInfo[2]));
             } else {
+                br.close();
                 throw new IOException("There is missing/too much user info");
             }
         }
@@ -47,29 +50,28 @@ public class DatabaseHandler {
     }
     
     public User readUser(String data, int data_index) throws IOException {
+        BufferedReader br = createBr();
         String line;
-        br.mark(0);
-        br.reset();
-        while ((line = br.readLine())!= null) {
+        while (true) {
+            try {
+                line = br.readLine();
+            } catch (IOException ex) {
+                br.close();
+                throw ex;
+            }
+            if (line == null) {
+                break;
+            }
             String[] userInfo = line.split(";");
             if (userInfo.length == 3) {
-                if (userInfo[data_index].equalsIgnoreCase(data)) {
+                if (userInfo[data_index].contentEquals(data)) {
                     return new User(userInfo[0], userInfo[1], userInfo[2]);
                 }
             } else {
+                br.close();
                 throw new IOException("There is missing/too much user info");
             }
         }
         return null;
     }
-    
-    @Override
-    protected void finalize()
-    {  
-        try { 
-            br.close();
-        } catch (IOException ex) {
-            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }  
 }

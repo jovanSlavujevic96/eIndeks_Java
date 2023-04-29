@@ -9,20 +9,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
 import java.text.NumberFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.swing.ImageIcon;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
@@ -30,7 +19,11 @@ import javax.swing.JPasswordField;
 import javax.swing.text.NumberFormatter;
 import org.apache.commons.validator.routines.InetAddressValidator;
 import org.json.simple.JSONObject;
-
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import javax.xml.bind.DatatypeConverter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -64,35 +57,17 @@ public class StartupScreen extends javax.swing.JFrame {
         this.userName = username;
     }
     
-    private String encrypt(String inputStr) {
+    private String hash(String inputStr) {
         try {
-            //Creating KeyPair generator object
-            KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
-
-            //Initializing the key pair generator
-            keyPairGen.initialize(2048);
-
-            //Generating the pair of keys
-            KeyPair pair = keyPairGen.generateKeyPair();      
-
-            //Creating a Cipher object
-            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-
-            //Initializing a Cipher object
-            cipher.init(Cipher.ENCRYPT_MODE, pair.getPublic());
-
-            //Adding data to the cipher
-            byte[] input = "Welcome to Tutorialspoint".getBytes();	  
-            cipher.update(input);
-
-            //encrypting the data
-            byte[] cipherText = cipher.doFinal();
-            return new String(cipherText, "UTF8");
-        } catch (NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException | InvalidKeyException | UnsupportedEncodingException | NoSuchPaddingException ex) {
-            // encryption failed -> proceed with regular password
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(inputStr.getBytes());
+            byte[] digest = md.digest();
+            return DatatypeConverter.printHexBinary(digest).toUpperCase();
+        } catch (NoSuchAlgorithmException ex) {
+            // cannot occur -> MD5 exists
             Logger.getLogger(StartupScreen.class.getName()).log(Level.SEVERE, null, ex);
-            return inputStr;
         }
+        return "";
     }
     
     /**
@@ -286,8 +261,8 @@ public class StartupScreen extends javax.swing.JFrame {
             );
             return;
         }
-        // password encryption
-        password = encrypt(password);
+        // password hash
+        password = hash(password);
         
         // packing userinfo to JSON
         JSONObject obj = new JSONObject();

@@ -14,6 +14,7 @@ import java.net.Socket;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.function.Consumer;
 import java.util.logging.Level;
@@ -22,6 +23,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.xml.bind.DatatypeConverter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -67,35 +69,17 @@ public class ClientHandler implements Runnable {
         return (int)Math.floor(Math.random()*(max-min+1) + min);
     }
     
-    private String encrypt(String inputStr) {
+    private String hash(String inputStr) {
         try {
-            //Creating KeyPair generator object
-            KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
-
-            //Initializing the key pair generator
-            keyPairGen.initialize(2048);
-
-            //Generating the pair of keys
-            KeyPair pair = keyPairGen.generateKeyPair();      
-
-            //Creating a Cipher object
-            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-
-            //Initializing a Cipher object
-            cipher.init(Cipher.ENCRYPT_MODE, pair.getPublic());
-
-            //Adding data to the cipher
-            byte[] input = "Welcome to Tutorialspoint".getBytes();	  
-            cipher.update(input);
-
-            //encrypting the data
-            byte[] cipherText = cipher.doFinal();
-            return new String(cipherText, "UTF8");
-        } catch (NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException | InvalidKeyException | UnsupportedEncodingException | NoSuchPaddingException ex) {
-            // encryption failed -> proceed with regular password
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(inputStr.getBytes());
+            byte[] digest = md.digest();
+            return DatatypeConverter.printHexBinary(digest).toUpperCase();
+        } catch (NoSuchAlgorithmException ex) {
+            // cannot occur -> MD5 exists
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-            return inputStr;
         }
+        return "";
     }
     
     public ClientHandler(Socket socket, Consumer<ClientHandler> logoutMethod) throws IOException {
@@ -147,10 +131,10 @@ public class ClientHandler implements Runnable {
                     return out.toJSONString();
                 }
 
-                User user = dbHandler.readUser(username, 1);
+                User user = dbHandler.readUser(username, 0);
                 if (user != null) {
-                    String encryptDbPass = encrypt(user.getPassword());
-                    if (encryptDbPass.contentEquals(password)) {
+                    String hashedDbPass = hash(user.getPassword());
+                    if (hashedDbPass.contentEquals(password)) {
                         out.put("status", "200");
                         out.put("message", user.getRole() + " " + username + " succesfully logged in");
                     } else {

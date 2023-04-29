@@ -80,14 +80,12 @@ public class Server {
     
     public static void main(String[] args) {
         Server server;
-        DatabaseHandler db;
+        DatabaseHandler db = new DatabaseHandler();
         
         final int port = 5050;
         
         try {
-            db = new DatabaseHandler();
             Collection<User> users = db.readAllUsers();
-            
             for (User user : users) {
                 System.out.println(
                         "User name: " + user.getUsername() + " ; " +
@@ -99,6 +97,7 @@ public class Server {
             server = new Server(port);
             server.bindDbHandler(db);
             server.acceptClients();
+
         } catch (IOException ex) {
             System.out.println("StickerServer create failed: " + ex.toString());
         }
