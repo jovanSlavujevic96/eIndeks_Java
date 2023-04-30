@@ -4,6 +4,8 @@
  */
 package eindex.client;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,6 +26,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.xml.bind.DatatypeConverter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.WindowConstants;
 
 /**
  *
@@ -49,12 +52,35 @@ public class StartupScreen extends javax.swing.JFrame {
         return pw;
     }
     
+    public Socket getSocket() {
+        return socket;
+    }
+    
     public String getUserName() {
         return userName;
     }
     
     public void setUsername(String username) {
         this.userName = username;
+    }
+    
+    public void closeSocket() {
+        try {
+            if (socket != null) {
+                socket.close();
+                socket = null;
+            }
+            if (pw != null) {
+                pw.close();
+                pw = null;
+            }
+            if (br != null) {
+                br.close();
+                br = null;
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(StartupScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private String hash(String inputStr) {
@@ -112,17 +138,40 @@ public class StartupScreen extends javax.swing.JFrame {
         }
     }
     
+    public void handleReopenMenuAssets(boolean enable) {
+        if (enable) {
+            bReopenMenu.setEnabled(true);
+            bReopenMenu.setVisible(true);
+        } else {
+            bReopenMenu.setEnabled(false);
+            bReopenMenu.setVisible(false);
+        }
+    }
+    
+    public void reopenMenuScreen() {
+        // Create and display the form
+        java.awt.EventQueue.invokeLater(() -> {
+            StudentMenuScreen menu = new StudentMenuScreen(this, rmfs.getJIndex());
+            rmfs.setMenu(menu);
+            
+            menu.setVisible(true);
+            menu.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+            menu.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        menu.closingWindowAction();
+                   }
+                });
+
+            this.handleLoginAssets(false);
+            this.setEnabled(false);
+            this.handleReopenMenuAssets(false);
+        });
+    }
+    
     public StartupScreen() {
         super("Pocetna stranica");
         initComponents();
-        
-        NumberFormat format = NumberFormat.getInstance();
-        NumberFormatter formatter = new NumberFormatter(format);
-        formatter.setValueClass(Integer.class);
-        formatter.setMinimum(0);
-        formatter.setMaximum(Integer.MAX_VALUE);
-        formatter.setAllowsInvalid(false);
-        formatter.setCommitsOnValidEdit(true);
     }
 
     /**
@@ -157,6 +206,8 @@ public class StartupScreen extends javax.swing.JFrame {
         bShowPass.setContentAreaFilled(false);
         jSelectRole = new javax.swing.JComboBox<>();
         jSelectRole.setEnabled(false);
+        bReopenMenu = new javax.swing.JButton();
+        handleReopenMenuAssets(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -191,6 +242,13 @@ public class StartupScreen extends javax.swing.JFrame {
 
         jSelectRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Student", "Admin" }));
 
+        bReopenMenu.setText("Otvori Meni");
+        bReopenMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bReopenMenuActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -198,22 +256,25 @@ public class StartupScreen extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jInputIp, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSelectRole, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jInputUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jInputIp, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSelectRole, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jInputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bShowPass, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(bLogin))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jInputPort, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnConnect)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jInputPort, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnConnect))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jInputUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jInputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bShowPass, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(bLogin))))
+                    .addComponent(bReopenMenu))
                 .addContainerGap(109, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -233,7 +294,9 @@ public class StartupScreen extends javax.swing.JFrame {
                             .addComponent(jInputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(bShowPass, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(291, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 244, Short.MAX_VALUE)
+                .addComponent(bReopenMenu)
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -325,6 +388,11 @@ public class StartupScreen extends javax.swing.JFrame {
             ((JPasswordField)jInputPassword).setEchoChar('*');
         }
     }//GEN-LAST:event_bShowPassActionPerformed
+
+    private void bReopenMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bReopenMenuActionPerformed
+        // TODO add your handling code here:
+        reopenMenuScreen();
+    }//GEN-LAST:event_bReopenMenuActionPerformed
         
     /**
      * @param args the command line arguments
@@ -364,6 +432,7 @@ public class StartupScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bLogin;
+    private javax.swing.JButton bReopenMenu;
     private javax.swing.JButton bShowPass;
     private javax.swing.JButton btnConnect;
     private javax.swing.JTextField jInputIp;

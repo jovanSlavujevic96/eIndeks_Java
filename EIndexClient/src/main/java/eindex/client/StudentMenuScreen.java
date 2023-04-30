@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.io.PrintWriter;
+import java.net.Socket;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -49,6 +50,21 @@ public class StudentMenuScreen extends javax.swing.JFrame {
         initComponents();
         
         setSubjects((JSONArray)jIndex.get("subjects"));
+    }
+    
+    public void closingWindowAction() {
+        parent.setEnabled(true);
+        Socket parentSoc = parent.getSocket();
+        if (parentSoc == null || !parentSoc.isConnected()) {
+            parent.handleConnectAssets(true);
+            parent.handleReopenMenuAssets(false);
+        } else {
+            parent.handleConnectAssets(false);
+            parent.handleReopenMenuAssets(true);
+        }
+        parent.toFront();
+        parent.requestFocus();
+        this.dispose();
     }
     
     void requestUpdateGrades() {

@@ -5,6 +5,8 @@
  */
 package eindex.client;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +18,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -27,12 +30,27 @@ public class MessageReceiver implements Runnable {
     final private PrintWriter pw;
     private StudentMenuScreen menu;
     private JFrame focusedScreen;
+    private JSONObject jIndex;
     
     public MessageReceiver(StartupScreen parent) {
         this.parent = parent;
         this.br = parent.getBr();
         this.pw = parent.getPw();
         focusedScreen = parent;
+    }
+    
+    public StudentMenuScreen getMenu() {
+        return menu;
+    }
+    public void setMenu(StudentMenuScreen menu) {
+        this.menu = menu;
+    }
+    
+    public JSONObject getJIndex() {
+        return jIndex;
+    }
+    public void setJIndex(JSONObject jIndex) {
+        this.jIndex = jIndex;
     }
     
     public static <T, U> List<U> convertStringListToIntList(List<T> listOfString, Function<T, U> function)
@@ -76,16 +94,8 @@ public class MessageReceiver implements Runnable {
             if (status.charAt(0) == '2') {
                 if (method.equalsIgnoreCase("login")) {
                     if (role.equalsIgnoreCase("student")) {
-                        JSONObject jIndex = (JSONObject)in.get("index");
-
-                        // Create and display the form
-                        java.awt.EventQueue.invokeLater(() -> {
-                            menu = new StudentMenuScreen(parent, jIndex);
-                            menu.setVisible(true);
-
-                            parent.handleLoginAssets(false);
-                            parent.setEnabled(false);
-                        });
+                        jIndex = (JSONObject)in.get("index");
+                        parent.reopenMenuScreen();
                     } else if (role.equalsIgnoreCase("admin")) {
 
                     }
@@ -131,12 +141,11 @@ public class MessageReceiver implements Runnable {
             "Pukla veza",
             JOptionPane.ERROR_MESSAGE
         );
+        parent.closeSocket();
         focusedScreen = parent;
-        parent.setEnabled(true);
-        parent.handleConnectAssets(true);
-        menu.dispose();
-        menu = null;
-        parent.toFront();
-        parent.requestFocus();
+        if (menu != null) {
+            menu.closingWindowAction();
+            menu = null;
+        }
     }
 }
