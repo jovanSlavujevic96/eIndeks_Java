@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="bUpdateAdminData" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jUsername" min="-2" pref="92" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="133" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jFullname" alignment="0" min="-2" pref="207" max="-2" attributes="0"/>
+                                  <Component id="jJmbg" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Component id="jTabbedPane1" min="-2" pref="452" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jRole" min="-2" pref="92" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jRole" min="-2" pref="27" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="jUsername" min="-2" pref="27" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jFullname" min="-2" pref="27" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jJmbg" min="-2" pref="27" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="jTabbedPane1" min="-2" pref="303" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                      <Component id="bUpdateAdminData" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace pref="9" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="jRole">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jRole.setText(role);&#xd;&#xa;jRole.setToolTipText(&quot;Rola&quot;);&#xd;&#xa;Font fRole = jRole.getFont();&#xd;&#xa;jRole.setFont(fRole.deriveFont(fRole.getStyle() | Font.BOLD));"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jUsername">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jUsername.setText(userName);&#xd;&#xa;jUsername.setToolTipText(&quot;Korisnicko ime&quot;);&#xd;&#xa;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jFullname">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jFullname.setText(firstName + &quot; &quot; + lastName);&#xd;&#xa;jFullname.setToolTipText(&quot;Puno ime&quot;);&#xd;&#xa;Font fFullname = jFullname.getFont();&#xd;&#xa;jFullname.setFont(fFullname.deriveFont(fFullname.getStyle() | Font.BOLD));"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jJmbg">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jJmbg.setText(jmbg);&#xd;&#xa;jJmbg.setToolTipText(&quot;JMBG&quot;);&#xd;&#xa;Font fJmbg = jJmbg.getFont();&#xd;&#xa;jJmbg.setFont(fJmbg.deriveFont(fJmbg.getStyle() | Font.BOLD));"/>
+      </AuxValues>
+    </Component>
+    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+            <BevelBorder/>
+          </Border>
+        </Property>
+      </Properties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+      <SubComponents>
+        <Container class="javax.swing.JPanel" name="jStudentGradesPanel">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jStudentGradesPanel.setVisible(false);&#xd;&#xa;"/>
+          </AuxValues>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Student">
+                <Property name="tabTitle" type="java.lang.String" value="Student"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="SelectStudent" min="-2" pref="105" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="SelectSubject" min="-2" pref="171" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jSelectStudent" min="-2" pref="170" max="-2" attributes="0"/>
+                                  <Component id="jStudentUsername" min="-2" pref="120" max="-2" attributes="0"/>
+                                  <Component id="jStudentIndex" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
+                                  <Component id="jStudentFullname" min="-2" pref="148" max="-2" attributes="0"/>
+                                  <Component id="jStudentJmbg" min="-2" pref="148" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="85" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="T1" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                                              <Component id="jT1" min="-2" pref="40" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="T2" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jT2" min="-2" pref="40" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="Z2" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jZ2" min="-2" pref="40" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="Z1" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jZ1" min="-2" pref="40" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <Component id="jSelectStudentSubject" min="-2" pref="171" max="-2" attributes="0"/>
+                                  <Component id="bSave" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="Summary" max="32767" attributes="0"/>
+                                          <Component id="Grade" min="-2" pref="49" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jSummary" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jGrade" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="SelectStudent" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="SelectSubject" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jSelectStudent" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jSelectStudentSubject" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="T1" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="jT1" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="Z1" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="jZ1" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jT2" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="T2" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="Z2" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="jZ2" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jSummary" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="Summary" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jGrade" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="Grade" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jStudentUsername" min="-2" pref="29" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jStudentFullname" min="-2" pref="29" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jStudentJmbg" min="-2" pref="29" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jStudentIndex" min="-2" pref="29" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="bSave" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="14" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="SelectStudent">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Izaberite Studenta"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="jSelectStudent">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jStudentUsername">
+            </Component>
+            <Component class="javax.swing.JLabel" name="jStudentFullname">
+            </Component>
+            <Component class="javax.swing.JLabel" name="jStudentIndex">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jStudentIndex.setToolTipText(&quot;Indeks&quot;);&#xd;&#xa;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jStudentJmbg">
+            </Component>
+            <Component class="javax.swing.JLabel" name="SelectSubject">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Izaberite predmet"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="jSelectStudentSubject">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="T1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="T1:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="T2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="T2:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="Z1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Z1:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="Z2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Z2:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jT1">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJT1);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jT1.setToolTipText(&quot;Unesite broj poena od 0-25&quot;);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJT1 = NumberFormat.getInstance();&#xa;formatJT1.setGroupingUsed(false);&#xa;NumberFormatter formatterJT1 = new NumberFormatter(formatJT1);&#xa;formatterJT1.setValueClass(Integer.class);&#xa;formatterJT1.setMinimum(0);&#xa;formatterJT1.setMaximum(25);&#xa;formatterJT1.setAllowsInvalid(false);&#xa;formatterJT1.setCommitsOnValidEdit(true);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fT1 = jT1.getFont();&#xd;&#xa;jT1.setFont(new Font(&#xd;&#xa;        jT1.getName(),&#xd;&#xa;        fT1.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jT2">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJT2);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jT2.setToolTipText(&quot;Unesite broj poena od 0-25&quot;);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJT2 = NumberFormat.getInstance();&#xa;formatJT2.setGroupingUsed(false);&#xa;NumberFormatter formatterJT2 = new NumberFormatter(formatJT2);&#xa;formatterJT2.setValueClass(Integer.class);&#xa;formatterJT2.setMinimum(0);&#xa;formatterJT2.setMaximum(25);&#xa;formatterJT2.setAllowsInvalid(false);&#xa;formatterJT2.setCommitsOnValidEdit(true);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fT2 = jT2.getFont();&#xd;&#xa;jT2.setFont(new Font(&#xd;&#xa;        jT2.getName(),&#xd;&#xa;        fT2.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jZ1">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJZ1);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jZ1.setToolTipText(&quot;Unesite broj poena od 0-25&quot;);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJZ1 = NumberFormat.getInstance();&#xa;formatJZ1.setGroupingUsed(false);&#xa;NumberFormatter formatterJZ1 = new NumberFormatter(formatJZ1);&#xa;formatterJZ1.setValueClass(Integer.class);&#xa;formatterJZ1.setMinimum(0);&#xa;formatterJZ1.setMaximum(25);&#xa;formatterJZ1.setAllowsInvalid(false);&#xa;formatterJZ1.setCommitsOnValidEdit(true);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fZ1 = jZ1.getFont();&#xd;&#xa;jZ1.setFont(new Font(&#xd;&#xa;        jZ1.getName(),&#xd;&#xa;        fZ1.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jZ2">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJZ2);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jZ2.setToolTipText(&quot;Unesite broj poena od 0-25&quot;);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJZ2 = NumberFormat.getInstance();&#xa;formatJZ2.setGroupingUsed(false);&#xa;NumberFormatter formatterJZ2 = new NumberFormatter(formatJZ2);&#xa;formatterJZ2.setValueClass(Integer.class);&#xa;formatterJZ2.setMinimum(0);&#xa;formatterJZ2.setMaximum(25);&#xa;formatterJZ2.setAllowsInvalid(false);&#xa;formatterJZ2.setCommitsOnValidEdit(true);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fZ2 = jZ2.getFont();&#xd;&#xa;jZ2.setFont(new Font(&#xd;&#xa;        jZ2.getName(),&#xd;&#xa;        fZ2.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jSummary">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jSummary.setEditable(false);&#xd;&#xa;Font fSummary = jSummary.getFont();&#xd;&#xa;jSummary.setFont(new Font(&#xd;&#xa;        jSummary.getName(),&#xd;&#xa;        fSummary.getStyle() | Font.BOLD,&#xd;&#xa;        18&#xd;&#xa;));"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jGrade">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jGrade.setEditable(false);&#xd;&#xa;Font fGrade = jGrade.getFont();&#xd;&#xa;jGrade.setFont(new Font(&#xd;&#xa;        jGrade.getName(),&#xd;&#xa;        fGrade.getStyle() | Font.BOLD,&#xd;&#xa;        18&#xd;&#xa;));"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="Grade">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Ocena:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="Summary">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Ukupno:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="bSave">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Sacuvaj"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="bSave.setEnabled(false);&#xd;&#xa;"/>
+              </AuxValues>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jAdminPanel">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Admin">
+                <Property name="tabTitle" type="java.lang.String" value="Admin"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="SelectAdmin" min="-2" pref="105" max="-2" attributes="0"/>
+                                  <EmptySpace min="65" pref="65" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                  <Component id="jSelectAdmin" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                                  <Component id="jAdminUsername" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="jAdminFullname" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
+                          <Component id="jAdminJmbg" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="272" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="SelectAdmin" min="-2" pref="25" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jSelectAdmin" min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jAdminUsername" min="-2" pref="29" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jAdminFullname" min="-2" pref="29" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jAdminJmbg" min="-2" pref="29" max="-2" attributes="0"/>
+                      <EmptySpace pref="84" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="SelectAdmin">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Izaberite Admina"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="jSelectAdmin">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jAdminJmbg">
+            </Component>
+            <Component class="javax.swing.JLabel" name="jAdminFullname">
+            </Component>
+            <Component class="javax.swing.JLabel" name="jAdminUsername">
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jNewUserPanel">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Novi Korisnik">
+                <Property name="tabTitle" type="java.lang.String" value="Novi Korisnik"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="NewFirstName" alignment="0" max="32767" attributes="0"/>
+                          <Component id="NewJmbg" alignment="0" max="32767" attributes="0"/>
+                          <Component id="NewLastName" alignment="0" pref="54" max="32767" attributes="0"/>
+                          <Component id="NewIndex" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jNewJmbg" min="-2" pref="114" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="NewPassword" min="-2" pref="89" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jNewIndex" min="-2" pref="114" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="RepeatNewPassword" min="-2" pref="98" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jNewPassword" max="32767" attributes="0"/>
+                                  <Component id="jRepeatNewPassword" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jNewFirstName" min="-2" pref="114" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="NewUserName" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jNewLastName" min="-2" pref="114" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="Role" min="-2" pref="101" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jSelectNewRole" pref="120" max="32767" attributes="0"/>
+                                  <Component id="jNewUserName" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="bNewUserSave" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="26" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jNewFirstName" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="NewFirstName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="NewUserName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jNewUserName" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jNewLastName" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                              <Component id="NewLastName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                              <Component id="jSelectNewRole" min="-2" max="-2" attributes="0"/>
+                              <Component id="Role" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jNewJmbg" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                                  <Component id="NewJmbg" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="NewPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jNewIndex" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                                  <Component id="NewIndex" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="RepeatNewPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="jNewPassword" min="-2" pref="22" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jRepeatNewPassword" min="-2" pref="22" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="bNewUserSave" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="102" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="NewFirstName">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Ime:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="NewLastName">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Prezime:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="NewJmbg">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="JMBG:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="NewIndex">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Indeks:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jNewFirstName">
+            </Component>
+            <Component class="javax.swing.JTextField" name="jNewLastName">
+            </Component>
+            <Component class="javax.swing.JTextField" name="jNewJmbg">
+            </Component>
+            <Component class="javax.swing.JTextField" name="jNewIndex">
+            </Component>
+            <Component class="javax.swing.JLabel" name="NewUserName">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Korisnicko ime:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="Role">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Rola:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="NewPassword">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Lozinka:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="RepeatNewPassword">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Ponovite lozinku:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jNewUserName">
+            </Component>
+            <Component class="javax.swing.JComboBox" name="jSelectNewRole">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jNewPassword">
+            </Component>
+            <Component class="javax.swing.JTextField" name="jRepeatNewPassword">
+            </Component>
+            <Component class="javax.swing.JButton" name="bNewUserSave">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Sacuvaj"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="bSave.setEnabled(false);&#xd;&#xa;"/>
+              </AuxValues>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jNewSubjectPanel">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Novi Predmet">
+                <Property name="tabTitle" type="java.lang.String" value="Novi Predmet"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="SelectStudent1" min="-2" pref="105" max="-2" attributes="0"/>
+                                      <EmptySpace min="65" pref="65" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="jSelectStudent1" alignment="1" min="-2" pref="170" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jInputNewSubject" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jLabel1" min="-2" pref="132" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="54" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jStudentUsername1" min="-2" pref="120" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="bNewSubjectSave" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jStudentIndex1" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
+                                  <Component id="jStudentFullname1" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
+                                  <Component id="jStudentJmbg1" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="SelectStudent1" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="jLabel1" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jSelectStudent1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jInputNewSubject" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jStudentUsername1" min="-2" pref="29" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                              <Component id="bNewSubjectSave" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jStudentFullname1" min="-2" pref="29" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jStudentJmbg1" min="-2" pref="29" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jStudentIndex1" min="-2" pref="29" max="-2" attributes="0"/>
+                      <EmptySpace pref="49" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="SelectStudent1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Izaberite Studenta"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="jSelectStudent1">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jStudentUsername1">
+            </Component>
+            <Component class="javax.swing.JLabel" name="jStudentFullname1">
+            </Component>
+            <Component class="javax.swing.JLabel" name="jStudentJmbg1">
+            </Component>
+            <Component class="javax.swing.JLabel" name="jStudentIndex1">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jStudentIndex.setToolTipText(&quot;Indeks&quot;);&#xd;&#xa;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Unesite novi predmet"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jInputNewSubject">
+            </Component>
+            <Component class="javax.swing.JButton" name="bNewSubjectSave">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Sacuvaj"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="bSave.setEnabled(false);&#xd;&#xa;"/>
+              </AuxValues>
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="bUpdateAdminData">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Azuriranje podataka"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bUpdateAdminDataActionPerformed"/>
+      </Events>
+    </Component>
+  </SubComponents>
+</Form>

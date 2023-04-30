@@ -49,13 +49,6 @@ public class MessageReceiver implements Runnable {
         this.jUserData = jUserData;
     }
     
-    public static <T, U> List<U> convertStringListToIntList(List<T> listOfString, Function<T, U> function)
-    {
-        return listOfString.stream()
-            .map(function)
-            .collect(Collectors.toList());
-    }
-    
     private String processMessage(String msg) {
         JSONParser parser = new JSONParser();
         try {
@@ -69,7 +62,8 @@ public class MessageReceiver implements Runnable {
                     parent : (method.equalsIgnoreCase("refreshGrades")) ?
                     menu : null;
             
-            if (status.contentEquals("") || message.contentEquals("") || method.contentEquals("") ||
+            if (status.contentEquals("") || message.contentEquals("") ||
+               (method.contentEquals("") && (status.charAt(0) == '2')) ||
                (method.equalsIgnoreCase("login") && role.contentEquals(""))) {
                 JOptionPane.showMessageDialog(
                     focusedScreen,

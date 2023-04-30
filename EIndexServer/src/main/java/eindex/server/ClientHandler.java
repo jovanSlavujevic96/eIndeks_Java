@@ -175,7 +175,7 @@ public class ClientHandler implements Runnable {
                     out.put("message", "Korisnik " + userName + " nije pronadjen");
                     userName = "";
                 }
-            } else if (method.equalsIgnoreCase("refreshGrades")) { // refreshGrade method
+            } else if (method.equalsIgnoreCase("refresh")) { // refreshGrade method
 
                 // get username
                 userName = "";
