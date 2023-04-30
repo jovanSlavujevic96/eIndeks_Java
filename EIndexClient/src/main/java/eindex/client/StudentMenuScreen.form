@@ -85,17 +85,17 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jUsername">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jUsername.setText(userName);&#xd;&#xa;jUsername.setToolTipText(&quot;korisnicko ime&quot;);&#xd;&#xa;"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jUsername.setText(userName);&#xd;&#xa;jUsername.setToolTipText(&quot;Korisnicko ime&quot;);&#xd;&#xa;"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jFullname">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jFullname.setText(firstName + &quot; &quot; + lastName);&#xd;&#xa;jFullname.setToolTipText(&quot;puno ime&quot;);&#xd;&#xa;Font fFullname = jFullname.getFont();&#xd;&#xa;jFullname.setFont(fFullname.deriveFont(fFullname.getStyle() | Font.BOLD));"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jFullname.setText(firstName + &quot; &quot; + lastName);&#xd;&#xa;jFullname.setToolTipText(&quot;Puno ime&quot;);&#xd;&#xa;Font fFullname = jFullname.getFont();&#xd;&#xa;jFullname.setFont(fFullname.deriveFont(fFullname.getStyle() | Font.BOLD));"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jIndex">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jIndex.setText(index);&#xd;&#xa;jIndex.setToolTipText(&quot;index&quot;);&#xd;&#xa;"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jIndex.setText(index);&#xd;&#xa;jIndex.setToolTipText(&quot;Indeks&quot;);&#xd;&#xa;"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jJmbg">

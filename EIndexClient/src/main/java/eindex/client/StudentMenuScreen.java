@@ -34,13 +34,6 @@ public class StudentMenuScreen extends MenuScreen {
         setSubjects((JSONArray)jIndex.get("subjects"));
     }
     
-    void requestUpdateGrades() {
-        JSONObject req = new JSONObject();
-        req.put("method", "refreshGrades");
-        req.put("username", userName);
-        pw.println(req);
-    }
-    
     @Override
     final public void updateData(Object data) {
         setSubjects((JSONArray)data);
@@ -123,15 +116,15 @@ public class StudentMenuScreen extends MenuScreen {
 
         jUsername = new javax.swing.JLabel();
         jUsername.setText(userName);
-        jUsername.setToolTipText("korisnicko ime");
+        jUsername.setToolTipText("Korisnicko ime");
         jFullname = new javax.swing.JLabel();
         jFullname.setText(firstName + " " + lastName);
-        jFullname.setToolTipText("puno ime");
+        jFullname.setToolTipText("Puno ime");
         Font fFullname = jFullname.getFont();
         jFullname.setFont(fFullname.deriveFont(fFullname.getStyle() | Font.BOLD));
         jIndex = new javax.swing.JLabel();
         jIndex.setText(index);
-        jIndex.setToolTipText("index");
+        jIndex.setToolTipText("Indeks");
         jJmbg = new javax.swing.JLabel();
         jJmbg.setText(jmbg);
         jJmbg.setToolTipText("JMBG");
@@ -336,7 +329,7 @@ public class StudentMenuScreen extends MenuScreen {
 
     private void jUpdateGradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jUpdateGradesActionPerformed
         // TODO add your handling code here:
-        requestUpdateGrades();
+        requestRefreshData();
     }//GEN-LAST:event_jUpdateGradesActionPerformed
 
     

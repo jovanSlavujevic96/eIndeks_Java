@@ -5,8 +5,6 @@
 package eindex.client;
 
 import java.io.PrintWriter;
-import java.net.Socket;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -49,6 +47,13 @@ public abstract class MenuScreen extends javax.swing.JFrame {
         parent.toFront();
         parent.requestFocus();
         this.dispose();
+    }
+    
+    final public void requestRefreshData() {
+        JSONObject req = new JSONObject();
+        req.put("method", "refresh");
+        req.put("username", userName);
+        pw.println(req);
     }
     
     final public String getRole() {
