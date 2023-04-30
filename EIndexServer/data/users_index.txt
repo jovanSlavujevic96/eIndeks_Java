@@ -1,5 +1,6 @@
 [
 	{
+		"role" : "student",
 		"username" : "btodorovic",
 		"first name": "Bogdan",
 		"last name" : "Todorovic",
@@ -43,5 +44,12 @@
 			},
 		],
 	},
+	{
+		"role" : "admin",
+		"username" : "pteodorovic",
+		"first name" : "Predrag",
+		"last name" : "Teodorovic",
+		"jmbg" : "0506984004786",
+	}
 ]
 			

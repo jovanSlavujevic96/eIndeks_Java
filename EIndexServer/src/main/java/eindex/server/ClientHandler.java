@@ -159,8 +159,22 @@ public class ClientHandler implements Runnable {
                             out.put("method", "login");
 
                             if (role.equalsIgnoreCase("student")) {
-                                JSONObject userIndex = dbHandler.readUserIndexPer(userName, "username");
-                                out.put("index", userIndex);
+                                JSONObject studentInfo = dbHandler.readUserIndexPer(userName, "username");
+                                out.put("data", studentInfo);
+                            } else if (role.equalsIgnoreCase("admin")) {
+                                JSONArray usersInfo = dbHandler.readAllUserIndex();
+
+                                // find admin user which requested login and remove him from JSON Array
+                                JSONObject jUserInfo = null;
+                                for (Object userInfo : usersInfo) {
+                                    jUserInfo = (JSONObject)userInfo;
+                                    if (jUserInfo.get("username").toString().equalsIgnoreCase(userName)) {
+                                        usersInfo.remove(jUserInfo);
+                                        jUserInfo.put("users", usersInfo);
+                                        break;
+                                    }
+                                }
+                                out.put("data", jUserInfo);
                             }
                         } else {
                             out.put("status", "401");

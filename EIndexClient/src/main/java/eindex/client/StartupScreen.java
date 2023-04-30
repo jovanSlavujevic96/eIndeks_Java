@@ -149,7 +149,7 @@ public class StartupScreen extends javax.swing.JFrame {
             if (role.equalsIgnoreCase("student")) {
                 menu = new StudentMenuScreen(this, rmfs.getJUserData());
             } else if (role.equalsIgnoreCase("admin")) {
-                return; // for now
+                menu = new AdminMenuScreen(this, rmfs.getJUserData());
             } else {
                 JOptionPane.showMessageDialog(
                     this,

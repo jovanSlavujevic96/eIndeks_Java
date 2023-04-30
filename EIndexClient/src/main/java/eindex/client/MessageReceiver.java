@@ -62,8 +62,8 @@ public class MessageReceiver implements Runnable {
                     parent : (method.equalsIgnoreCase("refreshGrades")) ?
                     menu : null;
             
-            if (status.contentEquals("") || message.contentEquals("") ||
-               (method.contentEquals("") && (status.charAt(0) == '2')) ||
+            if (status.contentEquals("") || message.contentEquals("") ||    // there always has to be status and message
+               (method.contentEquals("") && (status.charAt(0) == '2')) || // if status code is 20X method must exist
                (method.equalsIgnoreCase("login") && role.contentEquals(""))) {
                 JOptionPane.showMessageDialog(
                     focusedScreen,
@@ -83,18 +83,14 @@ public class MessageReceiver implements Runnable {
             // check if status is OK
             if (status.charAt(0) == '2') {
                 if (method.equalsIgnoreCase("login")) {
-                    if (role.equalsIgnoreCase("student")) {
-                        jUserData = (JSONObject)in.get("index");
-                        jUserData.put("role", "student");
+                    if (role.equalsIgnoreCase("student") || role.equalsIgnoreCase("admin")) {
+                        jUserData = (JSONObject)in.get("data");
                         parent.reopenMenuScreen();
-                    } else if (role.equalsIgnoreCase("admin")) {
-
                     }
-                } else if (method.equalsIgnoreCase("refreshGrades")) {
-                    if (role.equalsIgnoreCase("student") &&
-                            menu.getRole().equalsIgnoreCase("student")) {
+                } else if (method.equalsIgnoreCase("refresh")) {
+                    if (role.equalsIgnoreCase("student") && menu.getRole().equalsIgnoreCase("student")) {
                         if (in.get("subjects") instanceof JSONArray jSubjects) {
-                                menu.updateData(jSubjects);
+                            menu.updateData(jSubjects);
                         }
                     }
                 }
