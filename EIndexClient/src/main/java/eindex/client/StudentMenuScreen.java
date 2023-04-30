@@ -5,10 +5,7 @@
 package eindex.client;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.io.PrintWriter;
-import java.net.Socket;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -16,55 +13,25 @@ import org.json.simple.JSONObject;
  *
  * @author Jovan
  */
-public class StudentMenuScreen extends javax.swing.JFrame {
+public class StudentMenuScreen extends MenuScreen {
 
-    final private StartupScreen parent;
-    final private PrintWriter pw;
-    
-    private String userName;
-    private String firstName;
-    private String lastName;
-    private String index;
-    private String jmbg;
+    final private String index;
     private JSONArray jSubjects;
     
-    final private static Dimension PANEL_DIMENSION = new Dimension(250, 300);
-    
     /**
-     * Creates new form ExchangeMenu
+     * Creates new form StudentMenuScreen
      * @param parent
      * @param jIndex
      */
     public StudentMenuScreen(StartupScreen parent, JSONObject jIndex) {
-        super("Studentski Meni");
+        super(parent, jIndex, "Studentski Meni");
 
-        this.parent = parent;
-        pw = parent.getPw();
-        
-        userName = jIndex.get("username").toString();
-        firstName = jIndex.get("first name").toString();
-        lastName = jIndex.get("last name").toString();
-        jmbg = jIndex.get("jmbg").toString();
         index = jIndex.get("index").toString();
         
         initComponents();
         
+        // must be called after initComponents()
         setSubjects((JSONArray)jIndex.get("subjects"));
-    }
-    
-    public void closingWindowAction() {
-        parent.setEnabled(true);
-        Socket parentSoc = parent.getSocket();
-        if (parentSoc == null || !parentSoc.isConnected()) {
-            parent.handleConnectAssets(true);
-            parent.handleReopenMenuAssets(false);
-        } else {
-            parent.handleConnectAssets(false);
-            parent.handleReopenMenuAssets(true);
-        }
-        parent.toFront();
-        parent.requestFocus();
-        this.dispose();
     }
     
     void requestUpdateGrades() {
@@ -72,6 +39,11 @@ public class StudentMenuScreen extends javax.swing.JFrame {
         req.put("method", "refreshGrades");
         req.put("username", userName);
         pw.println(req);
+    }
+    
+    @Override
+    final public void updateData(Object data) {
+        setSubjects((JSONArray)data);
     }
     
     final void setSubjects(JSONArray jSubjects) {

@@ -37,7 +37,8 @@ public class StartupScreen extends javax.swing.JFrame {
     private BufferedReader br;
     private PrintWriter pw;
     private MessageReceiver rmfs;
-    private String userName;
+
+    // show/hide password props
     private boolean showPassword = false;
     final static private ImageIcon showIcon = new ImageIcon("./resources/show_pass_small.png");
     final static private ImageIcon showIconHover = new ImageIcon("./resources/show_pass_small_framed.png");
@@ -52,16 +53,8 @@ public class StartupScreen extends javax.swing.JFrame {
         return pw;
     }
     
-    public Socket getSocket() {
-        return socket;
-    }
-    
-    public String getUserName() {
-        return userName;
-    }
-    
-    public void setUsername(String username) {
-        this.userName = username;
+    public boolean isSocketDead() {
+        return socket == null || socket.isClosed() || !socket.isConnected();
     }
     
     public void closeSocket() {
@@ -151,7 +144,21 @@ public class StartupScreen extends javax.swing.JFrame {
     public void reopenMenuScreen() {
         // Create and display the form
         java.awt.EventQueue.invokeLater(() -> {
-            StudentMenuScreen menu = new StudentMenuScreen(this, rmfs.getJIndex());
+            MenuScreen menu;
+            String role = rmfs.getJUserData().get("role").toString();
+            if (role.equalsIgnoreCase("student")) {
+                menu = new StudentMenuScreen(this, rmfs.getJUserData());
+            } else if (role.equalsIgnoreCase("admin")) {
+                return; // for now
+            } else {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Ne mozemo otvoriti meni... Ne postoji meni za rolu \"" + role + "\"",
+                    "Meni greska",
+                    JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
             rmfs.setMenu(menu);
             
             menu.setVisible(true);

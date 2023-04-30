@@ -5,12 +5,9 @@
  */
 package eindex.client;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashSet;
 import java.util.List;
 import java.util.function.Function;
 import java.util.logging.Level;
@@ -18,7 +15,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.WindowConstants;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -28,9 +24,9 @@ public class MessageReceiver implements Runnable {
     final private StartupScreen parent;
     final private BufferedReader br;
     final private PrintWriter pw;
-    private StudentMenuScreen menu;
+    private MenuScreen menu;
     private JFrame focusedScreen;
-    private JSONObject jIndex;
+    private JSONObject jUserData;
     
     public MessageReceiver(StartupScreen parent) {
         this.parent = parent;
@@ -39,18 +35,18 @@ public class MessageReceiver implements Runnable {
         focusedScreen = parent;
     }
     
-    public StudentMenuScreen getMenu() {
+    public MenuScreen getMenu() {
         return menu;
     }
-    public void setMenu(StudentMenuScreen menu) {
+    public void setMenu(MenuScreen menu) {
         this.menu = menu;
     }
     
-    public JSONObject getJIndex() {
-        return jIndex;
+    public JSONObject getJUserData() {
+        return jUserData;
     }
-    public void setJIndex(JSONObject jIndex) {
-        this.jIndex = jIndex;
+    public void setJUserData(JSONObject jUserData) {
+        this.jUserData = jUserData;
     }
     
     public static <T, U> List<U> convertStringListToIntList(List<T> listOfString, Function<T, U> function)
@@ -77,7 +73,7 @@ public class MessageReceiver implements Runnable {
                (method.equalsIgnoreCase("login") && role.contentEquals(""))) {
                 JOptionPane.showMessageDialog(
                     focusedScreen,
-                    "Na poslati zahtev nema odgovora od strane servera",
+                    "Na poslati zahtev nije dobijen potpun odgovor od strane servera",
                     "Bez statusa",
                     JOptionPane.WARNING_MESSAGE
                 );
@@ -94,15 +90,18 @@ public class MessageReceiver implements Runnable {
             if (status.charAt(0) == '2') {
                 if (method.equalsIgnoreCase("login")) {
                     if (role.equalsIgnoreCase("student")) {
-                        jIndex = (JSONObject)in.get("index");
+                        jUserData = (JSONObject)in.get("index");
+                        jUserData.put("role", "student");
                         parent.reopenMenuScreen();
                     } else if (role.equalsIgnoreCase("admin")) {
 
                     }
                 } else if (method.equalsIgnoreCase("refreshGrades")) {
-                    if (role.equalsIgnoreCase("student")) {
-                        JSONArray jSubjects = (JSONArray)in.get("subjects");
-                        menu.setSubjects(jSubjects);
+                    if (role.equalsIgnoreCase("student") &&
+                            menu.getRole().equalsIgnoreCase("student")) {
+                        if (in.get("subjects") instanceof JSONArray jSubjects) {
+                                menu.updateData(jSubjects);
+                        }
                     }
                 }
             }
