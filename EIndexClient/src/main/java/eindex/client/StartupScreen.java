@@ -141,7 +141,7 @@ public class StartupScreen extends javax.swing.JFrame {
         }
     }
     
-    public void reopenMenuScreen() {
+    public void openMenuScreen() {
         // Create and display the form
         java.awt.EventQueue.invokeLater(() -> {
             MenuScreen menu;
@@ -153,7 +153,7 @@ public class StartupScreen extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(
                     this,
-                    "Ne mozemo otvoriti meni... Ne postoji meni za rolu \"" + role + "\"",
+                    "Nije moguce otvoriti meni... Ne postoji meni za rolu \"" + role + "\"",
                     "Meni greska",
                     JOptionPane.ERROR_MESSAGE
                 );
@@ -399,7 +399,7 @@ public class StartupScreen extends javax.swing.JFrame {
 
     private void bReopenMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bReopenMenuActionPerformed
         // TODO add your handling code here:
-        reopenMenuScreen();
+        openMenuScreen();
     }//GEN-LAST:event_bReopenMenuActionPerformed
         
     /**

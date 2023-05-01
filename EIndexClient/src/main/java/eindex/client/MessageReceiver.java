@@ -85,7 +85,7 @@ public class MessageReceiver implements Runnable {
                 if (method.equalsIgnoreCase("login")) {
                     if (role.equalsIgnoreCase("student") || role.equalsIgnoreCase("admin")) {
                         jUserData = (JSONObject)in.get("data");
-                        parent.reopenMenuScreen();
+                        parent.openMenuScreen();
                     }
                 } else if (method.equalsIgnoreCase("refresh")) {
                     if (role.equalsIgnoreCase("student") && menu.getRole().equalsIgnoreCase("student")) {

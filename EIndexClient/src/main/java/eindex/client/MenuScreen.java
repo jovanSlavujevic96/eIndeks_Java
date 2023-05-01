@@ -5,6 +5,7 @@
 package eindex.client;
 
 import java.io.PrintWriter;
+import javax.swing.JComboBox;
 import org.json.simple.JSONObject;
 
 /**
@@ -47,6 +48,13 @@ public abstract class MenuScreen extends javax.swing.JFrame {
         parent.toFront();
         parent.requestFocus();
         this.dispose();
+    }
+    
+    final protected String getSelectedString(JComboBox<String> selector) {
+        if (selector.getSelectedItem() != null) {
+            return selector.getSelectedItem().toString();
+        }
+        return null;
     }
     
     final public void requestRefreshData() {

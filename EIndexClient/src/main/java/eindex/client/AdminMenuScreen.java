@@ -6,6 +6,8 @@ package eindex.client;
 
 import java.awt.Font;
 import java.text.NumberFormat;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.text.NumberFormatter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -17,10 +19,11 @@ import org.json.simple.JSONObject;
 public class AdminMenuScreen extends MenuScreen {
 
     private JSONArray jStudents;
+    private JSONArray jAdmins;
     
     /**
      * Creates new form StudentMenuScreen
-     * @param parent
+     * @param parents
      * @param jAdminData
      */
     public AdminMenuScreen(StartupScreen parent, JSONObject jAdminData) {
@@ -29,42 +32,94 @@ public class AdminMenuScreen extends MenuScreen {
         initComponents();
         
         // must be called after initComponents()
-        setStudents((JSONArray)jAdminData.get("students"));
+        setInfo((JSONArray)jAdminData.get("users"));
     }
     
     @Override
     final public void updateData(Object data) {
-        setStudents((JSONArray)data);
+        setInfo((JSONArray)data);
     }
     
-    final void setStudents(JSONArray jStudents) {
-//        String selectedStudent = null;
-//        if(jSelectSubject.getSelectedItem() != null) {
-//            selectedStudent = jSelectSubject.getSelectedItem().toString();
-//        }
-//        
-//        this.jStudents = jStudents;
-//        for (Object student : jStudents) {
-//            JSONObject jStudent = (JSONObject)student;
-//            jSelectSubject.addItem(jStudent.get("student").toString());
-//        }
-//        
-//        if (selectedStudent != null) {
-//            jSelectSubject.setSelectedItem(selectedStudent);
-//        }
-//
-//        updateStudentInfo();
+    final void setInfo(JSONArray jUsers) {
+        String selectedStudent = getSelectedString(jSelectStudent);
+        String selectedStudent1 = getSelectedString(jSelectStudent1);
+        String selectedAdmin = getSelectedString(jSelectAdmin);
+        
+        // reset selectors
+        jSelectStudent.setModel(new DefaultComboBoxModel<>());
+        jSelectStudent1.setModel(new DefaultComboBoxModel<>());
+        jSelectAdmin.setModel(new DefaultComboBoxModel<>());
+        
+        // add items to admin & student selectors
+        for (Object user : jUsers) {
+            JSONObject jUser = (JSONObject)user;
+            String userRole = jUser.get("role").toString();
+            if (userRole.equalsIgnoreCase("student")) {
+                jStudents.add(jUser);
+                jSelectStudent.addItem(jUser.get("username").toString());
+                jSelectStudent1.addItem(jUser.get("username").toString());
+            } else if (userRole.equalsIgnoreCase("admin")) {
+                jAdmins.add(jUser);
+                jSelectAdmin.addItem(jUser.get("username").toString());
+            }
+        }
+        
+        // set back previously selected items
+        if (selectedStudent != null) {
+            jSelectStudent.setSelectedItem(selectedStudent);
+        }
+        if (selectedStudent1 != null) {
+            jSelectStudent1.setSelectedItem(selectedStudent1);
+        }
+        if (selectedAdmin != null) {
+            jSelectAdmin.setSelectedItem(selectedAdmin);
+        }
+
+        updateUsersInfo();
     }
     
-    void updateStudentInfo() {
-//        String selectedStudent = jSelectSubject.getSelectedItem().toString();
-//        for (Object student : jStudents) {
-//            JSONObject jStudent = (JSONObject)student;
-//            if (jStudent.get("student").toString().contentEquals(selectedStudent)) {
-//                // do updates
-//                break;
-//            }
-//        }
+    void updateUsersInfo() {
+        // filling Student tab
+        {
+            JSONObject jSelectedStudent = null;
+            JSONObject jSelectedSubject = null;
+            String selectedSubject = getSelectedString(jSelectStudentSubject);
+
+            // find JSON for selected student
+            String selectedStudent = jSelectStudent.getSelectedItem().toString();
+            for (Object student : jStudents) {
+                JSONObject jStudent = (JSONObject)student;
+                if (jStudent.get("username").toString().equalsIgnoreCase(selectedStudent)) {
+                    jSelectedStudent = jStudent;
+                    break;
+                }
+            }
+            if (jSelectedStudent == null) {
+                // not possible
+                return;
+            }
+            // add subjects to selectors
+            for (Object subject : (JSONArray)jSelectedStudent.get("subjects")) {
+                JSONObject jSubject = (JSONObject)subject;
+                String subjectStr = jSubject.get("subject").toString();
+
+                jSelectStudentSubject.addItem(subjectStr);
+
+                // if there was previously selected subject and it still exist set it back
+                if  (jSelectedSubject == null) {
+                    if (selectedSubject == null || selectedSubject.contentEquals(subjectStr)) {
+                        jSelectedSubject = jSubject;
+                        jSelectStudentSubject.setSelectedItem(subjectStr);
+                    }
+                }
+            }
+
+            jStudentUsername.setText(jSelectedStudent.get("username").toString());
+            jStudentFullname.setText(jSelectedStudent.get("first name").toString() +
+                    " " + jSelectedStudent.get("last name").toString());
+            jStudentIndex.setText(jSelectedStudent.get("index").toString());
+            jStudentJmbg.setText(jSelectedStudent.get("jmbg").toString());
+        }
     }
 
     /**
@@ -94,7 +149,7 @@ public class AdminMenuScreen extends MenuScreen {
         jJmbg.setToolTipText("JMBG");
         Font fJmbg = jJmbg.getFont();
         jJmbg.setFont(fJmbg.deriveFont(fJmbg.getStyle() | Font.BOLD));
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jTabbedPanel = new javax.swing.JTabbedPane();
         jStudentGradesPanel = new javax.swing.JPanel();
         jStudentGradesPanel.setVisible(false);
         SelectStudent = new javax.swing.JLabel();
@@ -208,7 +263,7 @@ public class AdminMenuScreen extends MenuScreen {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTabbedPane1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jTabbedPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         SelectStudent.setText("Izaberite Studenta");
 
@@ -355,7 +410,7 @@ public class AdminMenuScreen extends MenuScreen {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Student", jStudentGradesPanel);
+        jTabbedPanel.addTab("Student", jStudentGradesPanel);
 
         SelectAdmin.setText("Izaberite Admina");
 
@@ -393,7 +448,7 @@ public class AdminMenuScreen extends MenuScreen {
                 .addContainerGap(84, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Admin", jAdminPanel);
+        jTabbedPanel.addTab("Admin", jAdminPanel);
 
         NewFirstName.setText("Ime:");
 
@@ -496,7 +551,7 @@ public class AdminMenuScreen extends MenuScreen {
                 .addContainerGap(102, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Novi Korisnik", jNewUserPanel);
+        jTabbedPanel.addTab("Novi Korisnik", jNewUserPanel);
 
         SelectStudent1.setText("Izaberite Studenta");
 
@@ -563,7 +618,7 @@ public class AdminMenuScreen extends MenuScreen {
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Novi Predmet", jNewSubjectPanel);
+        jTabbedPanel.addTab("Novi Predmet", jNewSubjectPanel);
 
         bUpdateAdminData.setText("Azuriranje podataka");
         bUpdateAdminData.addActionListener(new java.awt.event.ActionListener() {
@@ -590,7 +645,7 @@ public class AdminMenuScreen extends MenuScreen {
                                     .addComponent(jFullname, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jJmbg, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTabbedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(36, 36, 36))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -611,7 +666,7 @@ public class AdminMenuScreen extends MenuScreen {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jJmbg, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTabbedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(55, 55, 55)
                         .addComponent(bUpdateAdminData)))
                 .addContainerGap(9, Short.MAX_VALUE))
@@ -685,7 +740,7 @@ public class AdminMenuScreen extends MenuScreen {
     private javax.swing.JTextField jSummary;
     private javax.swing.JTextField jT1;
     private javax.swing.JTextField jT2;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPanel;
     private javax.swing.JLabel jUsername;
     private javax.swing.JTextField jZ1;
     private javax.swing.JTextField jZ2;
