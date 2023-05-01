@@ -189,7 +189,7 @@ public class ClientHandler implements Runnable {
                     out.put("message", "Korisnik " + userName + " nije pronadjen");
                     userName = "";
                 }
-            } else if (method.equalsIgnoreCase("refresh")) { // refreshGrade method
+            } else if (method.equalsIgnoreCase("refresh")) { // refresh method
 
                 // get username
                 userName = "";
@@ -207,7 +207,7 @@ public class ClientHandler implements Runnable {
                         out.put("status", "200");
                         out.put("message", "Student" + " " + userName + " je uspesno azurirao ocene");
                         out.put("role", "student");
-                        out.put("method", "refreshGrades");
+                        out.put("method", "refresh");
 
                         JSONObject userIndex = dbHandler.readUserIndexPer(userName, "username");
                         JSONArray userSubjects = (JSONArray)userIndex.get("subjects");

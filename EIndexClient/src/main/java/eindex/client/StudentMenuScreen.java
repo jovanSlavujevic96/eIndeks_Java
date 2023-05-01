@@ -6,6 +6,8 @@ package eindex.client;
 
 import java.awt.Color;
 import java.awt.Font;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -44,6 +46,8 @@ public class StudentMenuScreen extends MenuScreen {
         if(jSelectSubject.getSelectedItem() != null) {
             selectedSub = jSelectSubject.getSelectedItem().toString();
         }
+        
+        jSelectSubject.setModel(new DefaultComboBoxModel<String>());
         
         this.jSubjects = jSubjects;
         for (Object sub : jSubjects) {
