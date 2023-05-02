@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.text.NumberFormat;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.text.NumberFormatter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -19,8 +18,8 @@ import org.json.simple.JSONObject;
  */
 public class AdminMenuScreen extends MenuScreen {
 
-    private JSONArray jStudents = new JSONArray();
-    private JSONArray jAdmins = new JSONArray();
+    private final JSONArray jStudents = new JSONArray();
+    private final JSONArray jAdmins = new JSONArray();
     private JSONObject jSelectedStudent = null;
     private JSONObject jSelectedSubject = null;
     
@@ -170,10 +169,7 @@ public class AdminMenuScreen extends MenuScreen {
         // reset selected student
         jSelectedSubject = null;
         
-        if (jSelectedStudent == null) {
-            // if there is not selected student there should not be selected subject
-            return;
-        } else {
+        if (jSelectedStudent != null) {
             // find SelectedSubject JSON
             for (Object subject : (JSONArray)jSelectedStudent.get("subjects")) {
                 JSONObject jSubject = (JSONObject)subject;
@@ -474,9 +470,9 @@ public class AdminMenuScreen extends MenuScreen {
                                     .addComponent(Summary, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(Grade, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jSummary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jGrade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jSummary)
+                                    .addComponent(jGrade))))))
                 .addGap(16, 16, 16))
         );
         jStudentGradesPanelLayout.setVerticalGroup(

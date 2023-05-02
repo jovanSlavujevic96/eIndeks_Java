@@ -203,18 +203,28 @@ public class ClientHandler implements Runnable {
                 
                 User user = dbHandler.readUserPer(userName, 0);
                 if (user != null) {
+                    out.put("status", "200");
+                    out.put("role", user.getRole());
+                    out.put("method", "refresh");
                     if (user.getRole().equalsIgnoreCase("student")) {
-                        out.put("status", "200");
-                        out.put("message", "Student" + " " + userName + " je uspesno azurirao ocene");
-                        out.put("role", "student");
-                        out.put("method", "refresh");
+                        out.put("message", "Student " + userName + " je uspesno osvezio predmete");
 
                         JSONObject userIndex = dbHandler.readUserIndexPer(userName, "username");
                         JSONArray userSubjects = (JSONArray)userIndex.get("subjects");
                         out.put("subjects", userSubjects);
-                    } else {
-                        out.put("status", "501");
-                        out.put("message", "Metoda " + method + " trenutno nije podrzana za admine");
+                    } else if (user.getRole().equalsIgnoreCase("admin")) {
+                        out.put("message", "Admin " + userName + " je uspesno osvezio korisnike");
+
+                        JSONArray usersInfo = dbHandler.readAllUserIndex();
+                        // find admin user which requested login and remove him from JSON Array
+                        for (Object userInfo : usersInfo) {
+                            JSONObject jUserInfo = (JSONObject)userInfo;
+                            if (jUserInfo.get("username").toString().equalsIgnoreCase(userName)) {
+                                usersInfo.remove(jUserInfo);
+                                break;
+                            }
+                        }
+                        out.put("users", usersInfo);
                     }
                 } else {
                     out.put("status", "404");

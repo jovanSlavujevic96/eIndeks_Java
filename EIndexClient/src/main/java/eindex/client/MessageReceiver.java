@@ -59,12 +59,12 @@ public class MessageReceiver implements Runnable {
             String role = (in.get("role") != null) ? in.get("role").toString() : "";
             String method = (in.get("method") != null) ? in.get("method").toString() : "";
             focusedScreen = (method.equalsIgnoreCase("login")) ?
-                    parent : (method.equalsIgnoreCase("refreshGrades")) ?
+                    parent : (method.equalsIgnoreCase("refresh")) ?
                     menu : null;
             
             if (status.contentEquals("") || message.contentEquals("") ||    // there always has to be status and message
-               (method.contentEquals("") && (status.charAt(0) == '2')) || // if status code is 20X method must exist
-               (method.equalsIgnoreCase("login") && role.contentEquals(""))) {
+               (status.charAt(0) == '2' && // if status code is 20X method and role must exist
+                    (method.contentEquals("") || role.contentEquals("")))) {
                 JOptionPane.showMessageDialog(
                     focusedScreen,
                     "Na poslati zahtev nije dobijen potpun odgovor od strane servera",
@@ -91,6 +91,10 @@ public class MessageReceiver implements Runnable {
                     if (role.equalsIgnoreCase("student") && menu.getRole().equalsIgnoreCase("student")) {
                         if (in.get("subjects") instanceof JSONArray jSubjects) {
                             menu.updateData(jSubjects);
+                        }
+                    } else if (role.equalsIgnoreCase("admin") && menu.getRole().equalsIgnoreCase("admin")) {
+                        if (in.get("users") instanceof JSONArray jUsers) {
+                            menu.updateData(jUsers);
                         }
                     }
                 }
