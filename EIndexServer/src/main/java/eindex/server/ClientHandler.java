@@ -213,8 +213,8 @@ public class ClientHandler implements Runnable {
                         JSONArray userSubjects = (JSONArray)userIndex.get("subjects");
                         out.put("subjects", userSubjects);
                     } else {
-                        out.put("status", "401");
-                        out.put("message", "Korisnik " + userName + " nije student");
+                        out.put("status", "501");
+                        out.put("message", "Metoda " + method + " trenutno nije podrzana za admine");
                     }
                 } else {
                     out.put("status", "404");

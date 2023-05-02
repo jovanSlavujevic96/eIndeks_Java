@@ -50,6 +50,44 @@
 		"first name" : "Predrag",
 		"last name" : "Teodorovic",
 		"jmbg" : "0506984004786",
-	}
+	},
+	{
+		"role" : "student",
+		"username" : "ppetrovic",
+		"first name" : "Petar",
+		"last name" : "Petrovic",
+		"jmbg" : "1212998336699",
+		"index" : "E2/2023",
+		"subjects" : [
+			{
+				"subject" : "Objektno programiranje",
+				"T1" : "15",
+				"T2" : "14.5",
+				"Z1" : "25",
+				"Z2" : "25"
+			},
+			{
+				"subject" : "Sistemi i Signali",
+				"T1" : "10",
+				"T2" : "17",
+				"Z1" : "0",
+				"Z2" : "20"
+			},
+			{
+				"subject" : "Algebra",
+				"T1" : "18",
+				"T2" : "22",
+				"Z1" : "13.5",
+				"Z2" : "23.5"
+			},
+			{
+				"subject" : "Engleski Jezik",
+				"T1" : "0",
+				"T2" : "0",
+				"Z1" : "11",
+				"Z2" : "12.5"
+			},
+		],
+	},
 ]
 			

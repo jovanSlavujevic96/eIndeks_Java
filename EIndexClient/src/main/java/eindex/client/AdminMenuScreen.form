@@ -136,7 +136,6 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jSelectStudent" min="-2" pref="170" max="-2" attributes="0"/>
-                                  <Component id="jStudentUsername" min="-2" pref="120" max="-2" attributes="0"/>
                                   <Component id="jStudentIndex" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
                                   <Component id="jStudentFullname" min="-2" pref="148" max="-2" attributes="0"/>
                                   <Component id="jStudentJmbg" min="-2" pref="148" max="-2" attributes="0"/>
@@ -205,7 +204,7 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="T1" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                                   <Component id="jT1" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
@@ -230,17 +229,15 @@
                                   <Component id="Grade" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jStudentUsername" min="-2" pref="29" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
                               <Component id="jStudentFullname" min="-2" pref="29" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jStudentJmbg" min="-2" pref="29" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="jStudentIndex" min="-2" pref="29" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jStudentJmbg" min="-2" pref="29" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="bSave" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="14" max="32767" attributes="0"/>
                   </Group>
@@ -254,20 +251,24 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="jSelectStudent">
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jSelectStudentItemStateChanged"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="jStudentUsername">
-            </Component>
             <Component class="javax.swing.JLabel" name="jStudentFullname">
-            </Component>
-            <Component class="javax.swing.JLabel" name="jStudentIndex">
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jStudentIndex.setToolTipText(&quot;Indeks&quot;);&#xd;&#xa;"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="Font fStudentFullname = jStudentFullname.getFont();&#xd;&#xa;jStudentFullname.setFont(fStudentFullname.deriveFont(&#xd;&#xa;    fStudentFullname.getStyle() | Font.BOLD&#xd;&#xa;));"/>
               </AuxValues>
             </Component>
+            <Component class="javax.swing.JLabel" name="jStudentIndex">
+            </Component>
             <Component class="javax.swing.JLabel" name="jStudentJmbg">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="Font fStudentJmbg = jStudentJmbg.getFont();&#xd;&#xa;jStudentJmbg.setFont(fStudentJmbg.deriveFont(&#xd;&#xa;    fStudentJmbg.getStyle() | Font.BOLD&#xd;&#xa;));"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="SelectSubject">
               <Properties>
@@ -275,6 +276,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="jSelectStudentSubject">
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jSelectStudentSubjectItemStateChanged"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>

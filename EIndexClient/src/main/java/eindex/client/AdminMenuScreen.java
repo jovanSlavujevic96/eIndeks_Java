@@ -4,6 +4,7 @@
  */
 package eindex.client;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.text.NumberFormat;
 import javax.swing.DefaultComboBoxModel;
@@ -18,12 +19,14 @@ import org.json.simple.JSONObject;
  */
 public class AdminMenuScreen extends MenuScreen {
 
-    private JSONArray jStudents;
-    private JSONArray jAdmins;
+    private JSONArray jStudents = new JSONArray();
+    private JSONArray jAdmins = new JSONArray();
+    private JSONObject jSelectedStudent = null;
+    private JSONObject jSelectedSubject = null;
     
     /**
      * Creates new form StudentMenuScreen
-     * @param parents
+     * @param parent
      * @param jAdminData
      */
     public AdminMenuScreen(StartupScreen parent, JSONObject jAdminData) {
@@ -44,6 +47,13 @@ public class AdminMenuScreen extends MenuScreen {
         String selectedStudent = getSelectedString(jSelectStudent);
         String selectedStudent1 = getSelectedString(jSelectStudent1);
         String selectedAdmin = getSelectedString(jSelectAdmin);
+        
+        // reset JSON storages
+        jStudents.clear();
+        jAdmins.clear();
+        
+        jSelectedStudent = null;
+        jSelectedSubject = null;
         
         // reset selectors
         jSelectStudent.setModel(new DefaultComboBoxModel<>());
@@ -75,18 +85,19 @@ public class AdminMenuScreen extends MenuScreen {
             jSelectAdmin.setSelectedItem(selectedAdmin);
         }
 
-        updateUsersInfo();
+        // filling Student tab
+        updateSelectedStudent();
     }
     
-    void updateUsersInfo() {
-        // filling Student tab
-        {
-            JSONObject jSelectedStudent = null;
-            JSONObject jSelectedSubject = null;
-            String selectedSubject = getSelectedString(jSelectStudentSubject);
+    void updateSelectedStudent() {
+        String selectedStudent = getSelectedString(jSelectStudent);
+        
+        // reset selected student
+        jSelectedStudent = null;
+
+        if (selectedStudent != null) {
 
             // find JSON for selected student
-            String selectedStudent = jSelectStudent.getSelectedItem().toString();
             for (Object student : jStudents) {
                 JSONObject jStudent = (JSONObject)student;
                 if (jStudent.get("username").toString().equalsIgnoreCase(selectedStudent)) {
@@ -98,27 +109,114 @@ public class AdminMenuScreen extends MenuScreen {
                 // not possible
                 return;
             }
-            // add subjects to selectors
+            jStudentFullname.setText(jSelectedStudent.get("first name").toString() +
+                    " " + jSelectedStudent.get("last name").toString());
+            jStudentFullname.setToolTipText("Puno ime");
+            jStudentIndex.setText(jSelectedStudent.get("index").toString());
+            jStudentIndex.setToolTipText("Indeks");
+            jStudentJmbg.setText(jSelectedStudent.get("jmbg").toString());
+            jStudentJmbg.setToolTipText("JMBG");
+
+            String selectedSubject = getSelectedString(jSelectStudentSubject);
+            
+            // reset selectors
+            jSelectStudentSubject.setModel(new DefaultComboBoxModel<>());
+            
+            // add subjects to selectors and check previous selection
+            boolean bFoundSelectedSubject = false;
             for (Object subject : (JSONArray)jSelectedStudent.get("subjects")) {
                 JSONObject jSubject = (JSONObject)subject;
                 String subjectStr = jSubject.get("subject").toString();
 
                 jSelectStudentSubject.addItem(subjectStr);
+                
+                if (!bFoundSelectedSubject && selectedSubject != null) {
+                    bFoundSelectedSubject = subjectStr.contentEquals(selectedSubject);
+                }
+            }
+            
+            // if selection exist beyond new selector set it as selected
+            if (bFoundSelectedSubject) {
+                jSelectStudentSubject.setSelectedItem(selectedSubject);
+            }
 
-                // if there was previously selected subject and it still exist set it back
-                if  (jSelectedSubject == null) {
-                    if (selectedSubject == null || selectedSubject.contentEquals(subjectStr)) {
-                        jSelectedSubject = jSubject;
-                        jSelectStudentSubject.setSelectedItem(subjectStr);
-                    }
+            // update selected subject
+            updateSelectedSubject();
+        } else {
+            // reset data
+            jStudentFullname.setText("");
+            jStudentFullname.setToolTipText("");
+            jStudentIndex.setText("");
+            jStudentIndex.setToolTipText("");
+            jStudentJmbg.setText("");
+            jStudentJmbg.setToolTipText("");
+
+            jSelectStudentSubject.setModel(new DefaultComboBoxModel<>());
+            
+            jT1.setText("");
+            jT2.setText("");
+            jZ1.setText("");
+            jZ2.setText("");
+            jSummary.setForeground(Color.black);
+            jGrade.setForeground(Color.black);
+            jSummary.setText("");
+            jGrade.setText("");
+        }
+    }
+    
+    void updateSelectedSubject() {
+        String selectedSubject = getSelectedString(jSelectStudentSubject);
+        
+        // reset selected student
+        jSelectedSubject = null;
+        
+        if (jSelectedStudent == null) {
+            // if there is not selected student there should not be selected subject
+            return;
+        } else {
+            // find SelectedSubject JSON
+            for (Object subject : (JSONArray)jSelectedStudent.get("subjects")) {
+                JSONObject jSubject = (JSONObject)subject;
+                if (jSubject.get("subject").toString().contentEquals(selectedSubject)) {
+                    jSelectedSubject = jSubject;
+                    break;
                 }
             }
 
-            jStudentUsername.setText(jSelectedStudent.get("username").toString());
-            jStudentFullname.setText(jSelectedStudent.get("first name").toString() +
-                    " " + jSelectedStudent.get("last name").toString());
-            jStudentIndex.setText(jSelectedStudent.get("index").toString());
-            jStudentJmbg.setText(jSelectedStudent.get("jmbg").toString());
+            if (jSelectedSubject == null) {
+                // not possible
+                return;
+            }
+            jT1.setText(jSelectedSubject.get("T1").toString());
+            jT2.setText(jSelectedSubject.get("T2").toString());
+            jZ1.setText(jSelectedSubject.get("Z1").toString());
+            jZ2.setText(jSelectedSubject.get("Z2").toString());
+
+            try {
+                float t1 = Float.parseFloat(jT1.getText());
+                float t2 = Float.parseFloat(jT2.getText());
+                float z1 = Float.parseFloat(jZ1.getText());
+                float z2 = Float.parseFloat(jZ2.getText());
+
+                float points = t1 + t2 + z1 + z2;
+                int grade = (t1 < 12.5 || t2 < 12.5 || z1 < 12.5 || z2 < 12.5 || points < 51) ?
+                        5 : (points < 61) ? 6 : (points < 71) ?
+                        7 : (points < 81) ? 8 : (points < 91) ? 9 : 10;
+
+                if (grade == 5) {
+                    jSummary.setForeground(Color.red);
+                    jGrade.setForeground(Color.red);
+                } else {
+                    jSummary.setForeground(Color.green);
+                    jGrade.setForeground(Color.green);
+                }
+
+                jSummary.setText(Float.toString(points));
+                jGrade.setText(Integer.toString(grade));
+            }
+            catch (NumberFormatException e) {
+                // should not happen
+            }
         }
     }
 
@@ -154,11 +252,17 @@ public class AdminMenuScreen extends MenuScreen {
         jStudentGradesPanel.setVisible(false);
         SelectStudent = new javax.swing.JLabel();
         jSelectStudent = new javax.swing.JComboBox<>();
-        jStudentUsername = new javax.swing.JLabel();
         jStudentFullname = new javax.swing.JLabel();
+        Font fStudentFullname = jStudentFullname.getFont();
+        jStudentFullname.setFont(fStudentFullname.deriveFont(
+            fStudentFullname.getStyle() | Font.BOLD
+        ));
         jStudentIndex = new javax.swing.JLabel();
-        jStudentIndex.setToolTipText("Indeks");
         jStudentJmbg = new javax.swing.JLabel();
+        Font fStudentJmbg = jStudentJmbg.getFont();
+        jStudentJmbg.setFont(fStudentJmbg.deriveFont(
+            fStudentJmbg.getStyle() | Font.BOLD
+        ));
         SelectSubject = new javax.swing.JLabel();
         jSelectStudentSubject = new javax.swing.JComboBox<>();
         T1 = new javax.swing.JLabel();
@@ -267,7 +371,19 @@ public class AdminMenuScreen extends MenuScreen {
 
         SelectStudent.setText("Izaberite Studenta");
 
+        jSelectStudent.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jSelectStudentItemStateChanged(evt);
+            }
+        });
+
         SelectSubject.setText("Izaberite predmet");
+
+        jSelectStudentSubject.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jSelectStudentSubjectItemStateChanged(evt);
+            }
+        });
 
         T1.setText("T1:");
 
@@ -326,7 +442,6 @@ public class AdminMenuScreen extends MenuScreen {
                     .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
                         .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSelectStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jStudentUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jStudentIndex, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jStudentFullname, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jStudentJmbg, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -398,14 +513,12 @@ public class AdminMenuScreen extends MenuScreen {
                             .addComponent(jGrade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Grade)))
                     .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
-                        .addComponent(jStudentUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jStudentFullname, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jStudentJmbg, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jStudentIndex, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jStudentIndex, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jStudentJmbg, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20)
                 .addComponent(bSave)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
@@ -680,6 +793,16 @@ public class AdminMenuScreen extends MenuScreen {
         requestRefreshData();
     }//GEN-LAST:event_bUpdateAdminDataActionPerformed
 
+    private void jSelectStudentSubjectItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jSelectStudentSubjectItemStateChanged
+        // TODO add your handling code here:
+        updateSelectedSubject();
+    }//GEN-LAST:event_jSelectStudentSubjectItemStateChanged
+
+    private void jSelectStudentItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jSelectStudentItemStateChanged
+        // TODO add your handling code here:
+        updateSelectedStudent();
+    }//GEN-LAST:event_jSelectStudentItemStateChanged
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Grade;
@@ -735,7 +858,6 @@ public class AdminMenuScreen extends MenuScreen {
     private javax.swing.JLabel jStudentIndex1;
     private javax.swing.JLabel jStudentJmbg;
     private javax.swing.JLabel jStudentJmbg1;
-    private javax.swing.JLabel jStudentUsername;
     private javax.swing.JLabel jStudentUsername1;
     private javax.swing.JTextField jSummary;
     private javax.swing.JTextField jT1;
