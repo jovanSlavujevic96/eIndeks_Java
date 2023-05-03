@@ -6,6 +6,7 @@ package eindex.client;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.text.NumberFormatter;
@@ -142,7 +143,7 @@ public class AdminMenuScreen extends MenuScreen {
             // update selected subject
             updateSelectedSubject();
         } else {
-            // reset data
+            // reset
             jStudentFullname.setText("");
             jStudentFullname.setToolTipText("");
             jStudentIndex.setText("");
@@ -153,13 +154,19 @@ public class AdminMenuScreen extends MenuScreen {
             jSelectStudentSubject.setModel(new DefaultComboBoxModel<>());
             
             jT1.setText("");
+            jT1.setEnabled(false);
             jT2.setText("");
+            jT2.setEnabled(false);
             jZ1.setText("");
+            jZ1.setEnabled(false);
             jZ2.setText("");
+            jZ2.setEnabled(false);
             jSummary.setForeground(Color.black);
-            jGrade.setForeground(Color.black);
             jSummary.setText("");
+            jSummary.setEnabled(false);
+            jGrade.setForeground(Color.black);
             jGrade.setText("");
+            jGrade.setEnabled(false);
         }
     }
     
@@ -183,10 +190,18 @@ public class AdminMenuScreen extends MenuScreen {
                 // not possible
                 return;
             }
+            jT1.setEnabled(true);
             jT1.setText(jSelectedSubject.get("T1").toString());
+            jT1.setToolTipText("Unesite broj poena od 0-25");
+            jT2.setEnabled(true);
             jT2.setText(jSelectedSubject.get("T2").toString());
+            jT2.setToolTipText("Unesite broj poena od 0-25");
+            jZ1.setEnabled(true);
             jZ1.setText(jSelectedSubject.get("Z1").toString());
+            jZ1.setToolTipText("Unesite broj poena od 0-25");
+            jZ2.setEnabled(true);
             jZ2.setText(jSelectedSubject.get("Z2").toString());
+            jZ2.setToolTipText("Unesite broj poena od 0-25");
 
             try {
                 float t1 = Float.parseFloat(jT1.getText());
@@ -213,6 +228,40 @@ public class AdminMenuScreen extends MenuScreen {
             catch (NumberFormatException e) {
                 // should not happen
             }
+        } else {
+            // reset
+            jSelectStudentSubject.setModel(new DefaultComboBoxModel<>());
+            
+            jT1.setText("");
+            jT1.setEnabled(false);
+            jT2.setText("");
+            jT2.setEnabled(false);
+            jZ1.setText("");
+            jZ1.setEnabled(false);
+            jZ2.setText("");
+            jZ2.setEnabled(false);
+            jSummary.setForeground(Color.black);
+            jSummary.setText("");
+            jSummary.setEnabled(false);
+            jGrade.setForeground(Color.black);
+            jGrade.setText("");
+            jGrade.setEnabled(false);
+        }
+    }
+    
+    private boolean isThereCategoryChange() {
+        if (jSelectedSubject == null || jSelectStudentSubject.getSelectedItem() == null) {
+            return false;
+        } else if (!jT1.getText().contentEquals(jSelectedSubject.get("T1").toString())) {
+            return true;
+        } else if (!jT2.getText().contentEquals(jSelectedSubject.get("T2").toString())) {
+            return true;
+        } else if (!jZ1.getText().contentEquals(jSelectedSubject.get("Z1").toString())) {
+            return true;
+        } else if (!jZ2.getText().contentEquals(jSelectedSubject.get("Z2").toString())) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -265,46 +314,38 @@ public class AdminMenuScreen extends MenuScreen {
         T2 = new javax.swing.JLabel();
         Z1 = new javax.swing.JLabel();
         Z2 = new javax.swing.JLabel();
-        NumberFormat formatJT1 = NumberFormat.getInstance();
+        NumberFormat formatJT1 = DecimalFormat.getInstance();
         formatJT1.setGroupingUsed(false);
         NumberFormatter formatterJT1 = new NumberFormatter(formatJT1);
-        formatterJT1.setValueClass(Integer.class);
-        formatterJT1.setMinimum(0);
-        formatterJT1.setMaximum(25);
-        formatterJT1.setAllowsInvalid(false);
+        formatterJT1.setValueClass(Float.class);
+        formatterJT1.setMinimum(0.0F);
+        formatterJT1.setMaximum(25.0F);
         formatterJT1.setCommitsOnValidEdit(true);
         jT1 = new javax.swing.JFormattedTextField(formatterJT1);
-        jT1.setToolTipText("Unesite broj poena od 0-25");
-        NumberFormat formatJT2 = NumberFormat.getInstance();
+        NumberFormat formatJT2 = DecimalFormat.getInstance();
         formatJT2.setGroupingUsed(false);
         NumberFormatter formatterJT2 = new NumberFormatter(formatJT2);
-        formatterJT2.setValueClass(Integer.class);
-        formatterJT2.setMinimum(0);
-        formatterJT2.setMaximum(25);
-        formatterJT2.setAllowsInvalid(false);
+        formatterJT2.setValueClass(Float.class);
+        formatterJT2.setMinimum(0.0F);
+        formatterJT2.setMaximum(25.0F);
         formatterJT2.setCommitsOnValidEdit(true);
         jT2 = new javax.swing.JFormattedTextField(formatterJT2);
-        jT2.setToolTipText("Unesite broj poena od 0-25");
-        NumberFormat formatJZ1 = NumberFormat.getInstance();
+        NumberFormat formatJZ1 = DecimalFormat.getInstance();
         formatJZ1.setGroupingUsed(false);
         NumberFormatter formatterJZ1 = new NumberFormatter(formatJZ1);
-        formatterJZ1.setValueClass(Integer.class);
-        formatterJZ1.setMinimum(0);
-        formatterJZ1.setMaximum(25);
-        formatterJZ1.setAllowsInvalid(false);
+        formatterJZ1.setValueClass(Float.class);
+        formatterJZ1.setMinimum(0.0F);
+        formatterJZ1.setMaximum(25.0F);
         formatterJZ1.setCommitsOnValidEdit(true);
         jZ1 = new javax.swing.JFormattedTextField(formatterJZ1);
-        jZ1.setToolTipText("Unesite broj poena od 0-25");
-        NumberFormat formatJZ2 = NumberFormat.getInstance();
+        NumberFormat formatJZ2 = DecimalFormat.getInstance();
         formatJZ2.setGroupingUsed(false);
         NumberFormatter formatterJZ2 = new NumberFormatter(formatJZ2);
-        formatterJZ2.setValueClass(Integer.class);
-        formatterJZ2.setMinimum(0);
-        formatterJZ2.setMaximum(25);
-        formatterJZ2.setAllowsInvalid(false);
+        formatterJZ2.setValueClass(Float.class);
+        formatterJZ2.setMinimum(0.0F);
+        formatterJZ2.setMaximum(25.0F);
         formatterJZ2.setCommitsOnValidEdit(true);
         jZ2 = new javax.swing.JFormattedTextField(formatterJZ2);
-        jZ2.setToolTipText("Unesite broj poena od 0-25");
         jSummary = new javax.swing.JTextField();
         jSummary.setEditable(false);
         Font fSummary = jSummary.getFont();
@@ -395,6 +436,11 @@ public class AdminMenuScreen extends MenuScreen {
             fT1.getStyle() | Font.BOLD,
             16
         ));
+        jT1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jT1PropertyChange(evt);
+            }
+        });
 
         Font fT2 = jT2.getFont();
         jT2.setFont(new Font(
@@ -402,6 +448,11 @@ public class AdminMenuScreen extends MenuScreen {
             fT2.getStyle() | Font.BOLD,
             16
         ));
+        jT2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jT2PropertyChange(evt);
+            }
+        });
 
         Font fZ1 = jZ1.getFont();
         jZ1.setFont(new Font(
@@ -409,6 +460,11 @@ public class AdminMenuScreen extends MenuScreen {
             fZ1.getStyle() | Font.BOLD,
             16
         ));
+        jZ1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jZ1PropertyChange(evt);
+            }
+        });
 
         Font fZ2 = jZ2.getFont();
         jZ2.setFont(new Font(
@@ -416,6 +472,11 @@ public class AdminMenuScreen extends MenuScreen {
             fZ2.getStyle() | Font.BOLD,
             16
         ));
+        jZ2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jZ2PropertyChange(evt);
+            }
+        });
 
         Grade.setText("Ocena:");
 
@@ -423,19 +484,27 @@ public class AdminMenuScreen extends MenuScreen {
 
         bSave.setText("Sacuvaj");
         bSave.setEnabled(false);
+        bSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSaveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jStudentGradesPanelLayout = new javax.swing.GroupLayout(jStudentGradesPanel);
         jStudentGradesPanel.setLayout(jStudentGradesPanelLayout);
         jStudentGradesPanelLayout.setHorizontalGroup(
             jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jStudentGradesPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(bSave))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jStudentGradesPanelLayout.createSequentialGroup()
                         .addComponent(SelectStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(SelectSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jStudentGradesPanelLayout.createSequentialGroup()
                         .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSelectStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jStudentIndex, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -443,36 +512,36 @@ public class AdminMenuScreen extends MenuScreen {
                             .addComponent(jStudentJmbg, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                         .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
-                                .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
-                                        .addComponent(T1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jT1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
-                                        .addComponent(T2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jT2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
-                                .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
-                                        .addComponent(Z2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jZ2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
-                                        .addComponent(Z1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jZ1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jSelectStudentSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bSave, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
-                                .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Summary, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(Grade, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSummary)
-                                    .addComponent(jGrade))))))
+                            .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
+                                    .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(Summary, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Grade, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jSummary)
+                                        .addComponent(jGrade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
+                                    .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
+                                            .addComponent(T2)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jT2, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                                        .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
+                                            .addComponent(T1)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jT1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
+                                            .addComponent(Z2)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jZ2, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                                        .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
+                                            .addComponent(Z1)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jZ1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
                 .addGap(16, 16, 16))
         );
         jStudentGradesPanelLayout.setVerticalGroup(
@@ -514,9 +583,9 @@ public class AdminMenuScreen extends MenuScreen {
                         .addComponent(jStudentIndex, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jStudentJmbg, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(20, 20, 20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(bSave)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(27, 27, 27))
         );
 
         jTabbedPanel.addTab("Student", jStudentGradesPanel);
@@ -554,7 +623,7 @@ public class AdminMenuScreen extends MenuScreen {
                 .addComponent(jAdminFullname, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jAdminJmbg, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(110, Short.MAX_VALUE))
         );
 
         jTabbedPanel.addTab("Admin", jAdminPanel);
@@ -657,7 +726,7 @@ public class AdminMenuScreen extends MenuScreen {
                         .addComponent(jRepeatNewPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(bNewUserSave)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
 
         jTabbedPanel.addTab("Novi Korisnik", jNewUserPanel);
@@ -724,7 +793,7 @@ public class AdminMenuScreen extends MenuScreen {
                 .addComponent(jStudentJmbg1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jStudentIndex1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         jTabbedPanel.addTab("Novi Predmet", jNewSubjectPanel);
@@ -741,21 +810,21 @@ public class AdminMenuScreen extends MenuScreen {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 6, Short.MAX_VALUE)
+                .addGap(0, 12, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(bUpdateAdminData)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(133, 133, 133))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jFullname, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jJmbg, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addGap(18, 18, 18)))
                         .addComponent(jTabbedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(36, 36, 36))
+                .addGap(30, 30, 30))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jRole, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -775,8 +844,8 @@ public class AdminMenuScreen extends MenuScreen {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jJmbg, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTabbedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(55, 55, 55)
+                        .addComponent(jTabbedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
                         .addComponent(bUpdateAdminData)))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
@@ -798,6 +867,52 @@ public class AdminMenuScreen extends MenuScreen {
         // TODO add your handling code here:
         updateSelectedStudent();
     }//GEN-LAST:event_jSelectStudentItemStateChanged
+
+    private void jT1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jT1PropertyChange
+        // TODO add your handling code here:
+        if (evt.getPropertyName().contentEquals("value")) {
+            bSave.setEnabled(isThereCategoryChange());
+        }
+    }//GEN-LAST:event_jT1PropertyChange
+
+    private void jT2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jT2PropertyChange
+        // TODO add your handling code here:
+        if (evt.getPropertyName().contentEquals("value")) {
+            bSave.setEnabled(isThereCategoryChange());
+        }
+    }//GEN-LAST:event_jT2PropertyChange
+
+    private void jZ1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jZ1PropertyChange
+        // TODO add your handling code here:
+        if (evt.getPropertyName().contentEquals("value")) {
+            bSave.setEnabled(isThereCategoryChange());
+        }
+    }//GEN-LAST:event_jZ1PropertyChange
+
+    private void jZ2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jZ2PropertyChange
+        // TODO add your handling code here:
+        if (evt.getPropertyName().contentEquals("value")) {
+            bSave.setEnabled(isThereCategoryChange());
+        }
+    }//GEN-LAST:event_jZ2PropertyChange
+
+    private void bSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaveActionPerformed
+        // TODO add your handling code here:
+        JSONObject req = new JSONObject();
+        req.put("method", "updateSubject");
+        req.put("username", userName);
+        req.put("target username", jSelectStudent.getSelectedItem());
+
+        // update selected subject JSON
+        jSelectedSubject.put("T1", jT1.getText());
+        jSelectedSubject.put("T2", jT2.getText());
+        jSelectedSubject.put("Z1", jZ1.getText());
+        jSelectedSubject.put("Z2", jZ2.getText());
+
+        req.put("subject", jSelectedSubject);
+        pw.println(req);
+        bSave.setEnabled(false);
+    }//GEN-LAST:event_bSaveActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -105,19 +105,27 @@ public class ClientHandler implements Runnable {
                 out.put("message", "Zahtev nije poslat");
                 return out.toJSONString();
             }
+            
+            // get username
+            userName = "";
+            if (in.get("username") != null) {
+                userName = in.get("username").toString();
+            } else {
+                out.put("status", "400");
+                out.put("message", "Korisnicko ime nije poslato");
+                return out.toJSONString();
+            }
+            
+            // try to find a user within database
+            User user = dbHandler.readUserPer(userName, 0);
+            if (user == null) {
+                out.put("status", "404");
+                out.put("message", "Korisnik " + userName + " nije pronadjen");
+                userName = "";
+                return out.toJSONString();
+            }
 
             if (method.equalsIgnoreCase("login")) { // login method
-                
-                // get username
-                userName = "";
-                if (in.get("username") != null) {
-                    userName = in.get("username").toString();
-                } else {
-                    out.put("status", "400");
-                    out.put("message", "Korisnicko ime nije poslato");
-                    return out.toJSONString();
-                }
-                
                 // get password
                 String password;
                 if (in.get("password") != null) {
@@ -145,91 +153,80 @@ public class ClientHandler implements Runnable {
                     return out.toJSONString();
                 }
                 
-                // try to find a user within database
-                User user = dbHandler.readUserPer(userName, 0);
-                if (user != null) {
-                    if (role.equalsIgnoreCase(user.getRole())) {
-                        // hash password from database to compare it to hashed password from client
-                        String hashedDbPass = hash(user.getPassword());
-                        // check does password match
-                        if (hashedDbPass.contentEquals(password)) {
-                            out.put("status", "200");
-                            out.put("message", user.getRole() + " " + userName + " je uspesno prijavljen");
-                            out.put("role", role);
-                            out.put("method", "login");
+                if (role.equalsIgnoreCase(user.getRole())) {
+                    // hash password from database to compare it to hashed password from client
+                    String hashedDbPass = hash(user.getPassword());
+                    // check does password match
+                    if (hashedDbPass.contentEquals(password)) {
+                        out.put("status", "200");
+                        out.put("message", user.getRole() + " " + userName + " je uspesno prijavljen");
+                        out.put("role", role);
+                        out.put("method", "login");
 
-                            if (role.equalsIgnoreCase("student")) {
-                                JSONObject studentInfo = dbHandler.readUserIndexPer(userName, "username");
-                                out.put("data", studentInfo);
-                            } else if (role.equalsIgnoreCase("admin")) {
-                                JSONArray usersInfo = dbHandler.readAllUserIndex();
+                        if (role.equalsIgnoreCase("student")) {
+                            JSONObject studentInfo = dbHandler.readUserIndexPer(userName, "username");
+                            out.put("data", studentInfo);
+                        } else if (role.equalsIgnoreCase("admin")) {
+                            JSONArray usersInfo = dbHandler.readAllUserIndex();
 
-                                // find admin user which requested login and remove him from JSON Array
-                                JSONObject jUserInfo = null;
-                                for (Object userInfo : usersInfo) {
-                                    jUserInfo = (JSONObject)userInfo;
-                                    if (jUserInfo.get("username").toString().equalsIgnoreCase(userName)) {
-                                        usersInfo.remove(jUserInfo);
-                                        jUserInfo.put("users", usersInfo);
-                                        break;
-                                    }
+                            // find admin user which requested login and remove him from JSON Array
+                            JSONObject jUserInfo = null;
+                            for (Object userInfo : usersInfo) {
+                                jUserInfo = (JSONObject)userInfo;
+                                if (jUserInfo.get("username").toString().equalsIgnoreCase(userName)) {
+                                    usersInfo.remove(jUserInfo);
+                                    jUserInfo.put("users", usersInfo);
+                                    break;
                                 }
-                                out.put("data", jUserInfo);
                             }
-                        } else {
-                            out.put("status", "401");
-                            out.put("message", "Nije uneta dobra lozinka za korisnika " + userName);
+                            out.put("data", jUserInfo);
                         }
                     } else {
                         out.put("status", "401");
-                        out.put("message", "Nije uneta dobra rola za korisnika " + userName);
+                        out.put("message", "Nije uneta dobra lozinka za korisnika " + userName);
                     }
                 } else {
                     out.put("status", "404");
-                    out.put("message", "Korisnik " + userName + " nije pronadjen");
-                    userName = "";
+                    out.put("message", "Nije pronadjen korisnik " + userName + " sa rolom " + role);
                 }
             } else if (method.equalsIgnoreCase("refresh")) { // refresh method
+                out.put("status", "200");
+                out.put("role", user.getRole());
+                out.put("method", "refresh");
+                if (user.getRole().equalsIgnoreCase("student")) {
+                    out.put("message", "Student " + userName + " je uspesno osvezio predmete");
 
-                // get username
-                userName = "";
-                if (in.get("username") != null) {
-                    userName = in.get("username").toString();
-                } else {
-                    out.put("status", "400");
-                    out.put("message", "Korisnicko ime nije poslato");
-                    return out.toJSONString();
-                }
-                
-                User user = dbHandler.readUserPer(userName, 0);
-                if (user != null) {
-                    out.put("status", "200");
-                    out.put("role", user.getRole());
-                    out.put("method", "refresh");
-                    if (user.getRole().equalsIgnoreCase("student")) {
-                        out.put("message", "Student " + userName + " je uspesno osvezio predmete");
+                    JSONObject userIndex = dbHandler.readUserIndexPer(userName, "username");
+                    JSONArray userSubjects = (JSONArray)userIndex.get("subjects");
+                    out.put("subjects", userSubjects);
+                } else if (user.getRole().equalsIgnoreCase("admin")) {
+                    out.put("message", "Admin " + userName + " je uspesno osvezio korisnike");
 
-                        JSONObject userIndex = dbHandler.readUserIndexPer(userName, "username");
-                        JSONArray userSubjects = (JSONArray)userIndex.get("subjects");
-                        out.put("subjects", userSubjects);
-                    } else if (user.getRole().equalsIgnoreCase("admin")) {
-                        out.put("message", "Admin " + userName + " je uspesno osvezio korisnike");
-
-                        JSONArray usersInfo = dbHandler.readAllUserIndex();
-                        // find admin user which requested login and remove him from JSON Array
-                        for (Object userInfo : usersInfo) {
-                            JSONObject jUserInfo = (JSONObject)userInfo;
-                            if (jUserInfo.get("username").toString().equalsIgnoreCase(userName)) {
-                                usersInfo.remove(jUserInfo);
-                                break;
-                            }
+                    JSONArray usersInfo = dbHandler.readAllUserIndex();
+                    // find admin user which requested login and remove him from JSON Array
+                    for (Object userInfo : usersInfo) {
+                        JSONObject jUserInfo = (JSONObject)userInfo;
+                        if (jUserInfo.get("username").toString().equalsIgnoreCase(userName)) {
+                            usersInfo.remove(jUserInfo);
+                            break;
                         }
-                        out.put("users", usersInfo);
                     }
+                    out.put("users", usersInfo);
+                }
+            } else if (method.equalsIgnoreCase("updateSubject")) {
+                if (user.getRole().equalsIgnoreCase("admin")) {
+                    JSONObject jSubject = (JSONObject)in.get("subject");
+                    String student = in.get("target username").toString();
+                    dbHandler.updateUserIndexSubject(jSubject, student);
+                    
+                    out.put("status", "200");
+                    String subjectName = jSubject.get("subject").toString();
+                    out.put("message", user.getRole() + " " + userName + " je uspesno azurirao ocenu " + subjectName + " za " + student);
+                    out.put("role", user.getRole());
+                    out.put("method", "updateSubject");
                 } else {
-                    out.put("status", "404");
-                    out.put("message", "Korisnik " + userName + " nije pronadjen");
-                    userName = "";
+                    out.put("status", "401");
+                    out.put("message", "Korisnik " + userName + " nema pristup ovoj metodi");
                 }
             } else {
                 out.put("status", "405");

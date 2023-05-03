@@ -24,12 +24,12 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="bUpdateAdminData" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
                               <Component id="jUsername" min="-2" pref="92" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="133" max="-2" attributes="0"/>
                           </Group>
@@ -38,13 +38,13 @@
                                   <Component id="jFullname" alignment="0" min="-2" pref="207" max="-2" attributes="0"/>
                                   <Component id="jJmbg" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="jTabbedPanel" min="-2" pref="452" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
@@ -68,8 +68,8 @@
                       <Component id="jJmbg" min="-2" pref="27" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Component id="jTabbedPanel" min="-2" pref="303" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                      <Component id="jTabbedPanel" min="-2" pref="329" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       <Component id="bUpdateAdminData" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -125,15 +125,19 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="bSave" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="SelectStudent" min="-2" pref="105" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="SelectSubject" min="-2" pref="171" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jSelectStudent" min="-2" pref="170" max="-2" attributes="0"/>
                                   <Component id="jStudentIndex" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
@@ -142,44 +146,45 @@
                               </Group>
                               <EmptySpace pref="85" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="T1" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" max="-2" attributes="0"/>
-                                              <Component id="jT1" min="-2" pref="40" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="T2" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jT2" min="-2" pref="40" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="Z2" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jZ2" min="-2" pref="40" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="Z1" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jZ1" min="-2" pref="40" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                  </Group>
                                   <Component id="jSelectStudentSubject" min="-2" pref="171" max="-2" attributes="0"/>
-                                  <Component id="bSave" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="Summary" max="32767" attributes="0"/>
-                                          <Component id="Grade" min="-2" pref="49" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="Summary" max="32767" attributes="0"/>
+                                              <Component id="Grade" min="-2" pref="49" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="jSummary" max="32767" attributes="0"/>
+                                              <Component id="jGrade" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jSummary" max="32767" attributes="0"/>
-                                          <Component id="jGrade" max="32767" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="T2" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jT2" pref="0" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="T1" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jT1" min="-2" pref="53" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="Z2" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jZ2" pref="0" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="Z1" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jZ1" min="-2" pref="53" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
                                       </Group>
                                   </Group>
                               </Group>
@@ -237,9 +242,9 @@
                               <Component id="jStudentJmbg" min="-2" pref="29" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace pref="33" max="32767" attributes="0"/>
                       <Component id="bSave" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="14" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -304,34 +309,42 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jT1">
+              <Events>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jT1PropertyChange"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJT1);"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jT1.setToolTipText(&quot;Unesite broj poena od 0-25&quot;);"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJT1 = NumberFormat.getInstance();&#xa;formatJT1.setGroupingUsed(false);&#xa;NumberFormatter formatterJT1 = new NumberFormatter(formatJT1);&#xa;formatterJT1.setValueClass(Integer.class);&#xa;formatterJT1.setMinimum(0);&#xa;formatterJT1.setMaximum(25);&#xa;formatterJT1.setAllowsInvalid(false);&#xa;formatterJT1.setCommitsOnValidEdit(true);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJT1 = DecimalFormat.getInstance();&#xa;formatJT1.setGroupingUsed(false);&#xa;NumberFormatter formatterJT1 = new NumberFormatter(formatJT1);&#xa;formatterJT1.setValueClass(Float.class);&#xa;formatterJT1.setMinimum(0.0F);&#xa;formatterJT1.setMaximum(25.0F);&#xa;formatterJT1.setCommitsOnValidEdit(true);"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fT1 = jT1.getFont();&#xd;&#xa;jT1.setFont(new Font(&#xd;&#xa;        jT1.getName(),&#xd;&#xa;        fT1.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="jT2">
+              <Events>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jT2PropertyChange"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJT2);"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jT2.setToolTipText(&quot;Unesite broj poena od 0-25&quot;);"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJT2 = NumberFormat.getInstance();&#xa;formatJT2.setGroupingUsed(false);&#xa;NumberFormatter formatterJT2 = new NumberFormatter(formatJT2);&#xa;formatterJT2.setValueClass(Integer.class);&#xa;formatterJT2.setMinimum(0);&#xa;formatterJT2.setMaximum(25);&#xa;formatterJT2.setAllowsInvalid(false);&#xa;formatterJT2.setCommitsOnValidEdit(true);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJT2 = DecimalFormat.getInstance();&#xa;formatJT2.setGroupingUsed(false);&#xa;NumberFormatter formatterJT2 = new NumberFormatter(formatJT2);&#xa;formatterJT2.setValueClass(Float.class);&#xa;formatterJT2.setMinimum(0.0F);&#xa;formatterJT2.setMaximum(25.0F);&#xa;formatterJT2.setCommitsOnValidEdit(true);"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fT2 = jT2.getFont();&#xd;&#xa;jT2.setFont(new Font(&#xd;&#xa;        jT2.getName(),&#xd;&#xa;        fT2.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="jZ1">
+              <Events>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jZ1PropertyChange"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJZ1);"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jZ1.setToolTipText(&quot;Unesite broj poena od 0-25&quot;);"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJZ1 = NumberFormat.getInstance();&#xa;formatJZ1.setGroupingUsed(false);&#xa;NumberFormatter formatterJZ1 = new NumberFormatter(formatJZ1);&#xa;formatterJZ1.setValueClass(Integer.class);&#xa;formatterJZ1.setMinimum(0);&#xa;formatterJZ1.setMaximum(25);&#xa;formatterJZ1.setAllowsInvalid(false);&#xa;formatterJZ1.setCommitsOnValidEdit(true);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJZ1 = DecimalFormat.getInstance();&#xa;formatJZ1.setGroupingUsed(false);&#xa;NumberFormatter formatterJZ1 = new NumberFormatter(formatJZ1);&#xa;formatterJZ1.setValueClass(Float.class);&#xa;formatterJZ1.setMinimum(0.0F);&#xa;formatterJZ1.setMaximum(25.0F);&#xa;formatterJZ1.setCommitsOnValidEdit(true);"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fZ1 = jZ1.getFont();&#xd;&#xa;jZ1.setFont(new Font(&#xd;&#xa;        jZ1.getName(),&#xd;&#xa;        fZ1.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="jZ2">
+              <Events>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jZ2PropertyChange"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJZ2);"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jZ2.setToolTipText(&quot;Unesite broj poena od 0-25&quot;);"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJZ2 = NumberFormat.getInstance();&#xa;formatJZ2.setGroupingUsed(false);&#xa;NumberFormatter formatterJZ2 = new NumberFormatter(formatJZ2);&#xa;formatterJZ2.setValueClass(Integer.class);&#xa;formatterJZ2.setMinimum(0);&#xa;formatterJZ2.setMaximum(25);&#xa;formatterJZ2.setAllowsInvalid(false);&#xa;formatterJZ2.setCommitsOnValidEdit(true);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJZ2 = DecimalFormat.getInstance();&#xa;formatJZ2.setGroupingUsed(false);&#xa;NumberFormatter formatterJZ2 = new NumberFormatter(formatJZ2);&#xa;formatterJZ2.setValueClass(Float.class);&#xa;formatterJZ2.setMinimum(0.0F);&#xa;formatterJZ2.setMaximum(25.0F);&#xa;formatterJZ2.setCommitsOnValidEdit(true);"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fZ2 = jZ2.getFont();&#xd;&#xa;jZ2.setFont(new Font(&#xd;&#xa;        jZ2.getName(),&#xd;&#xa;        fZ2.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
               </AuxValues>
             </Component>
@@ -359,6 +372,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Sacuvaj"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bSaveActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="bSave.setEnabled(false);&#xd;&#xa;"/>
               </AuxValues>
@@ -410,7 +426,7 @@
                       <Component id="jAdminFullname" min="-2" pref="29" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jAdminJmbg" min="-2" pref="29" max="-2" attributes="0"/>
-                      <EmptySpace pref="84" max="32767" attributes="0"/>
+                      <EmptySpace pref="110" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -544,7 +560,7 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="bNewUserSave" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="102" max="32767" attributes="0"/>
+                      <EmptySpace pref="128" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -698,7 +714,7 @@
                       <Component id="jStudentJmbg1" min="-2" pref="29" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jStudentIndex1" min="-2" pref="29" max="-2" attributes="0"/>
-                      <EmptySpace pref="49" max="32767" attributes="0"/>
+                      <EmptySpace pref="75" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

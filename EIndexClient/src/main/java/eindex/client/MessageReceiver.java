@@ -58,9 +58,7 @@ public class MessageReceiver implements Runnable {
             String message = (in.get("message") != null) ? in.get("message").toString() : "";
             String role = (in.get("role") != null) ? in.get("role").toString() : "";
             String method = (in.get("method") != null) ? in.get("method").toString() : "";
-            focusedScreen = (method.equalsIgnoreCase("login")) ?
-                    parent : (method.equalsIgnoreCase("refresh")) ?
-                    menu : null;
+            focusedScreen = parent.isEnabled() ? parent : menu.isEnabled() ? menu : null;
             
             if (status.contentEquals("") || message.contentEquals("") ||    // there always has to be status and message
                (status.charAt(0) == '2' && // if status code is 20X method and role must exist
@@ -96,6 +94,10 @@ public class MessageReceiver implements Runnable {
                         if (in.get("users") instanceof JSONArray jUsers) {
                             menu.updateData(jUsers);
                         }
+                    }
+                } else if (method.equalsIgnoreCase("updateSubject")) {
+                    if (menu instanceof AdminMenuScreen admenu) {
+                        admenu.updateSelectedSubject();
                     }
                 }
             }
