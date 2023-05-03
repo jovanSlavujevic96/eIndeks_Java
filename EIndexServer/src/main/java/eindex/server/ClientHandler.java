@@ -228,7 +228,38 @@ public class ClientHandler implements Runnable {
                     out.put("status", "401");
                     out.put("message", "Korisnik " + userName + " nema pristup ovoj metodi");
                 }
-            } else {
+            } else if (method.equalsIgnoreCase("crateNewUser")) {
+                if (user.getRole().equalsIgnoreCase("admin")) {
+                    JSONObject jNewUser = (JSONObject)in.get("new user");
+                    String newUsername = jNewUser.get("username").toString();
+                    
+                    if (dbHandler.readUserPer(newUsername, 0) != null) {
+                        out.put("status", "409");
+                        out.put("message", "Korisnik sa korisnickim imenom " + newUsername + " vec postoji");
+                        return out.toJSONString();
+                    }
+
+                    String newRole = jNewUser.get("role").toString();
+                    dbHandler.writeUser(new User(
+                            newUsername,
+                            jNewUser.get("password").toString(),
+                            newRole
+                    ));
+                    
+                    jNewUser.remove("password");
+                    jNewUser.put("subjects", new JSONArray()); // add empty JSON array
+                    
+                    dbHandler.writeUserIndex(jNewUser);
+
+                    out.put("status", "200");
+                    out.put("message", user.getRole() + " " + userName + " je uspesno kreirao korisnika (" + newRole + ") " + newUsername);
+                    out.put("role", user.getRole());
+                    out.put("method", "crateNewUser");
+                } else {
+                    out.put("status", "401");
+                    out.put("message", "Korisnik " + userName + " nema pristup ovoj metodi");
+                }
+            }else {
                 out.put("status", "405");
                 out.put("message", "Uneti zahtev nije podrzan ili ne postoji");
             }

@@ -12,7 +12,7 @@ public class User {
     private String username;
     private String password;
     private String role;
-    
+
     public User(String name, String pass, String rol) {
         username = name;
         password = pass;
@@ -29,5 +29,10 @@ public class User {
     
     public String getRole() {
         return role;
+    }
+    
+    @Override
+    public String toString() {
+        return username + ";" + password + ";" + role;
     }
 }

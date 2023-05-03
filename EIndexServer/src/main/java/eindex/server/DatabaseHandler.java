@@ -5,6 +5,7 @@
 package eindex.server;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -68,6 +69,9 @@ public class DatabaseHandler {
             if (line == null) {
                 break;
             }
+            if (line.contentEquals("")) {
+                continue; // empty line due to new line addition
+            }
             String[] userInfo = line.split(";");
             if (userInfo.length == 3) {
                 if (userInfo[data_index].contentEquals(data)) {
@@ -79,6 +83,16 @@ public class DatabaseHandler {
             }
         }
         return null;
+    }
+
+    static private BufferedWriter createUsersBw(boolean append) throws IOException {
+        return new BufferedWriter(new FileWriter("./data/" + USERS_FILENAME, append));
+    }
+    
+    public void writeUser(User user) throws IOException {
+        try (BufferedWriter bw = createUsersBw(true)) {
+            bw.write("\n" + user.toString());
+        }
     }
     
     static private FileReader createIndexFr() throws FileNotFoundException {
@@ -137,6 +151,21 @@ public class DatabaseHandler {
         targetSubject.put("Z1", subject.get("Z1"));
         targetSubject.put("Z2", subject.get("Z2"));
         
+        //Write JSON file
+        try (FileWriter file = new FileWriter("./data/" + USERS_INDEX_FILENAME)) {
+            //We can write any JSONArray or JSONObject instance to the file
+            file.write(array.toJSONString()); 
+            file.flush();
+        } catch (IOException e) {
+            // just disclaimer for exception
+            throw e;
+        }
+    }
+    
+    public void writeUserIndex(JSONObject user) throws IOException, ParseException {
+        JSONArray array = readAllUserIndex();
+        array.add(user);
+
         //Write JSON file
         try (FileWriter file = new FileWriter("./data/" + USERS_INDEX_FILENAME)) {
             //We can write any JSONArray or JSONObject instance to the file
