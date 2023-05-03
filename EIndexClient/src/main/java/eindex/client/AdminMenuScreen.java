@@ -9,6 +9,9 @@ import java.awt.Font;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.NumberFormatter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -87,6 +90,33 @@ public class AdminMenuScreen extends MenuScreen {
 
         // filling Student tab
         updateSelectedStudent();
+        
+        // filling Admin tab
+        updateSelectedAdmin();
+        
+        // filling NewUser tab
+    }
+    
+    void updateSelectedAdmin() {
+        String selectedAdmin = getSelectedString(jSelectAdmin);
+
+        if (selectedAdmin != null) {
+            for (Object admin : jAdmins) {
+                JSONObject jAdmin = (JSONObject)admin;
+                if (jAdmin.get("username").toString().equalsIgnoreCase(selectedAdmin)) {
+                    jAdminFullname.setText(jAdmin.get("first name").toString() + " " + jAdmin.get("last name").toString());
+                    jAdminFullname.setToolTipText("Puno ime");
+                    jAdminJmbg.setText(jAdmin.get("jmbg").toString());
+                    jAdminJmbg.setToolTipText("JMBG");
+                    break;
+                }
+            }
+        } else {
+            jAdminFullname.setText("");
+            jAdminFullname.setToolTipText("");
+            jAdminJmbg.setText("");
+            jAdminJmbg.setToolTipText("");
+        }
     }
     
     void updateSelectedStudent() {
@@ -264,6 +294,28 @@ public class AdminMenuScreen extends MenuScreen {
             return false;
         }
     }
+    
+    private boolean isEverythingFilledForNewUser() {
+        if (jNewUserName.getText().contentEquals("")) {
+            return false;
+        } else if (jNewFirstName.getText().contentEquals("")) {
+            return false;
+        } else if (jNewLastName.getText().contentEquals("")) {
+            return false;
+        } else if (jNewJmbg.getText().contentEquals("")) {
+            return false;
+        } else if (jNewPassword.getText().contentEquals("")) {
+            return false;
+        } else if (jRepeatNewPassword.getText().contentEquals("")) {
+            return false;
+        } else if (jSelectNewRole.getSelectedItem() == null) {
+            return false;
+        } else if (jSelectNewRole.getSelectedItem().toString().equalsIgnoreCase("student")) {
+            return !jNewIndex.getText().contentEquals("");
+        } else {
+            return true;
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -387,8 +439,41 @@ public class AdminMenuScreen extends MenuScreen {
         jNewUserName = new javax.swing.JTextField();
         jSelectNewRole = new javax.swing.JComboBox<>();
         jNewPassword = new javax.swing.JTextField();
+        // Listen for changes in the text
+        jNewPassword.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                act();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                act();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                act();
+            }
+
+            public void act() {
+                bNewUserSave.setEnabled(isEverythingFilledForNewUser());
+            }
+        });
         jRepeatNewPassword = new javax.swing.JTextField();
+        // Listen for changes in the text
+        jRepeatNewPassword.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                act();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                act();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                act();
+            }
+
+            public void act() {
+                bNewUserSave.setEnabled(isEverythingFilledForNewUser());
+            }
+        });
         bNewUserSave = new javax.swing.JButton();
+        bNewUserSave.setEnabled(false);
         jNewSubjectPanel = new javax.swing.JPanel();
         SelectStudent1 = new javax.swing.JLabel();
         jSelectStudent1 = new javax.swing.JComboBox<>();
@@ -592,6 +677,12 @@ public class AdminMenuScreen extends MenuScreen {
 
         SelectAdmin.setText("Izaberite Admina");
 
+        jSelectAdmin.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jSelectAdminItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jAdminPanelLayout = new javax.swing.GroupLayout(jAdminPanel);
         jAdminPanel.setLayout(jAdminPanelLayout);
         jAdminPanelLayout.setHorizontalGroup(
@@ -636,6 +727,74 @@ public class AdminMenuScreen extends MenuScreen {
 
         NewIndex.setText("Indeks:");
 
+        // Listen for changes in the text
+        jNewFirstName.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                act();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                act();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                act();
+            }
+
+            public void act() {
+                bNewUserSave.setEnabled(isEverythingFilledForNewUser());
+            }
+        });
+
+        // Listen for changes in the text
+        jNewLastName.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                act();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                act();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                act();
+            }
+
+            public void act() {
+                bNewUserSave.setEnabled(isEverythingFilledForNewUser());
+            }
+        });
+
+        // Listen for changes in the text
+        jNewJmbg.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                act();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                act();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                act();
+            }
+
+            public void act() {
+                bNewUserSave.setEnabled(isEverythingFilledForNewUser());
+            }
+        });
+
+        // Listen for changes in the text
+        jNewIndex.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                act();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                act();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                act();
+            }
+
+            public void act() {
+                bNewUserSave.setEnabled(isEverythingFilledForNewUser());
+            }
+        });
+
         NewUserName.setText("Korisnicko ime:");
 
         Role.setText("Rola:");
@@ -644,8 +803,38 @@ public class AdminMenuScreen extends MenuScreen {
 
         RepeatNewPassword.setText("Ponovite lozinku:");
 
+        // Listen for changes in the text
+        jNewUserName.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                act();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                act();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                act();
+            }
+
+            public void act() {
+                bNewUserSave.setEnabled(isEverythingFilledForNewUser());
+            }
+        });
+
+        jSelectNewRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Student", "Admin" }));
+        jSelectNewRole.setName(""); // NOI18N
+        jSelectNewRole.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jSelectNewRoleItemStateChanged(evt);
+            }
+        });
+
         bNewUserSave.setText("Sacuvaj");
         bSave.setEnabled(false);
+        bNewUserSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bNewUserSaveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jNewUserPanelLayout = new javax.swing.GroupLayout(jNewUserPanel);
         jNewUserPanel.setLayout(jNewUserPanelLayout);
@@ -913,6 +1102,77 @@ public class AdminMenuScreen extends MenuScreen {
         pw.println(req);
         bSave.setEnabled(false);
     }//GEN-LAST:event_bSaveActionPerformed
+
+    private void jSelectAdminItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jSelectAdminItemStateChanged
+        // TODO add your handling code here:
+        updateSelectedAdmin();
+    }//GEN-LAST:event_jSelectAdminItemStateChanged
+
+    private void jSelectNewRoleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jSelectNewRoleItemStateChanged
+        // TODO add your handling code here:
+        if (jSelectNewRole.getSelectedItem().toString().equalsIgnoreCase("student")) {
+            jNewIndex.setEnabled(true);
+        } else {
+            jNewIndex.setText("");
+            jNewIndex.setEnabled(false);
+        }
+        
+        bNewUserSave.setEnabled(isEverythingFilledForNewUser());
+    }//GEN-LAST:event_jSelectNewRoleItemStateChanged
+
+    private void bNewUserSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNewUserSaveActionPerformed
+        // TODO add your handling code here:
+        if (isEverythingFilledForNewUser()) {
+            // verification of data
+            String newPassword = jNewPassword.getText();
+            if (!jRepeatNewPassword.getText().contentEquals(newPassword)) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Unete lozinke se razlikuju... Potrebno je uneti dva puta istu lozinku",
+                    "Pogresna lozinka",
+                    JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+            
+            String newRole = jSelectNewRole.getSelectedItem().toString().toLowerCase();
+            if (newRole.contentEquals("student")) {
+                if (!jNewIndex.getText().matches("[E][1-3][/](20[0-1]\\d|20[2][0-3])")) {
+                    JOptionPane.showMessageDialog(
+                        this, 
+                        """
+                            Unteti indeks je u pogresnom formatu..
+                            Ispravan format je EX/YYYY.
+                            X je broj 1-3
+                            YYYY je godina studije (2000-2023)
+                        """,
+                        "Pogresan indeks",
+                        JOptionPane.ERROR_MESSAGE
+                    );
+                    return;
+                }
+            }
+            
+            JSONObject req = new JSONObject();
+            req.put("method", "crateNewUser");
+            req.put("username", userName);
+            
+            JSONObject newUser = new JSONObject();
+            newUser.put("role", newRole);
+            newUser.put("username", jNewUserName.getText());
+            newUser.put("first name", jNewFirstName.getText());
+            newUser.put("last name", jNewLastName.getText());
+            newUser.put("jmbg", jNewJmbg.getText());
+            if (newRole.contentEquals("student")) {
+                newUser.put("index", jNewIndex.getText());
+            }
+            newUser.put("password", newPassword);
+            
+            req.put("new user", newUser);
+            pw.println(req);
+            bNewUserSave.setEnabled(false);
+        }
+    }//GEN-LAST:event_bNewUserSaveActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

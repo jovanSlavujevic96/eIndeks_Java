@@ -96,4 +96,13 @@
 		"last name" : "Tanovic",
 		"jmbg" : "0904986004400",
 	},
+	{
+		"role" : "student",
+		"username" : "mmiric",
+		"first name" : "Mitar",
+		"last name" : "Miric",
+		"jmbg" : "1601957425508",
+		"index" : "E1/2003",
+		"subjects" : [],
+	},
 ]

@@ -438,6 +438,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="jSelectAdmin">
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jSelectAdminItemStateChanged"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -587,12 +590,24 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jNewFirstName">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// Listen for changes in the text&#xd;&#xa;jNewFirstName.getDocument().addDocumentListener(new DocumentListener() {&#xd;&#xa;  public void changedUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;  public void removeUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;  public void insertUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;&#xd;&#xa;  public void act() {&#xd;&#xa;    bNewUserSave.setEnabled(isEverythingFilledForNewUser());&#xd;&#xa;  }&#xd;&#xa;});"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="jNewLastName">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;jNewLastName.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        bNewUserSave.setEnabled(isEverythingFilledForNewUser());&#xa;    }&#xa;});"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="jNewJmbg">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;jNewJmbg.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        bNewUserSave.setEnabled(isEverythingFilledForNewUser());&#xa;    }&#xa;});"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="jNewIndex">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;jNewIndex.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        bNewUserSave.setEnabled(isEverythingFilledForNewUser());&#xa;    }&#xa;});"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="NewUserName">
               <Properties>
@@ -615,21 +630,46 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jNewUserName">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;jNewUserName.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        bNewUserSave.setEnabled(isEverythingFilledForNewUser());&#xa;    }&#xa;});"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JComboBox" name="jSelectNewRole">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="2">
+                    <StringItem index="0" value="Student"/>
+                    <StringItem index="1" value="Admin"/>
+                  </StringArray>
+                </Property>
+                <Property name="name" type="java.lang.String" value="" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jSelectNewRoleItemStateChanged"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="jNewPassword">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;jNewPassword.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        bNewUserSave.setEnabled(isEverythingFilledForNewUser());&#xa;    }&#xa;});"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="jRepeatNewPassword">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;jRepeatNewPassword.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        bNewUserSave.setEnabled(isEverythingFilledForNewUser());&#xa;    }&#xa;});"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JButton" name="bNewUserSave">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Sacuvaj"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bNewUserSaveActionPerformed"/>
+              </Events>
               <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="bNewUserSave.setEnabled(false);"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="bSave.setEnabled(false);&#xd;&#xa;"/>
               </AuxValues>
             </Component>
