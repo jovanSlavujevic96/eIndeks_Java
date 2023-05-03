@@ -89,5 +89,11 @@
 			},
 		],
 	},
+	{
+		"role" : "admin",
+		"username" : "zireT",
+		"first name" : "Zivorad",
+		"last name" : "Tanovic",
+		"jmbg" : "0904986004400",
+	},
 ]
-			
