@@ -162,6 +162,7 @@ public class ClientHandler implements Runnable {
                         out.put("message", user.getRole() + " " + userName + " je uspesno prijavljen");
                         out.put("role", role);
                         out.put("method", "login");
+                        out.put("background", in.get("background"));
 
                         if (role.equalsIgnoreCase("student")) {
                             JSONObject studentInfo = dbHandler.readUserIndexPer(userName, "username");
@@ -193,6 +194,7 @@ public class ClientHandler implements Runnable {
                 out.put("status", "200");
                 out.put("role", user.getRole());
                 out.put("method", "refresh");
+                out.put("background", in.get("background"));
                 if (user.getRole().equalsIgnoreCase("student")) {
                     out.put("message", "Student " + userName + " je uspesno osvezio predmete");
 
@@ -224,6 +226,7 @@ public class ClientHandler implements Runnable {
                     out.put("message", user.getRole() + " " + userName + " je uspesno azurirao ocenu " + subjectName + " za " + student);
                     out.put("role", user.getRole());
                     out.put("method", "updateSubject");
+                    out.put("background", in.get("background"));
                 } else {
                     out.put("status", "401");
                     out.put("message", "Korisnik " + userName + " nema pristup ovoj metodi");
@@ -255,6 +258,7 @@ public class ClientHandler implements Runnable {
                     out.put("message", user.getRole() + " " + userName + " je uspesno kreirao korisnika (" + newRole + ") " + newUsername);
                     out.put("role", user.getRole());
                     out.put("method", "crateNewUser");
+                    out.put("background", in.get("background"));
                 } else {
                     out.put("status", "401");
                     out.put("message", "Korisnik " + userName + " nema pristup ovoj metodi");

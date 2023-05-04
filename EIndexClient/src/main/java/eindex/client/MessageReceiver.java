@@ -61,7 +61,7 @@ public class MessageReceiver implements Runnable {
             focusedScreen = parent.isEnabled() ? parent : menu.isEnabled() ? menu : null;
             
             if (status.contentEquals("") || message.contentEquals("") ||    // there always has to be status and message
-               (status.charAt(0) == '2' && // if status code is 20X method and role must exist
+               (status.charAt(0) == '2' && // if status code is 20X -> method and role must exist
                     (method.contentEquals("") || role.contentEquals("")))) {
                 JOptionPane.showMessageDialog(
                     focusedScreen,
@@ -69,6 +69,10 @@ public class MessageReceiver implements Runnable {
                     "Bez statusa",
                     JOptionPane.WARNING_MESSAGE
                 );
+            } else if (status.charAt(0) == '2' &&
+                       in.get("background") != null &&
+                       in.get("background").toString().equalsIgnoreCase("true")) {
+                // if there is a background attribute do not show nothing
             } else {
                 JOptionPane.showMessageDialog(
                     focusedScreen,
@@ -103,7 +107,10 @@ public class MessageReceiver implements Runnable {
                     }
                 } else if (method.equalsIgnoreCase("crateNewUser")) {
                     if (role.equalsIgnoreCase("admin")) {
-                        return menu.formRefreshDataReq();
+                        // request refresh because of new user
+                        JSONObject refreshDataReq = menu.formRefreshDataReq();
+                        refreshDataReq.put("background", "true");
+                        return refreshDataReq.toJSONString();
                     }
                 }
             }
