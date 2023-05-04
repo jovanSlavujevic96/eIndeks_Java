@@ -219,6 +219,13 @@ public class ClientHandler implements Runnable {
                 if (user.getRole().equalsIgnoreCase("admin")) {
                     JSONObject jSubject = (JSONObject)in.get("subject");
                     String student = in.get("target username").toString();
+
+                    if (dbHandler.readUserPer(student, 0) == null) {
+                        out.put("status", "404");
+                        out.put("message", "Student sa korisnickim imenom " + student + " ne postoji");
+                        return out.toJSONString();
+                    }
+
                     dbHandler.updateUserIndexSubject(jSubject, student);
                     
                     out.put("status", "200");
@@ -263,7 +270,43 @@ public class ClientHandler implements Runnable {
                     out.put("status", "401");
                     out.put("message", "Korisnik " + userName + " nema pristup ovoj metodi");
                 }
-            }else {
+            } else if (method.equalsIgnoreCase("addNewSubject")) {
+                if (user.getRole().equalsIgnoreCase("admin")) {
+                    String student = in.get("target username").toString();
+                    String newSubject = in.get("subject").toString();
+
+                    if (dbHandler.readUserPer(student, 0) == null) {
+                        out.put("status", "404");
+                        out.put("message", "Student sa korisnickim imenom " + student + " ne postoji");
+                        return out.toJSONString();
+                    }
+                    
+                    JSONObject jStudent = dbHandler.readUserIndexPer(student, "username");
+                    for (Object subject : (JSONArray)jStudent.get("subjects")) {
+                        JSONObject jSubject = (JSONObject)subject;
+                        if (jSubject.get("subject").toString().equalsIgnoreCase(newSubject)) {
+                            out.put("status", "409");
+                            out.put("message", "Korisnik vec poseduje predmet " + newSubject + " u bazi");
+                            return out.toJSONString();
+                        }
+                    }
+                    
+                    JSONObject jSubject = new JSONObject();
+                    jSubject.put("subject", in.get("subject"));
+                    jSubject.put("T1", "0");
+                    jSubject.put("T2", "0");
+                    jSubject.put("Z1", "0");
+                    jSubject.put("Z2", "0");
+                    dbHandler.addSubjectToUserIndex(jSubject, student);
+
+                    out.put("status", "200");
+                    String subjectName = jSubject.get("subject").toString();
+                    out.put("message", user.getRole() + " " + userName + " je uspesno dodao predmet " + subjectName + " za " + student);
+                    out.put("role", user.getRole());
+                    out.put("method", "addNewSubject");
+                    out.put("background", in.get("background"));
+                }
+            } else {
                 out.put("status", "405");
                 out.put("message", "Uneti zahtev nije podrzan ili ne postoji");
             }

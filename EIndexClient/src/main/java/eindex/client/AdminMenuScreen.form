@@ -798,11 +798,17 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jInputNewSubject">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;jInputNewSubject.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        bNewSubjectSave.setEnabled(&#xa;            !jInputNewSubject&#xa;                .getText()&#xa;                .contentEquals(&quot;&quot;)&#xa;        );&#xa;    }&#xa;});"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JButton" name="bNewSubjectSave">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Sacuvaj"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bNewSubjectSaveActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="bSave.setEnabled(false);&#xd;&#xa;"/>
               </AuxValues>

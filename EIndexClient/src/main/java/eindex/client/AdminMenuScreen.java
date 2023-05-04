@@ -483,6 +483,26 @@ public class AdminMenuScreen extends MenuScreen {
         jStudentIndex.setToolTipText("Indeks");
         jLabel1 = new javax.swing.JLabel();
         jInputNewSubject = new javax.swing.JTextField();
+        // Listen for changes in the text
+        jInputNewSubject.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                act();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                act();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                act();
+            }
+
+            public void act() {
+                bNewSubjectSave.setEnabled(
+                    !jInputNewSubject
+                    .getText()
+                    .contentEquals("")
+                );
+            }
+        });
         bNewSubjectSave = new javax.swing.JButton();
         bUpdateAdminData = new javax.swing.JButton();
 
@@ -933,6 +953,11 @@ public class AdminMenuScreen extends MenuScreen {
 
         bNewSubjectSave.setText("Sacuvaj");
         bSave.setEnabled(false);
+        bNewSubjectSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bNewSubjectSaveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jNewSubjectPanelLayout = new javax.swing.GroupLayout(jNewSubjectPanel);
         jNewSubjectPanel.setLayout(jNewSubjectPanelLayout);
@@ -1173,6 +1198,22 @@ public class AdminMenuScreen extends MenuScreen {
             bNewUserSave.setEnabled(false);
         }
     }//GEN-LAST:event_bNewUserSaveActionPerformed
+
+    private void bNewSubjectSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNewSubjectSaveActionPerformed
+        // TODO add your handling code here:
+        String selectedStudent = getSelectedString(jSelectStudent1);
+        if (selectedStudent != null) {
+            JSONObject req = new JSONObject();
+            req.put("method", "addNewSubject");
+            req.put("username", userName);
+
+            req.put("target username", selectedStudent);
+            req.put("subject", jInputNewSubject.getText());
+
+            pw.println(req);
+            bNewSubjectSave.setEnabled(false);
+        }
+    }//GEN-LAST:event_bNewSubjectSaveActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

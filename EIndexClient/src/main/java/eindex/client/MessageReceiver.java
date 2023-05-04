@@ -8,11 +8,8 @@ package eindex.client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.json.simple.JSONArray;
@@ -105,7 +102,8 @@ public class MessageReceiver implements Runnable {
                     if (menu instanceof AdminMenuScreen admenu) {
                         admenu.updateSelectedSubject();
                     }
-                } else if (method.equalsIgnoreCase("crateNewUser")) {
+                } else if (method.equalsIgnoreCase("crateNewUser") ||
+                           method.equalsIgnoreCase("addNewSubject")) {
                     if (role.equalsIgnoreCase("admin")) {
                         // request refresh because of new user
                         JSONObject refreshDataReq = menu.formRefreshDataReq();

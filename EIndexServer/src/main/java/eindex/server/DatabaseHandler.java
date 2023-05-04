@@ -167,6 +167,29 @@ public class DatabaseHandler {
         file.close();
     }
     
+    public void addSubjectToUserIndex(JSONObject subject, String username) throws IOException, ParseException {
+        JSONArray array = readAllUserIndex();
+        JSONObject user = null;
+        for (Object obj : array) {
+            JSONObject jObj = (JSONObject)obj;
+            if (jObj.get("username").toString().equalsIgnoreCase(username)) {
+                user = jObj;
+                break;
+            }
+        }
+        if (user == null) {
+            // should not happen
+            throw new IOException("There is missing user " + username + " from eIndex database");
+        }
+        
+        ((JSONArray)user.get("subjects")).add(subject);
+
+        FileWriter file = new FileWriter("./data/" + USERS_INDEX_FILENAME);
+        file.write(array.toJSONString()); 
+        file.flush();
+        file.close();
+    }
+    
     public void writeUserIndex(JSONObject user) throws IOException, ParseException {
         JSONArray array = readAllUserIndex();
         array.add(user);
