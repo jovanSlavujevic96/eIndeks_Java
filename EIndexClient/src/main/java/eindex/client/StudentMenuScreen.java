@@ -41,10 +41,7 @@ public class StudentMenuScreen extends MenuScreen {
     }
     
     final void setSubjects(JSONArray jSubjects) {
-        String selectedSub = null;
-        if(jSelectSubject.getSelectedItem() != null) {
-            selectedSub = jSelectSubject.getSelectedItem().toString();
-        }
+        String selectedSub = getSelectedString(jSelectSubject);
         
         jSelectSubject.setModel(new DefaultComboBoxModel<>());
         
@@ -62,49 +59,64 @@ public class StudentMenuScreen extends MenuScreen {
     }
     
     void updateExamResults() {
-        String selectedSub = jSelectSubject.getSelectedItem().toString();
-        for (Object sub : jSubjects) {
-            JSONObject jSub = (JSONObject)sub;
-            if (jSub.get("subject").toString().contentEquals(selectedSub)) {
-                jT1.setText(jSub.get("T1").toString());
-                jT2.setText(jSub.get("T2").toString());
-                jZ1.setText(jSub.get("Z1").toString());
-                jZ2.setText(jSub.get("Z2").toString());
-                break;
+        String selectedSub = getSelectedString(jSelectSubject);
+        if (selectedSub != null) {
+            for (Object sub : jSubjects) {
+                JSONObject jSub = (JSONObject)sub;
+                if (jSub.get("subject").toString().contentEquals(selectedSub)) {
+                    jT1.setText(jSub.get("T1").toString());
+                    jT2.setText(jSub.get("T2").toString());
+                    jZ1.setText(jSub.get("Z1").toString());
+                    jZ2.setText(jSub.get("Z2").toString());
+                    break;
+                }
             }
-        }
-        
-        try {
-            float t1 = Float.parseFloat(jT1.getText());
-            jT1.setForeground((t1 >= 12.5) ? Color.green : Color.red);
-            
-            float t2 = Float.parseFloat(jT2.getText());
-            jT2.setForeground((t2 >= 12.5) ? Color.green : Color.red);
-            
-            float z1 = Float.parseFloat(jZ1.getText());
-            jZ1.setForeground((z1 >= 12.5) ? Color.green : Color.red);
-            
-            float z2 = Float.parseFloat(jZ2.getText());
-            jZ2.setForeground((z2 >= 12.5) ? Color.green : Color.red);
-            
-            float points = t1 + t2 + z1 + z2;
-            int grade = (t1 < 12.5 || t2 < 12.5 || z1 < 12.5 || z2 < 12.5 || points < 51) ?
-                    5 : (points < 61) ? 6 : (points < 71) ?
-                    7 : (points < 81) ? 8 : (points < 91) ? 9 : 10;
-            
-            if (grade == 5) {
-                jSummary.setForeground(Color.red);
-                jGrade.setForeground(Color.red);
-            } else {
-                jSummary.setForeground(Color.green);
-                jGrade.setForeground(Color.green);
+
+            try {
+                float t1 = Float.parseFloat(jT1.getText());
+                jT1.setForeground((t1 >= 12.5) ? Color.green : Color.red);
+
+                float t2 = Float.parseFloat(jT2.getText());
+                jT2.setForeground((t2 >= 12.5) ? Color.green : Color.red);
+
+                float z1 = Float.parseFloat(jZ1.getText());
+                jZ1.setForeground((z1 >= 12.5) ? Color.green : Color.red);
+
+                float z2 = Float.parseFloat(jZ2.getText());
+                jZ2.setForeground((z2 >= 12.5) ? Color.green : Color.red);
+
+                float points = t1 + t2 + z1 + z2;
+                int grade = (t1 < 12.5 || t2 < 12.5 || z1 < 12.5 || z2 < 12.5 || points < 51) ?
+                        5 : (points < 61) ? 6 : (points < 71) ?
+                        7 : (points < 81) ? 8 : (points < 91) ? 9 : 10;
+
+                if (grade == 5) {
+                    jSummary.setForeground(Color.red);
+                    jGrade.setForeground(Color.red);
+                } else {
+                    jSummary.setForeground(Color.green);
+                    jGrade.setForeground(Color.green);
+                }
+
+                jSummary.setText(Float.toString(points));
+                jGrade.setText(Integer.toString(grade));
             }
-            
-            jSummary.setText(Float.toString(points));
-            jGrade.setText(Integer.toString(grade));
-        }
-        catch (NumberFormatException e) {
-            // should not happen
+            catch (NumberFormatException e) {
+                // should not happen
+            }
+        } else {
+            jT1.setText("");
+            jT1.setForeground(Color.black);
+            jT2.setText("");
+            jT2.setForeground(Color.black);
+            jZ1.setText("");
+            jZ1.setForeground(Color.black);
+            jZ2.setText("");
+            jZ2.setForeground(Color.black);
+            jSummary.setText("");
+            jSummary.setForeground(Color.black);
+            jGrade.setText("");
+            jGrade.setForeground(Color.black);
         }
     }
 

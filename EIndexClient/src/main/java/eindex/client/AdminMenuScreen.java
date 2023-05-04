@@ -93,8 +93,6 @@ public class AdminMenuScreen extends MenuScreen {
         
         // filling Admin tab
         updateSelectedAdmin();
-        
-        // filling NewUser tab
     }
     
     void updateSelectedAdmin() {
@@ -119,6 +117,38 @@ public class AdminMenuScreen extends MenuScreen {
         }
     }
     
+    void resetCategory() {
+        jSelectStudentSubject.setModel(new DefaultComboBoxModel<>());
+
+        jT1.setText("");
+        jT1.setEnabled(false);
+        jT2.setText("");
+        jT2.setEnabled(false);
+        jZ1.setText("");
+        jZ1.setEnabled(false);
+        jZ2.setText("");
+        jZ2.setEnabled(false);
+        jSummary.setForeground(Color.black);
+        jSummary.setText("");
+        jSummary.setEnabled(false);
+        jGrade.setForeground(Color.black);
+        jGrade.setText("");
+        jGrade.setEnabled(false);
+        
+        bSave.setEnabled(false);
+    }
+    
+    void resetStudentInfo() {
+        jStudentFullname.setText("");
+        jStudentFullname.setToolTipText("");
+        jStudentIndex.setText("");
+        jStudentIndex.setToolTipText("");
+        jStudentJmbg.setText("");
+        jStudentJmbg.setToolTipText("");
+
+        resetCategory();
+    }
+    
     void updateSelectedStudent() {
         String selectedStudent = getSelectedString(jSelectStudent);
         
@@ -136,7 +166,7 @@ public class AdminMenuScreen extends MenuScreen {
                 }
             }
             if (jSelectedStudent == null) {
-                // not possible
+                resetStudentInfo();
                 return;
             }
             jStudentFullname.setText(jSelectedStudent.get("first name").toString() +
@@ -174,29 +204,7 @@ public class AdminMenuScreen extends MenuScreen {
             updateSelectedSubject();
         } else {
             // reset
-            jStudentFullname.setText("");
-            jStudentFullname.setToolTipText("");
-            jStudentIndex.setText("");
-            jStudentIndex.setToolTipText("");
-            jStudentJmbg.setText("");
-            jStudentJmbg.setToolTipText("");
-
-            jSelectStudentSubject.setModel(new DefaultComboBoxModel<>());
-            
-            jT1.setText("");
-            jT1.setEnabled(false);
-            jT2.setText("");
-            jT2.setEnabled(false);
-            jZ1.setText("");
-            jZ1.setEnabled(false);
-            jZ2.setText("");
-            jZ2.setEnabled(false);
-            jSummary.setForeground(Color.black);
-            jSummary.setText("");
-            jSummary.setEnabled(false);
-            jGrade.setForeground(Color.black);
-            jGrade.setText("");
-            jGrade.setEnabled(false);
+            resetStudentInfo();
         }
     }
     
@@ -218,6 +226,7 @@ public class AdminMenuScreen extends MenuScreen {
 
             if (jSelectedSubject == null) {
                 // not possible
+                resetCategory();
                 return;
             }
             jT1.setEnabled(true);
@@ -232,6 +241,9 @@ public class AdminMenuScreen extends MenuScreen {
             jZ2.setEnabled(true);
             jZ2.setText(jSelectedSubject.get("Z2").toString());
             jZ2.setToolTipText("Unesite broj poena od 0-25");
+
+            jSummary.setEnabled(true);
+            jGrade.setEnabled(true);
 
             try {
                 float t1 = Float.parseFloat(jT1.getText());
@@ -260,22 +272,7 @@ public class AdminMenuScreen extends MenuScreen {
             }
         } else {
             // reset
-            jSelectStudentSubject.setModel(new DefaultComboBoxModel<>());
-            
-            jT1.setText("");
-            jT1.setEnabled(false);
-            jT2.setText("");
-            jT2.setEnabled(false);
-            jZ1.setText("");
-            jZ1.setEnabled(false);
-            jZ2.setText("");
-            jZ2.setEnabled(false);
-            jSummary.setForeground(Color.black);
-            jSummary.setText("");
-            jSummary.setEnabled(false);
-            jGrade.setForeground(Color.black);
-            jGrade.setText("");
-            jGrade.setEnabled(false);
+            resetCategory();
         }
     }
     

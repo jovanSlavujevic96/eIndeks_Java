@@ -27,82 +27,92 @@ public class DatabaseHandler {
     
     public DatabaseHandler() {}
     
-    static private BufferedReader createUsersBr() throws FileNotFoundException {
-        return new BufferedReader(new FileReader("./data/" + USERS_FILENAME));
-    }
-    
     public Collection<User> readAllUsers() throws IOException {
-        BufferedReader br = createUsersBr();
+        FileReader fr = new FileReader("./data/" + USERS_FILENAME);
+        BufferedReader br = new BufferedReader(fr);
+
         Collection<User> users = new ArrayList<>();
         String line;
         while (true) {
             try {
                 line = br.readLine();
             } catch (IOException ex) {
+                fr.close();
                 br.close();
                 throw ex;
             }
+
             if (line == null) {
-                break;
+                break; // EOL
+            } else if (line.contentEquals("")) {
+                continue; // empty line due to new line addition
             }
+
             String[] userInfo = line.split(";");
             if (userInfo.length == 3) {
                 users.add(new User(userInfo[0], userInfo[1], userInfo[2]));
             } else {
+                fr.close();
                 br.close();
                 throw new IOException("There is missing/too much user info");
             }
         }
+
+        fr.close();
+        br.close();
         return users;
     }
     
     public User readUserPer(String data, int data_index) throws IOException {
-        BufferedReader br = createUsersBr();
+        FileReader fr = new FileReader("./data/" + USERS_FILENAME);
+        BufferedReader br = new BufferedReader(fr);
+
         String line;
         while (true) {
             try {
                 line = br.readLine();
             } catch (IOException ex) {
+                fr.close();
                 br.close();
                 throw ex;
             }
+
             if (line == null) {
-                break;
-            }
-            if (line.contentEquals("")) {
+                break; // EOL
+            } else if (line.contentEquals("")) {
                 continue; // empty line due to new line addition
             }
+
             String[] userInfo = line.split(";");
             if (userInfo.length == 3) {
                 if (userInfo[data_index].contentEquals(data)) {
+                    fr.close();
+                    br.close();
                     return new User(userInfo[0], userInfo[1], userInfo[2]);
                 }
             } else {
+                fr.close();
                 br.close();
                 throw new IOException("There is missing/too much user info");
             }
         }
-        return null;
-    }
 
-    static private BufferedWriter createUsersBw(boolean append) throws IOException {
-        return new BufferedWriter(new FileWriter("./data/" + USERS_FILENAME, append));
+        fr.close();
+        br.close();
+        return null;
     }
     
     public void writeUser(User user) throws IOException {
-        try (BufferedWriter bw = createUsersBw(true)) {
-            bw.write("\n" + user.toString());
-        }
-    }
-    
-    static private FileReader createIndexFr() throws FileNotFoundException {
-        return new FileReader("./data/" + USERS_INDEX_FILENAME);
+        FileWriter fw = new FileWriter("./data/" + USERS_FILENAME, true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write("\n" + user.toString());
+        bw.close();
     }
     
     public JSONArray readAllUserIndex() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
         JSONArray out;
-        try (FileReader fr = createIndexFr()) {
+        try (FileReader fr = new FileReader("./data/" + USERS_INDEX_FILENAME)) {
             out = (JSONArray)parser.parse(fr);
         }
         return out;
@@ -151,29 +161,19 @@ public class DatabaseHandler {
         targetSubject.put("Z1", subject.get("Z1"));
         targetSubject.put("Z2", subject.get("Z2"));
         
-        //Write JSON file
-        try (FileWriter file = new FileWriter("./data/" + USERS_INDEX_FILENAME)) {
-            //We can write any JSONArray or JSONObject instance to the file
-            file.write(array.toJSONString()); 
-            file.flush();
-        } catch (IOException e) {
-            // just disclaimer for exception
-            throw e;
-        }
+        FileWriter file = new FileWriter("./data/" + USERS_INDEX_FILENAME);
+        file.write(array.toJSONString()); 
+        file.flush();
+        file.close();
     }
     
     public void writeUserIndex(JSONObject user) throws IOException, ParseException {
         JSONArray array = readAllUserIndex();
         array.add(user);
 
-        //Write JSON file
-        try (FileWriter file = new FileWriter("./data/" + USERS_INDEX_FILENAME)) {
-            //We can write any JSONArray or JSONObject instance to the file
-            file.write(array.toJSONString()); 
-            file.flush();
-        } catch (IOException e) {
-            // just disclaimer for exception
-            throw e;
-        }
+        FileWriter file = new FileWriter("./data/" + USERS_INDEX_FILENAME);
+        file.write(array.toJSONString()); 
+        file.flush();
+        file.close();
     }
 }

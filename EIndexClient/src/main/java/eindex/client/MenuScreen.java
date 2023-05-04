@@ -57,11 +57,15 @@ public abstract class MenuScreen extends javax.swing.JFrame {
         return null;
     }
     
-    final public void requestRefreshData() {
+    public String formRefreshDataReq() {
         JSONObject req = new JSONObject();
         req.put("method", "refresh");
         req.put("username", userName);
-        pw.println(req);
+        return req.toJSONString();
+    }
+    
+    final public void requestRefreshData() {
+        pw.println(formRefreshDataReq());
     }
     
     final public String getRole() {

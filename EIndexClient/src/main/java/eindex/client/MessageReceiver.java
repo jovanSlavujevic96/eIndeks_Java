@@ -88,16 +88,22 @@ public class MessageReceiver implements Runnable {
                 } else if (method.equalsIgnoreCase("refresh")) {
                     if (role.equalsIgnoreCase("student") && menu.getRole().equalsIgnoreCase("student")) {
                         if (in.get("subjects") instanceof JSONArray jSubjects) {
+                            jUserData.replace("subjects", jSubjects);
                             menu.updateData(jSubjects);
                         }
                     } else if (role.equalsIgnoreCase("admin") && menu.getRole().equalsIgnoreCase("admin")) {
                         if (in.get("users") instanceof JSONArray jUsers) {
+                            jUserData.replace("users", jUsers);
                             menu.updateData(jUsers);
                         }
                     }
                 } else if (method.equalsIgnoreCase("updateSubject")) {
                     if (menu instanceof AdminMenuScreen admenu) {
                         admenu.updateSelectedSubject();
+                    }
+                } else if (method.equalsIgnoreCase("crateNewUser")) {
+                    if (role.equalsIgnoreCase("admin")) {
+                        return menu.formRefreshDataReq();
                     }
                 }
             }
