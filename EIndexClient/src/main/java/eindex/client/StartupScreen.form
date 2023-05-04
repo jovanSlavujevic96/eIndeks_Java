@@ -136,7 +136,8 @@
     </Component>
     <Component class="javax.swing.JButton" name="bShowPass">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ShowHideButton((JPasswordField)jInputPassword);"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ShowHideButton((javax.swing.JPasswordField)jInputPassword);"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="bShowPass.setVisible(false);&#xd;&#xa;"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JComboBox" name="jSelectRole">

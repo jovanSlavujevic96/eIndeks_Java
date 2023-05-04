@@ -27,7 +27,7 @@ public class ShowHideButton extends JButton {
         JButton bShowPass = this;
 
         bShowPass.setRolloverEnabled(true);
-        bShowPass.setVisible(false);
+        bShowPass.setVisible(true);
         bShowPass.setIcon(showIcon);
         bShowPass.setRolloverIcon(showIconHover);
         bShowPass.setBorder(javax.swing.BorderFactory.createEmptyBorder());

@@ -200,7 +200,8 @@ public class StartupScreen extends javax.swing.JFrame {
         jInputUsername.setEnabled(false);
         jInputPassword = new javax.swing.JPasswordField();
         jInputPassword.setEnabled(false);
-        bShowPass = new ShowHideButton((JPasswordField)jInputPassword);
+        bShowPass = new ShowHideButton((javax.swing.JPasswordField)jInputPassword);
+        bShowPass.setVisible(false);
         jSelectRole = new javax.swing.JComboBox<>();
         jSelectRole.setEnabled(false);
         bReopenMenu = new javax.swing.JButton();
