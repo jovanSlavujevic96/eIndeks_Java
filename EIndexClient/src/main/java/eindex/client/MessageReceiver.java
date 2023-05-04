@@ -84,6 +84,8 @@ public class MessageReceiver implements Runnable {
                 if (method.equalsIgnoreCase("login")) {
                     if (role.equalsIgnoreCase("student") || role.equalsIgnoreCase("admin")) {
                         jUserData = (JSONObject)in.get("data");
+                        parent.showLogoutBtn(true);
+                        parent.enableLogoutBtn(true);
                         parent.openMenuScreen();
                     }
                 } else if (method.equalsIgnoreCase("refresh")) {
@@ -148,6 +150,7 @@ public class MessageReceiver implements Runnable {
             JOptionPane.ERROR_MESSAGE
         );
         parent.closeSocket();
+        parent.enableLogoutBtn(false);
         focusedScreen = parent;
         if (menu != null) {
             menu.closingWindowAction();

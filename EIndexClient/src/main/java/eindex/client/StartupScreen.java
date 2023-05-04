@@ -51,6 +51,14 @@ public class StartupScreen extends javax.swing.JFrame {
         return socket == null || socket.isClosed() || !socket.isConnected();
     }
     
+    public void enableLogoutBtn(boolean enable) {
+        bLogout.setEnabled(enable);
+    } 
+    
+    public void showLogoutBtn(boolean show) {
+        bLogout.setVisible(show);
+    }
+    
     public void closeSocket() {
         try {
             if (socket != null) {
@@ -280,6 +288,9 @@ public class StartupScreen extends javax.swing.JFrame {
         jSelectRole.setEnabled(false);
         bReopenMenu = new javax.swing.JButton();
         handleReopenMenuAssets(false);
+        bLogout = new javax.swing.JButton();
+        bLogout.setEnabled(false);
+        bLogout.setVisible(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -334,6 +345,13 @@ public class StartupScreen extends javax.swing.JFrame {
             }
         });
 
+        bLogout.setText("Odjavi se");
+        bLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bLogoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -358,11 +376,11 @@ public class StartupScreen extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(bShowPass, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(bLogin)))
-                        .addContainerGap(109, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(bReopenMenu)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(bLogout)
+                                    .addComponent(bLogin)))))
+                    .addComponent(bReopenMenu))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -382,9 +400,11 @@ public class StartupScreen extends javax.swing.JFrame {
                             .addComponent(jInputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(bShowPass, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 244, Short.MAX_VALUE)
-                .addComponent(bReopenMenu)
-                .addGap(24, 24, 24))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 240, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bReopenMenu)
+                    .addComponent(bLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -430,6 +450,17 @@ public class StartupScreen extends javax.swing.JFrame {
             connect();
         }
     }//GEN-LAST:event_jInputPortKeyPressed
+
+    private void bLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLogoutActionPerformed
+        // TODO add your handling code here:
+        rmfs.setJUserData(null);
+        
+        handleLoginAssets(true);
+        handleReopenMenuAssets(false);
+
+        bLogout.setEnabled(false);
+        bLogout.setVisible(false);
+    }//GEN-LAST:event_bLogoutActionPerformed
         
     /**
      * @param args the command line arguments
@@ -469,6 +500,7 @@ public class StartupScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bLogin;
+    private javax.swing.JButton bLogout;
     private javax.swing.JButton bReopenMenu;
     private javax.swing.JButton bShowPass;
     private javax.swing.JButton btnConnect;
