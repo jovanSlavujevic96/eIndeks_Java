@@ -4,10 +4,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 
-/**
- *
- * @author Jovan
- */
 public class ShowHideButton extends JButton {
     // show/hide password props
     private boolean showPassword = false;

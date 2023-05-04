@@ -4,10 +4,6 @@
  */
 package eindex.server;
 
-/**
- *
- * @author Jovan
- */
 public class User {
     // wrapper for storage data
     private String username;

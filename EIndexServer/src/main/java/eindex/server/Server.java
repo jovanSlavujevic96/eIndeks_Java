@@ -8,10 +8,6 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Jovan
- */
 public class Server {
     private ServerSocket acceptSocket;
     private final Collection<ClientHandler> clients;

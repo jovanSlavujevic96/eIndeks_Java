@@ -12,10 +12,6 @@ import javax.swing.text.NumberFormatter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-/**
- *
- * @author Jovan
- */
 public class AdminMenuScreen extends MenuScreen {
 
     // JSON storage helpers to data structure received from server

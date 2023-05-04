@@ -12,10 +12,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-/**
- *
- * @author Jovan
- */
 public class DatabaseHandler {
     // filenames
     final private static String USERS_FILENAME = "users.txt";

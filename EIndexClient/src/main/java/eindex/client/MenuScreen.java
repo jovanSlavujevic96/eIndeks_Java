@@ -4,10 +4,6 @@ import java.io.PrintWriter;
 import javax.swing.JComboBox;
 import org.json.simple.JSONObject;
 
-/**
- *
- * @author Jovan
- */
 public abstract class MenuScreen extends javax.swing.JFrame {
     // user info storages
     final protected String role;

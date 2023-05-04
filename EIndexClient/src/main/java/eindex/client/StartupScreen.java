@@ -23,10 +23,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.WindowConstants;
 
-/**
- *
- * @author Jovan
- */
 public class StartupScreen extends javax.swing.JFrame {    
     private Socket socket;
     private BufferedReader br;
