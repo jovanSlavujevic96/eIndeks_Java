@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package eindex.client;
 
 import java.awt.event.KeyEvent;
@@ -15,10 +11,8 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.text.NumberFormat;
-import javax.swing.ImageIcon;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
 import javax.swing.text.NumberFormatter;
 import org.apache.commons.validator.routines.InetAddressValidator;
 import org.json.simple.JSONObject;
@@ -78,6 +72,7 @@ public class StartupScreen extends javax.swing.JFrame {
         }
     }
     
+    // make MD5 hash from entered string
     private String hash(String inputStr) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -148,6 +143,8 @@ public class StartupScreen extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             MenuScreen menu;
             String role = rmfs.getJUserData().get("role").toString();
+
+            // decide by role which derived MenuScreen to create
             if (role.equalsIgnoreCase("student")) {
                 menu = new StudentMenuScreen(this, rmfs.getJUserData());
             } else if (role.equalsIgnoreCase("admin")) {
@@ -161,10 +158,13 @@ public class StartupScreen extends javax.swing.JFrame {
                 );
                 return;
             }
+            // add current running menu ref
             rmfs.setMenu(menu);
-            
+
             menu.setVisible(true);
+            // make sure that closing of menu screen will not collapse/terminate app
             menu.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+            // add closing event for menu screen
             menu.addWindowListener(new WindowAdapter() {
                     @Override
                     public void windowClosing(WindowEvent e) {
@@ -172,8 +172,11 @@ public class StartupScreen extends javax.swing.JFrame {
                    }
                 });
 
+            // hide/disable login assets
             this.handleLoginAssets(false);
+            // make startup screen disabled (inactive/unusable)
             this.setEnabled(false);
+            // hide reopen menu button
             this.handleReopenMenuAssets(false);
         });
     }
@@ -187,6 +190,8 @@ public class StartupScreen extends javax.swing.JFrame {
         String username = jInputUsername.getText();
         String password = jInputPassword.getText();
         String role = jSelectRole.getSelectedItem().toString();
+
+        // if username or password are not entered report error through dialog
         if ((username == null || username.contentEquals("")) ||
             (password == null || password.contentEquals(""))) {
             JOptionPane.showMessageDialog(
@@ -197,16 +202,18 @@ public class StartupScreen extends javax.swing.JFrame {
             );
             return;
         }
-        // password hash
+
+        // hash the password
         password = hash(password);
         
-        // packing userinfo to JSON
+        // packing user info to JSON req
         JSONObject obj = new JSONObject();
         obj.put("username", username.toLowerCase());
         obj.put("password", password);
         obj.put("role", role);
         obj.put("method", "login");
 
+        // send req to server
         pw.println(obj);
     }
     
@@ -240,14 +247,17 @@ public class StartupScreen extends javax.swing.JFrame {
             );
             return;
         }
-        
+
+        // create and start message receiver thread
         this.rmfs = new MessageReceiver(this);
         Thread thr = new Thread(rmfs);
         thr.start();
-        
+
+        // disable connect & enable login UI assets
         handleConnectAssets(false);
         handleLoginAssets(true);
-        
+
+        // inform about succesfull connection
         JOptionPane.showMessageDialog(
                 this,
                 "Uspesno povezivanje sa \"" + ip + ":" + port + "\" serverom",
@@ -411,53 +421,57 @@ public class StartupScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectActionPerformed
+        // perfom connect method on connect button press
         connect();
     }//GEN-LAST:event_btnConnectActionPerformed
 
     private void bLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoginActionPerformed
+        // perform login method on login button press
         login();
     }//GEN-LAST:event_bLoginActionPerformed
 
     private void bReopenMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bReopenMenuActionPerformed
-        // TODO add your handling code here:
+        // perform open menu screen on reopen button press
         openMenuScreen();
     }//GEN-LAST:event_bReopenMenuActionPerformed
 
     private void jInputPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jInputPasswordKeyPressed
-        // TODO add your handling code here:
+        // if password input is selected perform login on ENTER keyboard press
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             login();
         }
     }//GEN-LAST:event_jInputPasswordKeyPressed
 
     private void jInputUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jInputUsernameKeyPressed
-        // TODO add your handling code here:
+        // if username input is selected perform login on ENTER keyboard press
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             login();
         }
     }//GEN-LAST:event_jInputUsernameKeyPressed
 
     private void jInputIpKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jInputIpKeyPressed
-        // TODO add your handling code here:
+        // if IP input is selected perform connect on ENTER keyboard press
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             connect();
         }
     }//GEN-LAST:event_jInputIpKeyPressed
 
     private void jInputPortKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jInputPortKeyPressed
-        // TODO add your handling code here:
+        // if port input is selected perform connect on ENTER keyboard press
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             connect();
         }
     }//GEN-LAST:event_jInputPortKeyPressed
 
     private void bLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLogoutActionPerformed
-        // TODO add your handling code here:
+        // reset JSON storage from message receiver
         rmfs.setJUserData(null);
-        
+
+        // show/enable login assets & hide/disable reopen menu
         handleLoginAssets(true);
         handleReopenMenuAssets(false);
 
+        // hide & disable logout button
         bLogout.setEnabled(false);
         bLogout.setVisible(false);
     }//GEN-LAST:event_bLogoutActionPerformed

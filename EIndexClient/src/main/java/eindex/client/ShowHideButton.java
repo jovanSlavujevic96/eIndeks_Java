@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package eindex.client;
 
 import javax.swing.ImageIcon;
@@ -19,7 +15,11 @@ public class ShowHideButton extends JButton {
     final static private ImageIcon showIconHover = new ImageIcon("./resources/show_pass_small_framed.png");
     final static private ImageIcon hideIcon = new ImageIcon("./resources/hide_pass_small.png");
     final static private ImageIcon hideIconHover = new ImageIcon("./resources/hide_pass_small_framed.png");
-    
+
+    /**
+     *
+     * @param passwordInput - password text filed to which this button will be linked to (showing/hiding it)
+     */
     public ShowHideButton(JPasswordField passwordInput) {
         super();
 
@@ -35,12 +35,17 @@ public class ShowHideButton extends JButton {
         
         // Listen for changes
         this.addActionListener((java.awt.event.ActionEvent evt) -> {
+            // on every button press switch boolean flag to opposite value
             showPassword = !showPassword;
             if (showPassword) {
+                // show password means making cases visible
+                // replace show button icon by hide
                 bShowPass.setRolloverIcon(hideIconHover);
                 bShowPass.setIcon(hideIcon);
                 passwordInput.setEchoChar('\u0000');
             } else {
+                // hide password means making cases like stars ***
+                // replace hide button icon by show
                 bShowPass.setRolloverIcon(showIconHover);
                 bShowPass.setIcon(showIcon);
                 passwordInput.setEchoChar('*');

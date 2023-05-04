@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package eindex.client;
 
 import java.awt.Color;
@@ -21,8 +17,8 @@ public class StudentMenuScreen extends MenuScreen {
     
     /**
      * Creates new form StudentMenuScreen
-     * @param parent
-     * @param jIndex
+     * @param parent - ref to startup screen
+     * @param jIndex - data structure received from server
      */
     public StudentMenuScreen(StartupScreen parent, JSONObject jIndex) {
         super(parent, jIndex, "Studentski Meni");
@@ -41,26 +37,32 @@ public class StudentMenuScreen extends MenuScreen {
     }
     
     final void setSubjects(JSONArray jSubjects) {
+        // read earlier existing value from selector (if it existed)
         String selectedSub = getSelectedString(jSelectSubject);
-        
+
+        // reset selector
         jSelectSubject.setModel(new DefaultComboBoxModel<>());
-        
+
+        // add subjects to subject selector
         this.jSubjects = jSubjects;
         for (Object sub : jSubjects) {
             JSONObject jSub = (JSONObject)sub;
             jSelectSubject.addItem(jSub.get("subject").toString());
         }
-        
+
+        // set earlier selected item
         if (selectedSub != null) {
             jSelectSubject.setSelectedItem(selectedSub);
         }
 
+        // update subject categories
         updateExamResults();
     }
     
     void updateExamResults() {
         String selectedSub = getSelectedString(jSelectSubject);
         if (selectedSub != null) {
+            // iterate through subjects and when you find it fill category input
             for (Object sub : jSubjects) {
                 JSONObject jSub = (JSONObject)sub;
                 if (jSub.get("subject").toString().contentEquals(selectedSub)) {
@@ -72,6 +74,7 @@ public class StudentMenuScreen extends MenuScreen {
                 }
             }
 
+            // calculate and visualise (GREEN -> good/RED -> bad) student grade
             try {
                 float t1 = Float.parseFloat(jT1.getText());
                 jT1.setForeground((t1 >= 12.5) ? Color.green : Color.red);
@@ -357,12 +360,12 @@ public class StudentMenuScreen extends MenuScreen {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jSelectSubjectItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jSelectSubjectItemStateChanged
-        // TODO add your handling code here:
+        // perfrom update exam results on select subject select change
         updateExamResults();
     }//GEN-LAST:event_jSelectSubjectItemStateChanged
 
     private void jUpdateGradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jUpdateGradesActionPerformed
-        // TODO add your handling code here:
+        // perfrom refresh data on update button press
         requestRefreshData();
     }//GEN-LAST:event_jUpdateGradesActionPerformed
 

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package eindex.client;
 
 import java.awt.Color;
@@ -22,15 +18,16 @@ import org.json.simple.JSONObject;
  */
 public class AdminMenuScreen extends MenuScreen {
 
+    // JSON storage helpers to data structure received from server
     private final JSONArray jStudents = new JSONArray();
     private final JSONArray jAdmins = new JSONArray();
     private JSONObject jSelectedStudent = null;
     private JSONObject jSelectedSubject = null;
     
     /**
-     * Creates new form StudentMenuScreen
-     * @param parent
-     * @param jAdminData
+     * Creates new form AdminMenuScreen
+     * @param parent - ref to startup screen
+     * @param jAdminData - data structure received from server
      */
     public AdminMenuScreen(StartupScreen parent, JSONObject jAdminData) {
         super(parent, jAdminData, "Admin Meni");
@@ -47,6 +44,7 @@ public class AdminMenuScreen extends MenuScreen {
     }
     
     final void setInfo(JSONArray jUsers) {
+        // read earlier values from selector (if they existed)
         String selectedStudent = getSelectedString(jSelectStudent);
         String selectedStudent1 = getSelectedString(jSelectStudent1);
         String selectedAdmin = getSelectedString(jSelectAdmin);
@@ -54,7 +52,6 @@ public class AdminMenuScreen extends MenuScreen {
         // reset JSON storages
         jStudents.clear();
         jAdmins.clear();
-        
         jSelectedStudent = null;
         jSelectedSubject = null;
         
@@ -77,7 +74,8 @@ public class AdminMenuScreen extends MenuScreen {
             }
         }
         
-        // set back previously selected items
+        // set back previously selected items if they existed
+        // otherwise it will use firstly added items
         if (selectedStudent != null) {
             jSelectStudent.setSelectedItem(selectedStudent);
         }
@@ -96,9 +94,11 @@ public class AdminMenuScreen extends MenuScreen {
     }
     
     void updateSelectedAdmin() {
+        // get selected admin
         String selectedAdmin = getSelectedString(jSelectAdmin);
 
         if (selectedAdmin != null) {
+            // if there is any admin find him in JSON storage and fill his data to UI inputs
             for (Object admin : jAdmins) {
                 JSONObject jAdmin = (JSONObject)admin;
                 if (jAdmin.get("username").toString().equalsIgnoreCase(selectedAdmin)) {
@@ -110,6 +110,7 @@ public class AdminMenuScreen extends MenuScreen {
                 }
             }
         } else {
+            // if there's no admin clear UI inputs
             jAdminFullname.setText("");
             jAdminFullname.setToolTipText("");
             jAdminJmbg.setText("");
@@ -118,8 +119,11 @@ public class AdminMenuScreen extends MenuScreen {
     }
     
     void resetCategory() {
+        // reset selector
         jSelectStudentSubject.setModel(new DefaultComboBoxModel<>());
 
+        // clear category (subject) inputs from Student Tab
+        // make them disabled
         jT1.setText("");
         jT1.setEnabled(false);
         jT2.setText("");
@@ -135,10 +139,12 @@ public class AdminMenuScreen extends MenuScreen {
         jGrade.setText("");
         jGrade.setEnabled(false);
         
+        // disable Save button
         bSave.setEnabled(false);
     }
     
     void resetStudentInfo() {
+        // clear student inputs from Student Tab
         jStudentFullname.setText("");
         jStudentFullname.setToolTipText("");
         jStudentIndex.setText("");
@@ -150,6 +156,7 @@ public class AdminMenuScreen extends MenuScreen {
     }
     
     void updateSelectedStudent() {
+        // get selected student
         String selectedStudent = getSelectedString(jSelectStudent);
         
         // reset selected student
@@ -165,10 +172,13 @@ public class AdminMenuScreen extends MenuScreen {
                     break;
                 }
             }
+            // selected student JSON is null -> should not happen
             if (jSelectedStudent == null) {
                 resetStudentInfo();
                 return;
             }
+
+            // fill student info within input in Student Tab
             jStudentFullname.setText(jSelectedStudent.get("first name").toString() +
                     " " + jSelectedStudent.get("last name").toString());
             jStudentFullname.setToolTipText("Puno ime");
@@ -177,6 +187,7 @@ public class AdminMenuScreen extends MenuScreen {
             jStudentJmbg.setText(jSelectedStudent.get("jmbg").toString());
             jStudentJmbg.setToolTipText("JMBG");
 
+            // get selected subject
             String selectedSubject = getSelectedString(jSelectStudentSubject);
             
             // reset selectors
@@ -209,9 +220,10 @@ public class AdminMenuScreen extends MenuScreen {
     }
     
     void updateSelectedSubject() {
+        // get selected subject
         String selectedSubject = getSelectedString(jSelectStudentSubject);
         
-        // reset selected student
+        // reset selected student JSON
         jSelectedSubject = null;
         
         if (jSelectedStudent != null) {
@@ -224,11 +236,13 @@ public class AdminMenuScreen extends MenuScreen {
                 }
             }
 
+            // selected subject JSON is null -> should not happen
             if (jSelectedSubject == null) {
-                // not possible
                 resetCategory();
                 return;
             }
+
+            // make category UI inputs feasable
             jT1.setEnabled(true);
             jT1.setText(jSelectedSubject.get("T1").toString());
             jT1.setToolTipText("Unesite broj poena od 0-25");
@@ -245,6 +259,7 @@ public class AdminMenuScreen extends MenuScreen {
             jSummary.setEnabled(true);
             jGrade.setEnabled(true);
 
+            // calculate category points, total and grade
             try {
                 float t1 = Float.parseFloat(jT1.getText());
                 float t2 = Float.parseFloat(jT2.getText());
@@ -257,13 +272,16 @@ public class AdminMenuScreen extends MenuScreen {
                         7 : (points < 81) ? 8 : (points < 91) ? 9 : 10;
 
                 if (grade == 5) {
+                    // for negative grade mark summary and grade as RED (bad)
                     jSummary.setForeground(Color.red);
                     jGrade.setForeground(Color.red);
                 } else {
+                    // for positive grade mark summary and grade as GREEN (good)
                     jSummary.setForeground(Color.green);
                     jGrade.setForeground(Color.green);
                 }
 
+                /// set summary & grade
                 jSummary.setText(Float.toString(points));
                 jGrade.setText(Integer.toString(grade));
             }
@@ -271,45 +289,72 @@ public class AdminMenuScreen extends MenuScreen {
                 // should not happen
             }
         } else {
-            // reset
+            // selected student is null -> reset category UI
             resetCategory();
         }
     }
-    
+
+    /**
+     * Checks is there any category part updated comparing to data taken from server
+     * so admin can do actual update of subject within database
+     *
+     * @return is category updated
+     */
     private boolean isThereCategoryChange() {
         if (jSelectedSubject == null || jSelectStudentSubject.getSelectedItem() == null) {
+            // if selected subject JSON ref or student selector doesn't have any item -> no change
             return false;
         } else if (!jT1.getText().contentEquals(jSelectedSubject.get("T1").toString())) {
+            // if T1 category input is different than T1 JSON ref -> change
             return true;
         } else if (!jT2.getText().contentEquals(jSelectedSubject.get("T2").toString())) {
+            // if T2 category input is different than T2 JSON ref -> change
             return true;
         } else if (!jZ1.getText().contentEquals(jSelectedSubject.get("Z1").toString())) {
+            // if Z1 category input is different than Z1 JSON ref -> change
             return true;
         } else if (!jZ2.getText().contentEquals(jSelectedSubject.get("Z2").toString())) {
+            // if Z2 category input is different than Z2 JSON ref -> change
             return true;
         } else {
+            // everything is same -> no change
             return false;
         }
     }
     
+    /**
+     * Check is every necessary input filled for creation of new user
+     * so admin can proceed creating of new user
+     *
+     * @return everything is filled in
+     */
     private boolean isEverythingFilledForNewUser() {
         if (jNewUserName.getText().contentEquals("")) {
+            // if username input is empty -> no change
             return false;
         } else if (jNewFirstName.getText().contentEquals("")) {
+            // if first name input is empty -> no change
             return false;
         } else if (jNewLastName.getText().contentEquals("")) {
+            // if last name input is empty -> no change
             return false;
         } else if (jNewJmbg.getText().contentEquals("")) {
+            // if JMBG input is empty -> no change
             return false;
         } else if (jNewPassword.getText().contentEquals("")) {
+            // if password input is empty -> no change
             return false;
         } else if (jRepeatNewPassword.getText().contentEquals("")) {
+            // if password repeating input is empty -> no change
             return false;
         } else if (jSelectNewRole.getSelectedItem() == null) {
+            // if there is no new role selected -> no change
             return false;
         } else if (jSelectNewRole.getSelectedItem().toString().equalsIgnoreCase("student")) {
+            // in case of student ther emust be filled in Index input as well
             return !jNewIndex.getText().contentEquals("");
         } else {
+            // if everything is filled in -> change!
             return true;
         }
     }
@@ -1068,50 +1113,52 @@ public class AdminMenuScreen extends MenuScreen {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bUpdateAdminDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bUpdateAdminDataActionPerformed
-        // TODO add your handling code here:
+        // refresh -> pull data once again from server
         requestRefreshData();
     }//GEN-LAST:event_bUpdateAdminDataActionPerformed
 
     private void jSelectStudentSubjectItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jSelectStudentSubjectItemStateChanged
-        // TODO add your handling code here:
+        // change UI inputs whenever there is another subject selected
         updateSelectedSubject();
     }//GEN-LAST:event_jSelectStudentSubjectItemStateChanged
 
     private void jSelectStudentItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jSelectStudentItemStateChanged
-        // TODO add your handling code here:
+        // change UI inputs whenever there is another student selected
         updateSelectedStudent();
     }//GEN-LAST:event_jSelectStudentItemStateChanged
 
     private void jT1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jT1PropertyChange
-        // TODO add your handling code here:
+        // check can app enable save button if any of category parts are actually changed
         if (evt.getPropertyName().contentEquals("value")) {
             bSave.setEnabled(isThereCategoryChange());
         }
     }//GEN-LAST:event_jT1PropertyChange
 
     private void jT2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jT2PropertyChange
-        // TODO add your handling code here:
+        // check can app enable save button if any of category parts are actually changed
         if (evt.getPropertyName().contentEquals("value")) {
             bSave.setEnabled(isThereCategoryChange());
         }
     }//GEN-LAST:event_jT2PropertyChange
 
     private void jZ1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jZ1PropertyChange
-        // TODO add your handling code here:
+        // check can app enable save button if any of category parts are actually changed
         if (evt.getPropertyName().contentEquals("value")) {
             bSave.setEnabled(isThereCategoryChange());
         }
     }//GEN-LAST:event_jZ1PropertyChange
 
     private void jZ2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jZ2PropertyChange
-        // TODO add your handling code here:
+        // check can app enable save button if any of category parts are actually changed
         if (evt.getPropertyName().contentEquals("value")) {
             bSave.setEnabled(isThereCategoryChange());
         }
     }//GEN-LAST:event_jZ2PropertyChange
 
     private void bSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaveActionPerformed
-        // TODO add your handling code here:
+        // update grade for selected student's subject
+
+        // create JSON req with necessary utilities
         JSONObject req = new JSONObject();
         req.put("method", "updateSubject");
         req.put("username", userName);
@@ -1123,32 +1170,38 @@ public class AdminMenuScreen extends MenuScreen {
         jSelectedSubject.put("Z1", jZ1.getText());
         jSelectedSubject.put("Z2", jZ2.getText());
 
+        // put updated JSON as value for "subject" key
         req.put("subject", jSelectedSubject);
+
+        // send JSON to server
         pw.println(req);
+
+        // disable Save button
         bSave.setEnabled(false);
     }//GEN-LAST:event_bSaveActionPerformed
 
     private void jSelectAdminItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jSelectAdminItemStateChanged
-        // TODO add your handling code here:
+        // change UI inputs whenever there is another admin selected
         updateSelectedAdmin();
     }//GEN-LAST:event_jSelectAdminItemStateChanged
 
     private void jSelectNewRoleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jSelectNewRoleItemStateChanged
-        // TODO add your handling code here:
+        // decide whether to disable or enable new index input according to role (admin or student)
         if (jSelectNewRole.getSelectedItem().toString().equalsIgnoreCase("student")) {
             jNewIndex.setEnabled(true);
         } else {
             jNewIndex.setText("");
             jNewIndex.setEnabled(false);
         }
-        
+
+        // if all necessary properties for new user are filled in -> enable save button
         bNewUserSave.setEnabled(isEverythingFilledForNewUser());
     }//GEN-LAST:event_jSelectNewRoleItemStateChanged
 
     private void bNewUserSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNewUserSaveActionPerformed
-        // TODO add your handling code here:
+        // create new user action
         if (isEverythingFilledForNewUser()) {
-            // verification of data
+            // verification of data -> two time entered passwords must match!
             String newPassword = jNewPassword.getText();
             if (!jRepeatNewPassword.getText().contentEquals(newPassword)) {
                 JOptionPane.showMessageDialog(
@@ -1160,6 +1213,7 @@ public class AdminMenuScreen extends MenuScreen {
                 return;
             }
             
+            // verification of data -> student index must follow certain format (according to regex)
             String newRole = jSelectNewRole.getSelectedItem().toString().toLowerCase();
             if (newRole.contentEquals("student")) {
                 if (!jNewIndex.getText().matches("[E][1-3][/](20[0-1]\\d|20[2][0-3])")) {
@@ -1178,7 +1232,8 @@ public class AdminMenuScreen extends MenuScreen {
                 }
             }
             
-            if (!jNewJmbg.getText().matches("^(?:0[1-9]|[12][1-9]|3[01])(?:0[0-9]|1[0-2])9[0-9]{8}$")) {
+            // verification of data -> user myust have entered valid JMBG (according to regex)
+            if (!jNewJmbg.getText().matches("^(?:0[1-9]|[12][0-9]|3[01])(?:0[1-9]|1[0-2])(?:00[0-5]|9[7-9][0-9])(?:[0-9]{6})$")) {
                 JOptionPane.showMessageDialog(
                     this, 
                     """
@@ -1186,7 +1241,7 @@ public class AdminMenuScreen extends MenuScreen {
                         Ispravan format je DDMMYYYXXXXXX.
                         DD je dan 01-31
                         MM je mesec 01-12
-                        YYY je poslednje tri godine rodjenja
+                        YYY je poslednje tri godine rodjenja (970-005)
                         XXXXXX je sestocifrena kombinacija
                     """,
                     "Pogresan JMBG",
@@ -1195,10 +1250,12 @@ public class AdminMenuScreen extends MenuScreen {
                 return;
             }
             
+            // create JSON req with necessary utilities
             JSONObject req = new JSONObject();
             req.put("method", "crateNewUser");
             req.put("username", userName);
             
+            // create new user JSON
             JSONObject newUser = new JSONObject();
             newUser.put("role", newRole);
             newUser.put("username", jNewUserName.getText());
@@ -1209,17 +1266,23 @@ public class AdminMenuScreen extends MenuScreen {
                 newUser.put("index", jNewIndex.getText());
             }
             newUser.put("password", newPassword);
-            
+
+            // put new user JSON within req JSON
             req.put("new user", newUser);
+
+            // send JSON to server
             pw.println(req);
+
+            // disable save button
             bNewUserSave.setEnabled(false);
         }
     }//GEN-LAST:event_bNewUserSaveActionPerformed
 
     private void bNewSubjectSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNewSubjectSaveActionPerformed
-        // TODO add your handling code here:
+        // if there is selected student and subject name is entered proceed action
         String selectedStudent = getSelectedString(jSelectStudent1);
-        if (selectedStudent != null) {
+        if (selectedStudent != null && !jInputNewSubject.getText().contentEquals("")) {
+            // create JSON req with necessary utilities
             JSONObject req = new JSONObject();
             req.put("method", "addNewSubject");
             req.put("username", userName);
@@ -1227,7 +1290,10 @@ public class AdminMenuScreen extends MenuScreen {
             req.put("target username", selectedStudent);
             req.put("subject", jInputNewSubject.getText());
 
+            // send JSON to server
             pw.println(req);
+
+            // disable save button
             bNewSubjectSave.setEnabled(false);
         }
     }//GEN-LAST:event_bNewSubjectSaveActionPerformed
