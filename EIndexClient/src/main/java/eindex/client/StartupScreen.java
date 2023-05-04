@@ -4,6 +4,7 @@
  */
 package eindex.client;
 
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
@@ -173,6 +174,79 @@ public class StartupScreen extends javax.swing.JFrame {
         super("Pocetna stranica");
         initComponents();
     }
+    
+    private void login() {
+        String username = jInputUsername.getText();
+        String password = jInputPassword.getText();
+        String role = jSelectRole.getSelectedItem().toString();
+        if ((username == null || username.contentEquals("")) ||
+            (password == null || password.contentEquals(""))) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Morate uneti kredencijale",
+                    "Kredencijali",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+        // password hash
+        password = hash(password);
+        
+        // packing userinfo to JSON
+        JSONObject obj = new JSONObject();
+        obj.put("username", username.toLowerCase());
+        obj.put("password", password);
+        obj.put("role", role);
+        obj.put("method", "login");
+
+        pw.println(obj);
+    }
+    
+    private void connect() {
+        String ip = jInputIp.getText();
+        Integer port = (Integer)((JFormattedTextField)jInputPort).getValue();
+        
+        // Validate an IPv4 address
+        InetAddressValidator validator = InetAddressValidator.getInstance();
+        if (!validator.isValidInet4Address(ip)) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Uneta IP adresa \"" + ip + "\" nije validna",
+                    "IP",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+        
+        try {
+            this.socket = new Socket();
+            socket.connect(new InetSocketAddress(ip, port), 2000);
+            this.br = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+            this.pw = new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream()), true);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Neuspesno povezivanje sa \"" + ip + ":" + port + "\" serverom",
+                    "Konekcija neuspesna",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+        
+        this.rmfs = new MessageReceiver(this);
+        Thread thr = new Thread(rmfs);
+        thr.start();
+        
+        handleConnectAssets(false);
+        handleLoginAssets(true);
+        
+        JOptionPane.showMessageDialog(
+                this,
+                "Uspesno povezivanje sa \"" + ip + ":" + port + "\" serverom",
+                "Konekcija uspesna",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -218,14 +292,36 @@ public class StartupScreen extends javax.swing.JFrame {
 
         jInputIp.setText("127.0.0.1");
         jInputIp.setToolTipText("Unesite IP adresu servera");
+        jInputIp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jInputIpKeyPressed(evt);
+            }
+        });
 
         jInputPort.setText("5050");
         jInputPort.setToolTipText("Unesite port servera");
+        jInputPort.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jInputPortKeyPressed(evt);
+            }
+        });
 
         bLogin.setText("Prijavi se");
         bLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bLoginActionPerformed(evt);
+            }
+        });
+
+        jInputUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jInputUsernameKeyPressed(evt);
+            }
+        });
+
+        jInputPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jInputPasswordKeyPressed(evt);
             }
         });
 
@@ -262,9 +358,11 @@ public class StartupScreen extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(bShowPass, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(bLogin))))
-                    .addComponent(bReopenMenu))
-                .addContainerGap(109, Short.MAX_VALUE))
+                                .addComponent(bLogin)))
+                        .addContainerGap(109, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(bReopenMenu)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,82 +391,45 @@ public class StartupScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectActionPerformed
-        String ip = jInputIp.getText();
-        Integer port = (Integer)((JFormattedTextField)jInputPort).getValue();
-        
-        // Validate an IPv4 address
-        InetAddressValidator validator = InetAddressValidator.getInstance();
-        if (!validator.isValidInet4Address(ip)) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Uneta IP adresa \"" + ip + "\" nije validna",
-                    "IP",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            return;
-        }
-        
-        try {
-            this.socket = new Socket();
-            socket.connect(new InetSocketAddress(ip, port), 2000);
-            this.br = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-            this.pw = new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream()), true);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Neuspesno povezivanje sa \"" + ip + ":" + port + "\" serverom",
-                    "Konekcija neuspesna",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            return;
-        }
-        
-        this.rmfs = new MessageReceiver(this);
-        Thread thr = new Thread(rmfs);
-        thr.start();
-        
-        handleConnectAssets(false);
-        handleLoginAssets(true);
-        
-        JOptionPane.showMessageDialog(
-                this,
-                "Uspesno povezivanje sa \"" + ip + ":" + port + "\" serverom",
-                "Konekcija uspesna",
-                JOptionPane.INFORMATION_MESSAGE
-        );
+        connect();
     }//GEN-LAST:event_btnConnectActionPerformed
 
     private void bLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoginActionPerformed
-        String username = jInputUsername.getText();
-        String password = jInputPassword.getText();
-        String role = jSelectRole.getSelectedItem().toString();
-        if ((username == null || username.contentEquals("")) ||
-            (password == null || password.contentEquals(""))) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Morate uneti kredencijale",
-                    "Kredencijali",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            return;
-        }
-        // password hash
-        password = hash(password);
-        
-        // packing userinfo to JSON
-        JSONObject obj = new JSONObject();
-        obj.put("username", username.toLowerCase());
-        obj.put("password", password);
-        obj.put("role", role);
-        obj.put("method", "login");
-
-        pw.println(obj);
+        login();
     }//GEN-LAST:event_bLoginActionPerformed
 
     private void bReopenMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bReopenMenuActionPerformed
         // TODO add your handling code here:
         openMenuScreen();
     }//GEN-LAST:event_bReopenMenuActionPerformed
+
+    private void jInputPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jInputPasswordKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            login();
+        }
+    }//GEN-LAST:event_jInputPasswordKeyPressed
+
+    private void jInputUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jInputUsernameKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            login();
+        }
+    }//GEN-LAST:event_jInputUsernameKeyPressed
+
+    private void jInputIpKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jInputIpKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            connect();
+        }
+    }//GEN-LAST:event_jInputIpKeyPressed
+
+    private void jInputPortKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jInputPortKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            connect();
+        }
+    }//GEN-LAST:event_jInputPortKeyPressed
         
     /**
      * @param args the command line arguments

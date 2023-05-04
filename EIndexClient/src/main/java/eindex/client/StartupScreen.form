@@ -48,10 +48,13 @@
                               <Component id="bLogin" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace pref="109" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="bReopenMenu" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="bReopenMenu" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="109" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -98,6 +101,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="127.0.0.1"/>
       </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jInputIpKeyPressed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jInputIp.setToolTipText(&quot;Unesite IP adresu servera&quot;);"/>
       </AuxValues>
@@ -106,6 +112,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="5050"/>
       </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jInputPortKeyPressed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatter);"/>
         <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat format = NumberFormat.getInstance();&#xa;format.setGroupingUsed(false);&#xa;NumberFormatter formatter = new NumberFormatter(format);&#xa;formatter.setValueClass(Integer.class);&#xa;formatter.setMinimum(0);&#xa;formatter.setMaximum(Integer.MAX_VALUE);&#xa;formatter.setAllowsInvalid(false);&#xa;formatter.setCommitsOnValidEdit(true);"/>
@@ -124,11 +133,17 @@
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="jInputUsername">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jInputUsernameKeyPressed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jInputUsername.setEnabled(false);"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="jInputPassword">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jInputPasswordKeyPressed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPasswordField()"/>
         <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jInputPassword.setEnabled(false);"/>
