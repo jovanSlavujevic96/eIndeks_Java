@@ -1,12 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package eindex.server;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,11 +17,13 @@ import org.json.simple.parser.ParseException;
  * @author Jovan
  */
 public class DatabaseHandler {
+    // filenames
     final private static String USERS_FILENAME = "users.txt";
     final private static String USERS_INDEX_FILENAME = "users_index.txt";
     
     public DatabaseHandler() {}
-    
+
+    // read all users from database
     public Collection<User> readAllUsers() throws IOException {
         FileReader fr = new FileReader("./data/" + USERS_FILENAME);
         BufferedReader br = new BufferedReader(fr);
@@ -62,7 +59,8 @@ public class DatabaseHandler {
         br.close();
         return users;
     }
-    
+
+    // read desired user from database
     public User readUserPer(String data, int data_index) throws IOException {
         FileReader fr = new FileReader("./data/" + USERS_FILENAME);
         BufferedReader br = new BufferedReader(fr);
@@ -101,14 +99,16 @@ public class DatabaseHandler {
         br.close();
         return null;
     }
-    
+
+    // write (append) user to database
     public void writeUser(User user) throws IOException {
         FileWriter fw = new FileWriter("./data/" + USERS_FILENAME, true);
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write("\n" + user.toString());
         bw.close();
     }
-    
+
+    // read all users from extended database
     public JSONArray readAllUserIndex() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
         JSONArray out;
@@ -117,7 +117,8 @@ public class DatabaseHandler {
         }
         return out;
     }
-    
+
+    // read desired user from extended database 
     public JSONObject readUserIndexPer(String value, String key) throws IOException, ParseException {
         JSONArray array = readAllUserIndex();
         for (Object obj : array) {
@@ -128,10 +129,13 @@ public class DatabaseHandler {
         }
         return new JSONObject();
     }
-    
+
+    // update user's subject within extended database
     public void updateUserIndexSubject(JSONObject subject, String username) throws IOException, ParseException {
         JSONArray array = readAllUserIndex();
         JSONObject user = null;
+
+        // iterate through all users in order to find desired user
         for (Object obj : array) {
             JSONObject jObj = (JSONObject)obj;
             if (jObj.get("username").toString().equalsIgnoreCase(username)) {
@@ -143,6 +147,8 @@ public class DatabaseHandler {
             // should not happen
             throw new IOException("There is missing user " + username + " from eIndex database");
         }
+
+        // iterate through all student's subjects in order to find desired subject
         String subjectStr = subject.get("subject").toString();
         JSONObject targetSubject = null;
         for (Object obj : (JSONArray)user.get("subjects")) {
@@ -156,6 +162,8 @@ public class DatabaseHandler {
             // should not happen
             throw new IOException("There is missing subject " + subjectStr + " for user " + username + " from eIndex database");
         }
+
+        // update subject's categories
         targetSubject.put("T1", subject.get("T1"));
         targetSubject.put("T2", subject.get("T2"));
         targetSubject.put("Z1", subject.get("Z1"));
@@ -189,7 +197,8 @@ public class DatabaseHandler {
         file.flush();
         file.close();
     }
-    
+
+    // add subject to user within extended database
     public void writeUserIndex(JSONObject user) throws IOException, ParseException {
         JSONArray array = readAllUserIndex();
         array.add(user);

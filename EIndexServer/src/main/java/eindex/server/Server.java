@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package eindex.server;
 
 import java.io.IOException;
@@ -27,6 +23,7 @@ public class Server {
         ClientHandler client_handler;
 
         while (true) {
+            // wait for new client
             System.out.println("Waiting for new clients..");
             try {
                 client_socket = this.acceptSocket.accept();
@@ -34,11 +31,13 @@ public class Server {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                 break;
             }
-            
             if (client_socket == null) {
                 System.out.println("Accept client returned null socket");
                 break;
             }
+
+            // create new client handler for connected client
+            // logout method is actually removing created client handler from list
             try {
                 client_handler = new ClientHandler(client_socket, (n) -> { clients.remove(n); });
                 client_handler.bindDbHandler(this.getDbHandler());
@@ -46,7 +45,8 @@ public class Server {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                 break;
             }
-            
+
+            // add client handler to list, create and start thread
             clients.add(client_handler);
             client_thread = new Thread(client_handler);
             client_thread.start();
@@ -83,17 +83,9 @@ public class Server {
         DatabaseHandler db = new DatabaseHandler();
         
         final int port = 5050;
+        System.out.println("Server port is " + port);
         
         try {
-            Collection<User> users = db.readAllUsers();
-            for (User user : users) {
-                System.out.println(
-                        "User name: " + user.getUsername() + " ; " +
-                        "password: " + user.getPassword() + " ; " +
-                        "role: " + user.getRole()
-                );
-            }
-            
             server = new Server(port);
             server.bindDbHandler(db);
             server.acceptClients();
