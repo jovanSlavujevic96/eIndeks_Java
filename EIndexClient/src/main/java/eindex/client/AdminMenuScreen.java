@@ -1178,6 +1178,23 @@ public class AdminMenuScreen extends MenuScreen {
                 }
             }
             
+            if (!jNewJmbg.getText().matches("^(?:0[1-9]|[12][1-9]|3[01])(?:0[0-9]|1[0-2])9[0-9]{8}$")) {
+                JOptionPane.showMessageDialog(
+                    this, 
+                    """
+                        JMBG mora biti kombinacija od iskljucivo 13 cifara
+                        Ispravan format je DDMMYYYXXXXXX.
+                        DD je dan 01-31
+                        MM je mesec 01-12
+                        YYY je poslednje tri godine rodjenja
+                        XXXXXX je sestocifrena kombinacija
+                    """,
+                    "Pogresan JMBG",
+                    JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+            
             JSONObject req = new JSONObject();
             req.put("method", "crateNewUser");
             req.put("username", userName);
