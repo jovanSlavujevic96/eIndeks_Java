@@ -135,12 +135,8 @@
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="bShowPass">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bShowPassActionPerformed"/>
-      </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="bShowPass.setIcon(showIcon);&#xd;&#xa;bShowPass.setBorder(javax.swing.BorderFactory.createEmptyBorder());&#xd;&#xa;bShowPass.setContentAreaFilled(false);"/>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="bShowPass.setRolloverEnabled(true);&#xa;bShowPass.setRolloverIcon(showIconHover);&#xa;bShowPass.setVisible(false);"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ShowHideButton((JPasswordField)jInputPassword);"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JComboBox" name="jSelectRole">

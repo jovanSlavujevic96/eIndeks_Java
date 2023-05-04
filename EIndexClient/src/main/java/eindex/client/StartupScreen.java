@@ -37,13 +37,6 @@ public class StartupScreen extends javax.swing.JFrame {
     private BufferedReader br;
     private PrintWriter pw;
     private MessageReceiver rmfs;
-
-    // show/hide password props
-    private boolean showPassword = false;
-    final static private ImageIcon showIcon = new ImageIcon("./resources/show_pass_small.png");
-    final static private ImageIcon showIconHover = new ImageIcon("./resources/show_pass_small_framed.png");
-    final static private ImageIcon hideIcon = new ImageIcon("./resources/hide_pass_small.png");
-    final static private ImageIcon hideIconHover = new ImageIcon("./resources/hide_pass_small_framed.png");
     
     public BufferedReader getBr() {
         return br;
@@ -207,10 +200,7 @@ public class StartupScreen extends javax.swing.JFrame {
         jInputUsername.setEnabled(false);
         jInputPassword = new javax.swing.JPasswordField();
         jInputPassword.setEnabled(false);
-        bShowPass = new javax.swing.JButton();
-        bShowPass.setIcon(showIcon);
-        bShowPass.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-        bShowPass.setContentAreaFilled(false);
+        bShowPass = new ShowHideButton((JPasswordField)jInputPassword);
         jSelectRole = new javax.swing.JComboBox<>();
         jSelectRole.setEnabled(false);
         bReopenMenu = new javax.swing.JButton();
@@ -235,15 +225,6 @@ public class StartupScreen extends javax.swing.JFrame {
         bLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bLoginActionPerformed(evt);
-            }
-        });
-
-        bShowPass.setRolloverEnabled(true);
-        bShowPass.setRolloverIcon(showIconHover);
-        bShowPass.setVisible(false);
-        bShowPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bShowPassActionPerformed(evt);
             }
         });
 
@@ -382,20 +363,6 @@ public class StartupScreen extends javax.swing.JFrame {
 
         pw.println(obj);
     }//GEN-LAST:event_bLoginActionPerformed
-
-    private void bShowPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bShowPassActionPerformed
-        // TODO add your handling code here:
-        showPassword = !showPassword;
-        if (showPassword) {
-            bShowPass.setRolloverIcon(hideIconHover);
-            bShowPass.setIcon(hideIcon);
-            ((JPasswordField)jInputPassword).setEchoChar('\u0000');
-        } else {
-            bShowPass.setRolloverIcon(showIconHover);
-            bShowPass.setIcon(showIcon);
-            ((JPasswordField)jInputPassword).setEchoChar('*');
-        }
-    }//GEN-LAST:event_bShowPassActionPerformed
 
     private void bReopenMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bReopenMenuActionPerformed
         // TODO add your handling code here:
