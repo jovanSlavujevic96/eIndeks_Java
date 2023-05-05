@@ -1,1 +1,0 @@
-# eIndeks_Java
