@@ -1,0 +1,52 @@
+[
+	{
+		"subject" : "Analogna Elektronika",
+		"categories" : [
+			{
+				"category" : "Z1",
+				"max_points" : "25",
+				"min_points" : "12.5"
+			},
+			{
+				"category" : "Z2",
+				"max_points" : "25",
+				"min_points" : "12.5"
+			},
+			{
+				"category" : "T",
+				"max_points" : "50",
+				"min_points" : "25"
+			},
+		]
+	},
+	{
+		"subject" : "Digitalna Elektronika",
+		"categories" : [
+			{
+				"category" : "L1",
+				"max_points" : "10",
+				"min_points" : "8"
+			},
+			{
+				"category" : "L2",
+				"max_points" : "10",
+				"min_points" : "5"
+			},
+			{
+				"category" : "I",
+				"max_points" : "80",
+				"min_points" : "50"
+			},
+		]
+	},
+	{
+		"subject" : "Engleski Jezik",
+		"categories" : [
+			{
+				"category" : "I",
+				"max_points" : "100",
+				"min_points" : "55"
+			}
+		]
+	}
+]

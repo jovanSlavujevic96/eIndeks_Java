@@ -4,8 +4,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.NumberFormatter;
@@ -19,6 +24,9 @@ public class AdminMenuScreen extends MenuScreen {
     private final JSONArray jAdmins = new JSONArray();
     private JSONObject jSelectedStudent = null;
     private JSONObject jSelectedSubject = null;
+
+    private JSONArray jSubjectsDB = null;
+    private JSONObject jSelectedSubjectDB = null;
     
     /**
      * Creates new form AdminMenuScreen
@@ -28,6 +36,7 @@ public class AdminMenuScreen extends MenuScreen {
     public AdminMenuScreen(StartupScreen parent, JSONObject jAdminData) {
         super(parent, jAdminData, "Admin Meni");
         
+        jSubjectsDB = (JSONArray)jAdminData.get("subjects DB");
         initComponents();
         
         // must be called after initComponents()
@@ -81,6 +90,12 @@ public class AdminMenuScreen extends MenuScreen {
         if (selectedAdmin != null) {
             jSelectAdmin.setSelectedItem(selectedAdmin);
         }
+        
+        if (jSelectStudent1.getSelectedItem() != null && jExistingSubjects.getSelectedItem() != null) {
+            bAddSubjectSave.setEnabled(true);
+        } else {
+            bAddSubjectSave.setEnabled(false);
+        }
 
         // filling Student tab
         updateSelectedStudent();
@@ -118,16 +133,14 @@ public class AdminMenuScreen extends MenuScreen {
         // reset selector
         jSelectStudentSubject.setModel(new DefaultComboBoxModel<>());
 
-        // clear category (subject) inputs from Student Tab
-        // make them disabled
-        jT1.setText("");
-        jT1.setEnabled(false);
-        jT2.setText("");
-        jT2.setEnabled(false);
-        jZ1.setText("");
-        jZ1.setEnabled(false);
-        jZ2.setText("");
-        jZ2.setEnabled(false);
+        jK1.setText("");
+        jK1.setEnabled(false);
+        jK3.setText("");
+        jK3.setEnabled(false);
+        jK2.setText("");
+        jK2.setEnabled(false);
+        jK4.setText("");
+        jK4.setEnabled(false);
         jSummary.setForeground(Color.black);
         jSummary.setText("");
         jSummary.setEnabled(false);
@@ -237,35 +250,71 @@ public class AdminMenuScreen extends MenuScreen {
                 resetCategory();
                 return;
             }
+            
+            for (Object subject : jSubjectsDB) {
+                JSONObject jSubject = (JSONObject)subject;
+                if (jSubject.get("subject").toString().contentEquals(selectedSubject)) {
+                    jSelectedSubjectDB = jSubject;
+                    break;
+                }
+            }
+            if (jSelectedSubjectDB == null) {
+                // definetley not possible!!!
+                resetCategory();
+                return;
+            }
 
-            // make category UI inputs feasable
-            jT1.setEnabled(true);
-            jT1.setText(jSelectedSubject.get("T1").toString());
-            jT1.setToolTipText("Unesite broj poena od 0-25");
-            jT2.setEnabled(true);
-            jT2.setText(jSelectedSubject.get("T2").toString());
-            jT2.setToolTipText("Unesite broj poena od 0-25");
-            jZ1.setEnabled(true);
-            jZ1.setText(jSelectedSubject.get("Z1").toString());
-            jZ1.setToolTipText("Unesite broj poena od 0-25");
-            jZ2.setEnabled(true);
-            jZ2.setText(jSelectedSubject.get("Z2").toString());
-            jZ2.setToolTipText("Unesite broj poena od 0-25");
+            JTextField[] jKS = {jK1, jK2, jK3, jK4, jK5, jK6};
+            JLabel[] jKL = {K1, K2, K3, K4, K5, K6};
+            ArrayList<Float> min_pts = new ArrayList<>();
+            
+            int ctr = 0;
+            for (Object categoryDB : (JSONArray)jSelectedSubjectDB.get("categories")) {
+                JSONObject jCategoryDB = (JSONObject)categoryDB;
+                String categoryName = jCategoryDB.get("category").toString();
+                jKL[ctr].setVisible(true);
+                jKL[ctr].setText(categoryName);
+                jKS[ctr].setVisible(true);
+                jKS[ctr].setEnabled(true);
+                jKS[ctr].setText(jSelectedSubject.get(categoryName).toString());
+                String minP = jCategoryDB.get("min_points").toString();
+                String maxP = jCategoryDB.get("max_points").toString();
+                min_pts.add(Float.valueOf(minP));
+                jKS[ctr].setToolTipText("Unesite broj poena od 0-" + maxP);
+                ctr++;
+            }
+            
+            // rest of cateogry text inputs
+            for (int i = ctr; i < 6; i++) {
+                jKL[i].setVisible(false);
+                jKS[i].setEnabled(false);
+                jKS[i].setVisible(false);
+                jKS[i].setToolTipText("");
+            }
 
             jSummary.setEnabled(true);
             jGrade.setEnabled(true);
 
             // calculate category points, total and grade
             try {
-                float t1 = Float.parseFloat(jT1.getText());
-                float t2 = Float.parseFloat(jT2.getText());
-                float z1 = Float.parseFloat(jZ1.getText());
-                float z2 = Float.parseFloat(jZ2.getText());
-
-                float points = t1 + t2 + z1 + z2;
-                int grade = (t1 < 12.5 || t2 < 12.5 || z1 < 12.5 || z2 < 12.5 || points < 51) ?
-                        5 : (points < 61) ? 6 : (points < 71) ?
-                        7 : (points < 81) ? 8 : (points < 91) ? 9 : 10;
+                float points = 0;
+                boolean pass = true;
+                for (int i=0; i<ctr; i++) {
+                    JTextField tf = jKS[i];
+                    float tfVal = Float.parseFloat(tf.getText());
+                    if (pass) {
+                        if (tfVal < min_pts.get(i)) {
+                            // fail
+                            pass = false;
+                        }
+                    }
+                    points += tfVal;
+                }
+                int grade = (!pass || points < 51) ?
+                        5 : (points < 61) ?
+                        6 : (points < 71) ?
+                        7 : (points < 81) ?
+                        8 : (points < 91) ? 9 : 10;
 
                 if (grade == 5) {
                     // for negative grade mark summary and grade as RED (bad)
@@ -297,25 +346,25 @@ public class AdminMenuScreen extends MenuScreen {
      * @return is category updated
      */
     private boolean isThereCategoryChange() {
-        if (jSelectedSubject == null || jSelectStudentSubject.getSelectedItem() == null) {
-            // if selected subject JSON ref or student selector doesn't have any item -> no change
-            return false;
-        } else if (!jT1.getText().contentEquals(jSelectedSubject.get("T1").toString())) {
-            // if T1 category input is different than T1 JSON ref -> change
-            return true;
-        } else if (!jT2.getText().contentEquals(jSelectedSubject.get("T2").toString())) {
-            // if T2 category input is different than T2 JSON ref -> change
-            return true;
-        } else if (!jZ1.getText().contentEquals(jSelectedSubject.get("Z1").toString())) {
-            // if Z1 category input is different than Z1 JSON ref -> change
-            return true;
-        } else if (!jZ2.getText().contentEquals(jSelectedSubject.get("Z2").toString())) {
-            // if Z2 category input is different than Z2 JSON ref -> change
-            return true;
-        } else {
-            // everything is same -> no change
+        if (jSelectedSubject == null || jSelectStudentSubject.getSelectedItem() == null || jSelectedSubjectDB == null) {
             return false;
         }
+        JTextField[] jKS = {jK1, jK2, jK3, jK4, jK5, jK6};
+        JSONArray categs = (JSONArray)jSelectedSubjectDB.get("categories");
+        boolean isThereCatChange = true;
+        for (int i=0; i<6; i++) {
+            JTextField tf = jKS[i];
+            JSONObject cat = (JSONObject)categs.get(i);
+            if (!isThereCatChange) {
+                break;
+            }
+            if (tf.isVisible()) {
+                isThereCatChange = !tf.getText().contentEquals(jSelectedSubject.get(cat.get("category")).toString());
+            } else {
+                break;
+            }
+        }
+        return isThereCatChange;
     }
     
     /**
@@ -400,42 +449,42 @@ public class AdminMenuScreen extends MenuScreen {
         ));
         SelectSubject = new javax.swing.JLabel();
         jSelectStudentSubject = new javax.swing.JComboBox<>();
-        T1 = new javax.swing.JLabel();
-        T2 = new javax.swing.JLabel();
-        Z1 = new javax.swing.JLabel();
-        Z2 = new javax.swing.JLabel();
-        NumberFormat formatJT1 = DecimalFormat.getInstance();
-        formatJT1.setGroupingUsed(false);
-        NumberFormatter formatterJT1 = new NumberFormatter(formatJT1);
-        formatterJT1.setValueClass(Float.class);
-        formatterJT1.setMinimum(0.0F);
-        formatterJT1.setMaximum(25.0F);
-        formatterJT1.setCommitsOnValidEdit(true);
-        jT1 = new javax.swing.JFormattedTextField(formatterJT1);
-        NumberFormat formatJT2 = DecimalFormat.getInstance();
-        formatJT2.setGroupingUsed(false);
-        NumberFormatter formatterJT2 = new NumberFormatter(formatJT2);
-        formatterJT2.setValueClass(Float.class);
-        formatterJT2.setMinimum(0.0F);
-        formatterJT2.setMaximum(25.0F);
-        formatterJT2.setCommitsOnValidEdit(true);
-        jT2 = new javax.swing.JFormattedTextField(formatterJT2);
-        NumberFormat formatJZ1 = DecimalFormat.getInstance();
-        formatJZ1.setGroupingUsed(false);
-        NumberFormatter formatterJZ1 = new NumberFormatter(formatJZ1);
-        formatterJZ1.setValueClass(Float.class);
-        formatterJZ1.setMinimum(0.0F);
-        formatterJZ1.setMaximum(25.0F);
-        formatterJZ1.setCommitsOnValidEdit(true);
-        jZ1 = new javax.swing.JFormattedTextField(formatterJZ1);
-        NumberFormat formatJZ2 = DecimalFormat.getInstance();
-        formatJZ2.setGroupingUsed(false);
-        NumberFormatter formatterJZ2 = new NumberFormatter(formatJZ2);
-        formatterJZ2.setValueClass(Float.class);
-        formatterJZ2.setMinimum(0.0F);
-        formatterJZ2.setMaximum(25.0F);
-        formatterJZ2.setCommitsOnValidEdit(true);
-        jZ2 = new javax.swing.JFormattedTextField(formatterJZ2);
+        K1 = new javax.swing.JLabel();
+        K3 = new javax.swing.JLabel();
+        K2 = new javax.swing.JLabel();
+        K4 = new javax.swing.JLabel();
+        NumberFormat formatJK1 = DecimalFormat.getInstance();
+        formatJK1.setGroupingUsed(false);
+        NumberFormatter formatterJK1 = new NumberFormatter(formatJK1);
+        formatterJK1.setValueClass(Float.class);
+        formatterJK1.setMinimum(0.0F);
+        formatterJK1.setMaximum(25.0F);
+        formatterJK1.setCommitsOnValidEdit(true);
+        jK1 = new javax.swing.JFormattedTextField(formatterJK1);
+        NumberFormat formatJK3 = DecimalFormat.getInstance();
+        formatJK3.setGroupingUsed(false);
+        NumberFormatter formatterJK3 = new NumberFormatter(formatJK3);
+        formatterJK3.setValueClass(Float.class);
+        formatterJK3.setMinimum(0.0F);
+        formatterJK3.setMaximum(25.0F);
+        formatterJK3.setCommitsOnValidEdit(true);
+        jK3 = new javax.swing.JFormattedTextField(formatterJK3);
+        NumberFormat formatJK2 = DecimalFormat.getInstance();
+        formatJK2.setGroupingUsed(false);
+        NumberFormatter formatterJK2 = new NumberFormatter(formatJK2);
+        formatterJK2.setValueClass(Float.class);
+        formatterJK2.setMinimum(0.0F);
+        formatterJK2.setMaximum(25.0F);
+        formatterJK2.setCommitsOnValidEdit(true);
+        jK2 = new javax.swing.JFormattedTextField(formatterJK2);
+        NumberFormat formatJK4 = DecimalFormat.getInstance();
+        formatJK4.setGroupingUsed(false);
+        NumberFormatter formatterJK4 = new NumberFormatter(formatJK4);
+        formatterJK4.setValueClass(Float.class);
+        formatterJK4.setMinimum(0.0F);
+        formatterJK4.setMaximum(25.0F);
+        formatterJK4.setCommitsOnValidEdit(true);
+        jK4 = new javax.swing.JFormattedTextField(formatterJK4);
         jSummary = new javax.swing.JTextField();
         jSummary.setEditable(false);
         Font fSummary = jSummary.getFont();
@@ -455,6 +504,24 @@ public class AdminMenuScreen extends MenuScreen {
         Grade = new javax.swing.JLabel();
         Summary = new javax.swing.JLabel();
         bSave = new javax.swing.JButton();
+        NumberFormat formatJK5 = DecimalFormat.getInstance();
+        formatJK5.setGroupingUsed(false);
+        NumberFormatter formatterJK5 = new NumberFormatter(formatJK5);
+        formatterJK5.setValueClass(Float.class);
+        formatterJK5.setMinimum(0.0F);
+        formatterJK5.setMaximum(25.0F);
+        formatterJK5.setCommitsOnValidEdit(true);
+        jK5 = new javax.swing.JFormattedTextField(formatterJK5);
+        NumberFormat formatJK6 = DecimalFormat.getInstance();
+        formatJK6.setGroupingUsed(false);
+        NumberFormatter formatterJK6 = new NumberFormatter(formatJK6);
+        formatterJK6.setValueClass(Float.class);
+        formatterJK6.setMinimum(0.0F);
+        formatterJK6.setMaximum(25.0F);
+        formatterJK6.setCommitsOnValidEdit(true);
+        jK6 = new javax.swing.JFormattedTextField(formatterJK6);
+        K5 = new javax.swing.JLabel();
+        K6 = new javax.swing.JLabel();
         jAdminPanel = new javax.swing.JPanel();
         SelectAdmin = new javax.swing.JLabel();
         jSelectAdmin = new javax.swing.JComboBox<>();
@@ -522,29 +589,54 @@ public class AdminMenuScreen extends MenuScreen {
         jStudentJmbg1 = new javax.swing.JLabel();
         jStudentIndex1 = new javax.swing.JLabel();
         jStudentIndex.setToolTipText("Indeks");
-        jLabel1 = new javax.swing.JLabel();
-        jInputNewSubject = new javax.swing.JTextField();
-        // Listen for changes in the text
-        jInputNewSubject.getDocument().addDocumentListener(new DocumentListener() {
-            public void changedUpdate(DocumentEvent e) {
-                act();
-            }
-            public void removeUpdate(DocumentEvent e) {
-                act();
-            }
-            public void insertUpdate(DocumentEvent e) {
-                act();
-            }
-
-            public void act() {
-                bNewSubjectSave.setEnabled(
-                    !jInputNewSubject
-                    .getText()
-                    .contentEquals("")
-                );
-            }
-        });
-        bNewSubjectSave = new javax.swing.JButton();
+        SelectExistingSubject = new javax.swing.JLabel();
+        bAddSubjectSave = new javax.swing.JButton();
+        jExistingSubjects = new javax.swing.JComboBox<>();
+        jNewSubjectPanel1 = new javax.swing.JPanel();
+        jStudentUsername2 = new javax.swing.JLabel();
+        jStudentFullname2 = new javax.swing.JLabel();
+        jStudentJmbg2 = new javax.swing.JLabel();
+        jStudentIndex2 = new javax.swing.JLabel();
+        jStudentIndex.setToolTipText("Indeks");
+        jLabel2 = new javax.swing.JLabel();
+        bNewSubjectSave1 = new javax.swing.JButton();
+        jNewSubject = new javax.swing.JTextField();
+        newCategory1 = new javax.swing.JLabel();
+        jNewCategory1 = new javax.swing.JTextField();
+        newMaxPts = new javax.swing.JLabel();
+        jNewMaxPts = new javax.swing.JTextField();
+        newMinPts1 = new javax.swing.JLabel();
+        jNewMinPts1 = new javax.swing.JTextField();
+        newCategory2 = new javax.swing.JLabel();
+        jNewCategory2 = new javax.swing.JTextField();
+        newMaxPts1 = new javax.swing.JLabel();
+        jNewMaxPts1 = new javax.swing.JTextField();
+        newMinPts2 = new javax.swing.JLabel();
+        jNewMinPts2 = new javax.swing.JTextField();
+        newMinPts3 = new javax.swing.JLabel();
+        jNewCategory3 = new javax.swing.JTextField();
+        newCategory3 = new javax.swing.JLabel();
+        newMaxPts2 = new javax.swing.JLabel();
+        jNewMaxPts2 = new javax.swing.JTextField();
+        jNewMinPts3 = new javax.swing.JTextField();
+        newMaxPts3 = new javax.swing.JLabel();
+        jNewMaxPts3 = new javax.swing.JTextField();
+        newMinPts4 = new javax.swing.JLabel();
+        jNewMinPts4 = new javax.swing.JTextField();
+        newMinPts5 = new javax.swing.JLabel();
+        jNewCategory4 = new javax.swing.JTextField();
+        newCategory4 = new javax.swing.JLabel();
+        newMaxPts4 = new javax.swing.JLabel();
+        jNewMaxPts4 = new javax.swing.JTextField();
+        jNewMinPts5 = new javax.swing.JTextField();
+        newCategory5 = new javax.swing.JLabel();
+        jNewCategory5 = new javax.swing.JTextField();
+        newMaxPts5 = new javax.swing.JLabel();
+        jNewMaxPts5 = new javax.swing.JTextField();
+        newMinPts6 = new javax.swing.JLabel();
+        jNewMinPts6 = new javax.swing.JTextField();
+        newCategory6 = new javax.swing.JLabel();
+        jNewCategory6 = new javax.swing.JTextField();
         bUpdateAdminData = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -567,59 +659,59 @@ public class AdminMenuScreen extends MenuScreen {
             }
         });
 
-        T1.setText("T1:");
+        K1.setText("K1:");
 
-        T2.setText("T2:");
+        K3.setText("K3:");
 
-        Z1.setText("Z1:");
+        K2.setText("K2:");
 
-        Z2.setText("Z2:");
+        K4.setText("K4:");
 
-        Font fT1 = jT1.getFont();
-        jT1.setFont(new Font(
-            jT1.getName(),
-            fT1.getStyle() | Font.BOLD,
+        Font fK1 = jK1.getFont();
+        jK1.setFont(new Font(
+            jK1.getName(),
+            fK1.getStyle() | Font.BOLD,
             16
         ));
-        jT1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        jK1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jT1PropertyChange(evt);
+                jK1PropertyChange(evt);
             }
         });
 
-        Font fT2 = jT2.getFont();
-        jT2.setFont(new Font(
-            jT2.getName(),
-            fT2.getStyle() | Font.BOLD,
+        Font fK3 = jK3.getFont();
+        jK3.setFont(new Font(
+            jK3.getName(),
+            fK3.getStyle() | Font.BOLD,
             16
         ));
-        jT2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        jK3.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jT2PropertyChange(evt);
+                jK3PropertyChange(evt);
             }
         });
 
-        Font fZ1 = jZ1.getFont();
-        jZ1.setFont(new Font(
-            jZ1.getName(),
-            fZ1.getStyle() | Font.BOLD,
+        Font fK2 = jK2.getFont();
+        jK2.setFont(new Font(
+            jK2.getName(),
+            fK2.getStyle() | Font.BOLD,
             16
         ));
-        jZ1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        jK2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jZ1PropertyChange(evt);
+                jK2PropertyChange(evt);
             }
         });
 
-        Font fZ2 = jZ2.getFont();
-        jZ2.setFont(new Font(
-            jZ2.getName(),
-            fZ2.getStyle() | Font.BOLD,
+        Font fK4 = jK4.getFont();
+        jK4.setFont(new Font(
+            jK4.getName(),
+            fK4.getStyle() | Font.BOLD,
             16
         ));
-        jZ2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        jK4.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jZ2PropertyChange(evt);
+                jK4PropertyChange(evt);
             }
         });
 
@@ -634,6 +726,34 @@ public class AdminMenuScreen extends MenuScreen {
                 bSaveActionPerformed(evt);
             }
         });
+
+        Font fK5 = jK5.getFont();
+        jK5.setFont(new Font(
+            jK5.getName(),
+            fK5.getStyle() | Font.BOLD,
+            16
+        ));
+        jK5.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jK5PropertyChange(evt);
+            }
+        });
+
+        Font fK6 = jK6.getFont();
+        jK6.setFont(new Font(
+            jK6.getName(),
+            fK6.getStyle() | Font.BOLD,
+            16
+        ));
+        jK6.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jK6PropertyChange(evt);
+            }
+        });
+
+        K5.setText("K5:");
+
+        K6.setText("K6:");
 
         javax.swing.GroupLayout jStudentGradesPanelLayout = new javax.swing.GroupLayout(jStudentGradesPanel);
         jStudentGradesPanel.setLayout(jStudentGradesPanelLayout);
@@ -670,23 +790,31 @@ public class AdminMenuScreen extends MenuScreen {
                                 .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
                                     .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
-                                            .addComponent(T2)
+                                            .addComponent(K3)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jT2, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                                            .addComponent(jK3, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
                                         .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
-                                            .addComponent(T1)
+                                            .addComponent(K1)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jT1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(jK1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
+                                            .addComponent(K5)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jK5, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)))
                                     .addGap(18, 18, 18)
                                     .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
-                                            .addComponent(Z2)
+                                            .addComponent(K4)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jZ2, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                                            .addComponent(jK4, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
                                         .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
-                                            .addComponent(Z1)
+                                            .addComponent(K2)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jZ1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
+                                            .addComponent(jK2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
+                                            .addComponent(K6)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jK6, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))))))))
                 .addGap(16, 16, 16))
         );
         jStudentGradesPanelLayout.setVerticalGroup(
@@ -704,31 +832,37 @@ public class AdminMenuScreen extends MenuScreen {
                 .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
                         .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(T1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jT1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Z1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jZ1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(K1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jK1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(K2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jK2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jT2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(T2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Z2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jZ2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jSummary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Summary))
+                            .addComponent(jK3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(K3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(K4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jK4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jGrade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Grade)))
+                            .addComponent(jK5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(K5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(K6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jK6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
                         .addComponent(jStudentFullname, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jStudentIndex, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jStudentJmbg, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jSummary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Summary))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jGrade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Grade))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bSave)
                 .addGap(27, 27, 27))
         );
@@ -990,13 +1124,24 @@ public class AdminMenuScreen extends MenuScreen {
 
         SelectStudent1.setText("Izaberite Studenta");
 
-        jLabel1.setText("Unesite novi predmet");
+        jSelectStudent1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jSelectStudent1ItemStateChanged(evt);
+            }
+        });
 
-        bNewSubjectSave.setText("Sacuvaj");
-        bSave.setEnabled(false);
-        bNewSubjectSave.addActionListener(new java.awt.event.ActionListener() {
+        SelectExistingSubject.setText("Izaberi Predmet");
+
+        bAddSubjectSave.setText("Sacuvaj");
+        bAddSubjectSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bNewSubjectSaveActionPerformed(evt);
+                bAddSubjectSaveActionPerformed(evt);
+            }
+        });
+
+        jExistingSubjects.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jExistingSubjectsItemStateChanged(evt);
             }
         });
 
@@ -1008,23 +1153,22 @@ public class AdminMenuScreen extends MenuScreen {
                 .addContainerGap()
                 .addGroup(jNewSubjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jNewSubjectPanelLayout.createSequentialGroup()
-                        .addGroup(jNewSubjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jNewSubjectPanelLayout.createSequentialGroup()
-                                .addComponent(SelectStudent1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(65, 65, 65))
-                            .addComponent(jSelectStudent1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(57, 57, 57)
-                        .addGroup(jNewSubjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jInputNewSubject)
-                            .addGroup(jNewSubjectPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 76, Short.MAX_VALUE))))
-                    .addGroup(jNewSubjectPanelLayout.createSequentialGroup()
                         .addComponent(jStudentUsername1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bNewSubjectSave))
+                        .addComponent(bAddSubjectSave))
                     .addGroup(jNewSubjectPanelLayout.createSequentialGroup()
                         .addGroup(jNewSubjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jNewSubjectPanelLayout.createSequentialGroup()
+                                .addGroup(jNewSubjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jNewSubjectPanelLayout.createSequentialGroup()
+                                        .addComponent(SelectStudent1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(122, 122, 122))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jNewSubjectPanelLayout.createSequentialGroup()
+                                        .addComponent(jSelectStudent1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(57, 57, 57)))
+                                .addGroup(jNewSubjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(SelectExistingSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jExistingSubjects, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jStudentIndex1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jStudentFullname1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jStudentJmbg1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1037,28 +1181,247 @@ public class AdminMenuScreen extends MenuScreen {
                 .addContainerGap()
                 .addGroup(jNewSubjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SelectStudent1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(SelectExistingSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jNewSubjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jSelectStudent1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jInputNewSubject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jExistingSubjects, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jNewSubjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jNewSubjectPanelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jStudentUsername1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jNewSubjectPanelLayout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(jStudentUsername1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(7, 7, 7)
-                        .addComponent(bNewSubjectSave)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jStudentFullname1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jStudentJmbg1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jStudentIndex1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(87, Short.MAX_VALUE))
+                        .addComponent(jStudentFullname1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jStudentJmbg1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jStudentIndex1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jNewSubjectPanelLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(bAddSubjectSave)))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
-        jTabbedPanel.addTab("Novi Predmet", jNewSubjectPanel);
+        jTabbedPanel.addTab("Dodaj Predmet", jNewSubjectPanel);
+
+        jLabel2.setText("Unesite Predmet");
+
+        bNewSubjectSave1.setText("Sacuvaj");
+        bSave.setEnabled(false);
+        bNewSubjectSave1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bNewSubjectSave1ActionPerformed(evt);
+            }
+        });
+
+        newCategory1.setText("Naziv kategorije");
+
+        newMaxPts.setText("Max broj poena");
+
+        newMinPts1.setText("Min broj poena");
+
+        newCategory2.setText("Naziv kategorije");
+
+        newMaxPts1.setText("Max broj poena");
+
+        newMinPts2.setText("Min broj poena");
+
+        newMinPts3.setText("Min broj poena");
+
+        newCategory3.setText("Naziv kategorije");
+
+        newMaxPts2.setText("Max broj poena");
+
+        newMaxPts3.setText("Max broj poena");
+
+        newMinPts4.setText("Min broj poena");
+
+        newMinPts5.setText("Min broj poena");
+
+        newCategory4.setText("Naziv kategorije");
+
+        newMaxPts4.setText("Max broj poena");
+
+        newCategory5.setText("Naziv kategorije");
+
+        newMaxPts5.setText("Max broj poena");
+
+        newMinPts6.setText("Min broj poena");
+
+        newCategory6.setText("Naziv kategorije");
+
+        javax.swing.GroupLayout jNewSubjectPanel1Layout = new javax.swing.GroupLayout(jNewSubjectPanel1);
+        jNewSubjectPanel1.setLayout(jNewSubjectPanel1Layout);
+        jNewSubjectPanel1Layout.setHorizontalGroup(
+            jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jNewSubjectPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jNewSubjectPanel1Layout.createSequentialGroup()
+                        .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(newCategory1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                            .addComponent(newCategory2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(newCategory3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jNewCategory1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jNewCategory2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jNewCategory3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jNewSubjectPanel1Layout.createSequentialGroup()
+                                .addComponent(newMaxPts1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jNewMaxPts1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(newMinPts2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jNewMinPts2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jNewSubjectPanel1Layout.createSequentialGroup()
+                                .addComponent(newMaxPts2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jNewMaxPts2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(newMinPts3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jNewMinPts3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jNewSubjectPanel1Layout.createSequentialGroup()
+                                .addComponent(newMaxPts, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jNewMaxPts, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(newMinPts1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jNewMinPts1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jNewSubjectPanel1Layout.createSequentialGroup()
+                        .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(newCategory6, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                            .addComponent(newCategory5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(newCategory4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jNewCategory4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jNewCategory5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jNewCategory6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(newMaxPts3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(newMaxPts4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(newMaxPts5, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jNewMaxPts5, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jNewMaxPts3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jNewMaxPts4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jNewSubjectPanel1Layout.createSequentialGroup()
+                                .addComponent(newMinPts5, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jNewMinPts6, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jNewSubjectPanel1Layout.createSequentialGroup()
+                                .addComponent(newMinPts6, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jNewMinPts4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jNewSubjectPanel1Layout.createSequentialGroup()
+                                .addComponent(newMinPts4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jNewMinPts5, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jNewSubjectPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jNewSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(123, 123, 123)
+                        .addComponent(bNewSubjectSave1))
+                    .addGroup(jNewSubjectPanel1Layout.createSequentialGroup()
+                        .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jStudentUsername2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jStudentIndex2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jStudentFullname2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jStudentJmbg2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(29, 29, 29))
+        );
+        jNewSubjectPanel1Layout.setVerticalGroup(
+            jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jNewSubjectPanel1Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jNewSubject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bNewSubjectSave1))
+                .addGap(48, 48, 48)
+                .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(newCategory1)
+                    .addComponent(jNewCategory1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(newMaxPts)
+                    .addComponent(jNewMaxPts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(newMinPts1)
+                    .addComponent(jNewMinPts1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(newCategory2)
+                    .addComponent(jNewCategory2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(newMaxPts1)
+                    .addComponent(jNewMaxPts1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(newMinPts2)
+                    .addComponent(jNewMinPts2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(newCategory3)
+                    .addComponent(jNewCategory3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(newMaxPts2)
+                    .addComponent(jNewMaxPts2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(newMinPts3)
+                    .addComponent(jNewMinPts3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jNewSubjectPanel1Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(newMinPts4)
+                            .addComponent(jNewMinPts5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(newMinPts5)
+                            .addComponent(jNewMinPts6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jNewSubjectPanel1Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(newMaxPts3)
+                            .addComponent(jNewMaxPts4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(newMaxPts4)
+                            .addComponent(jNewMaxPts5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jNewSubjectPanel1Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(newMaxPts5)
+                            .addComponent(newCategory5)
+                            .addComponent(newMinPts6)
+                            .addComponent(jNewCategory4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jNewMaxPts3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jNewMinPts4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(newCategory6)
+                            .addComponent(jNewCategory5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jNewSubjectPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(newCategory4)
+                            .addComponent(jNewCategory6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(278, 278, 278)
+                .addComponent(jStudentUsername2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(jStudentFullname2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jStudentJmbg2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jStudentIndex2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPanel.addTab("Novi Predmet", jNewSubjectPanel1);
 
         bUpdateAdminData.setText("Azuriranje podataka");
         bUpdateAdminData.addActionListener(new java.awt.event.ActionListener() {
@@ -1112,69 +1475,6 @@ public class AdminMenuScreen extends MenuScreen {
         // refresh -> pull data once again from server
         requestRefreshData();
     }//GEN-LAST:event_bUpdateAdminDataActionPerformed
-
-    private void jSelectStudentSubjectItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jSelectStudentSubjectItemStateChanged
-        // change UI inputs whenever there is another subject selected
-        updateSelectedSubject();
-    }//GEN-LAST:event_jSelectStudentSubjectItemStateChanged
-
-    private void jSelectStudentItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jSelectStudentItemStateChanged
-        // change UI inputs whenever there is another student selected
-        updateSelectedStudent();
-    }//GEN-LAST:event_jSelectStudentItemStateChanged
-
-    private void jT1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jT1PropertyChange
-        // check can app enable save button if any of category parts are actually changed
-        if (evt.getPropertyName().contentEquals("value")) {
-            bSave.setEnabled(isThereCategoryChange());
-        }
-    }//GEN-LAST:event_jT1PropertyChange
-
-    private void jT2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jT2PropertyChange
-        // check can app enable save button if any of category parts are actually changed
-        if (evt.getPropertyName().contentEquals("value")) {
-            bSave.setEnabled(isThereCategoryChange());
-        }
-    }//GEN-LAST:event_jT2PropertyChange
-
-    private void jZ1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jZ1PropertyChange
-        // check can app enable save button if any of category parts are actually changed
-        if (evt.getPropertyName().contentEquals("value")) {
-            bSave.setEnabled(isThereCategoryChange());
-        }
-    }//GEN-LAST:event_jZ1PropertyChange
-
-    private void jZ2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jZ2PropertyChange
-        // check can app enable save button if any of category parts are actually changed
-        if (evt.getPropertyName().contentEquals("value")) {
-            bSave.setEnabled(isThereCategoryChange());
-        }
-    }//GEN-LAST:event_jZ2PropertyChange
-
-    private void bSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaveActionPerformed
-        // update grade for selected student's subject
-
-        // create JSON req with necessary utilities
-        JSONObject req = new JSONObject();
-        req.put("method", "updateSubject");
-        req.put("username", userName);
-        req.put("target username", jSelectStudent.getSelectedItem());
-
-        // update selected subject JSON
-        jSelectedSubject.put("T1", jT1.getText());
-        jSelectedSubject.put("T2", jT2.getText());
-        jSelectedSubject.put("Z1", jZ1.getText());
-        jSelectedSubject.put("Z2", jZ2.getText());
-
-        // put updated JSON as value for "subject" key
-        req.put("subject", jSelectedSubject);
-
-        // send JSON to server
-        pw.println(req);
-
-        // disable Save button
-        bSave.setEnabled(false);
-    }//GEN-LAST:event_bSaveActionPerformed
 
     private void jSelectAdminItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jSelectAdminItemStateChanged
         // change UI inputs whenever there is another admin selected
@@ -1274,29 +1574,214 @@ public class AdminMenuScreen extends MenuScreen {
         }
     }//GEN-LAST:event_bNewUserSaveActionPerformed
 
-    private void bNewSubjectSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNewSubjectSaveActionPerformed
-        // if there is selected student and subject name is entered proceed action
+    private void bAddSubjectSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddSubjectSaveActionPerformed
+        // TODO add your handling code here:
         String selectedStudent = getSelectedString(jSelectStudent1);
-        if (selectedStudent != null && !jInputNewSubject.getText().contentEquals("")) {
-            // create JSON req with necessary utilities
+        String selectedSubject = getSelectedString(jExistingSubjects);
+        if (selectedStudent != null && selectedSubject != null) {
             JSONObject req = new JSONObject();
-            req.put("method", "addNewSubject");
+            req.put("method", "addSubject");
             req.put("username", userName);
 
             req.put("target username", selectedStudent);
-            req.put("subject", jInputNewSubject.getText());
+            req.put("target subject", selectedSubject);
 
             // send JSON to server
             pw.println(req);
-
-            // disable save button
-            bNewSubjectSave.setEnabled(false);
+            bAddSubjectSave.setEnabled(false);
         }
-    }//GEN-LAST:event_bNewSubjectSaveActionPerformed
+    }//GEN-LAST:event_bAddSubjectSaveActionPerformed
+
+    private void bNewSubjectSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNewSubjectSave1ActionPerformed
+        // TODO add your handling code here:
+        JTextField[] categories = {jNewCategory1, jNewCategory2, jNewCategory3, jNewCategory4, jNewCategory5, jNewCategory6};
+        JTextField[] max_pts = {jNewMaxPts, jNewMaxPts1, jNewMaxPts2, jNewMaxPts3, jNewMaxPts4, jNewMaxPts5};
+        JTextField[] min_pts = {jNewMinPts1, jNewMinPts2, jNewMinPts3, jNewMinPts4, jNewMinPts5, jNewMinPts6};
+        
+        String subjectName = jNewSubject.getText();
+        if (subjectName.contentEquals("")) {
+            JOptionPane.showMessageDialog(
+                this, 
+                "Morate uneti ime novog predmeta",
+                "Predmet",
+                JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+        
+        JSONObject req = new JSONObject();
+        req.put("method", "createNewSubject");
+        req.put("username", userName);
+        
+        JSONArray jCategories = new JSONArray();
+
+        boolean atLeastOneCategory = false;
+        for (int i=0; i<6; i++) {
+            String categoryName = categories[i].getText();
+            String minPts = min_pts[i].getText();
+            String maxPts = max_pts[i].getText();
+            if (categoryName.contentEquals("") && maxPts.contentEquals("") && minPts.contentEquals("")) {
+                // do nothing
+            } else if (!categoryName.contentEquals("") && !maxPts.contentEquals("") && !minPts.contentEquals("")) {
+                atLeastOneCategory = true;
+
+                JSONObject category = new JSONObject();
+                category.put("category", categoryName);
+                category.put("min_points", minPts);
+                category.put("max_points", maxPts);
+
+                jCategories.add(category);
+            } else {
+                JOptionPane.showMessageDialog(
+                    this, 
+                    "Unesite sva polja za potencijalnu kategoriju",
+                    "Kategorija",
+                    JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+        }
+        
+        if (!atLeastOneCategory) {
+            JOptionPane.showMessageDialog(
+                this, 
+                "Morate uneti barem jendu kategoriju za novi predmet",
+                "Kategorija",
+                JOptionPane.ERROR_MESSAGE
+            );
+        } else {
+            JSONObject jTargetSubject = new JSONObject();
+            jTargetSubject.put("categories", jCategories);
+            jTargetSubject.put("subject", subjectName);
+            
+            req.put("new subject", jTargetSubject);
+            pw.println(req);
+            bNewSubjectSave1.setEnabled(false);
+        }
+    }//GEN-LAST:event_bNewSubjectSave1ActionPerformed
+
+    private void jK6PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jK6PropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jK6PropertyChange
+
+    private void jK5PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jK5PropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jK5PropertyChange
+
+    private void bSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaveActionPerformed
+        // TODO add your handling code here:
+        JSONObject req = new JSONObject();
+        req.put("method", "updateSubject");
+        req.put("username", userName);
+        req.put("target username", jSelectStudent.getSelectedItem());
+
+        // update selected subject JSON
+        jSelectedSubject.put("T1", jK1.getText());
+        jSelectedSubject.put("T2", jK3.getText());
+        jSelectedSubject.put("Z1", jK2.getText());
+        jSelectedSubject.put("Z2", jK4.getText());
+
+        req.put("subject", jSelectedSubject);
+        pw.println(req);
+        bSave.setEnabled(false);
+    }//GEN-LAST:event_bSaveActionPerformed
+
+    private void jK4PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jK4PropertyChange
+        // TODO add your handling code here:
+        if (evt.getPropertyName().contentEquals("value")) {
+            bSave.setEnabled(isThereCategoryChange());
+        }
+    }//GEN-LAST:event_jK4PropertyChange
+
+    private void jK2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jK2PropertyChange
+        // TODO add your handling code here:
+        if (evt.getPropertyName().contentEquals("value")) {
+            bSave.setEnabled(isThereCategoryChange());
+        }
+    }//GEN-LAST:event_jK2PropertyChange
+
+    private void jK3PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jK3PropertyChange
+        // TODO add your handling code here:
+        if (evt.getPropertyName().contentEquals("value")) {
+            bSave.setEnabled(isThereCategoryChange());
+        }
+    }//GEN-LAST:event_jK3PropertyChange
+
+    private void jK1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jK1PropertyChange
+        // TODO add your handling code here:
+        if (evt.getPropertyName().contentEquals("value")) {
+            bSave.setEnabled(isThereCategoryChange());
+        }
+    }//GEN-LAST:event_jK1PropertyChange
+
+    private void jSelectStudentSubjectItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jSelectStudentSubjectItemStateChanged
+        // TODO add your handling code here:
+        updateSelectedSubject();
+    }//GEN-LAST:event_jSelectStudentSubjectItemStateChanged
+
+    private void jSelectStudentItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jSelectStudentItemStateChanged
+        // TODO add your handling code here:
+        updateSelectedStudent();
+    }//GEN-LAST:event_jSelectStudentItemStateChanged
+
+    private void jSelectStudent1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jSelectStudent1ItemStateChanged
+        // TODO add your handling code here:
+        JSONObject target = null;
+        for (Object student : jStudents) {
+            JSONObject jStudent = (JSONObject)student;
+            if (jStudent.get("username").toString().equalsIgnoreCase(jSelectStudent1.getSelectedItem().toString())) {
+                target = jStudent;
+                break;
+            }
+        }
+        if (target == null) {
+            return;
+        }
+        
+        // reset selector
+        jExistingSubjects.setModel(new DefaultComboBoxModel<>());
+
+        for (Object subjectDB : jSubjectsDB) {
+            JSONObject jSubjectDB = (JSONObject)subjectDB;
+            String jSubjectDBName = jSubjectDB.get("subject").toString();
+            boolean found = false;
+            for (Object studentSubject : (JSONArray)target.get("subjects")) {
+                JSONObject jStudentSubject = (JSONObject)studentSubject;
+                if (jStudentSubject.get("subject").toString().equalsIgnoreCase(jSubjectDBName)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                jExistingSubjects.addItem(jSubjectDBName);
+            }
+        }
+        
+        if (jSelectStudent1.getSelectedItem() != null && jExistingSubjects.getSelectedItem() != null) {
+            bAddSubjectSave.setEnabled(true);
+        } else {
+            bAddSubjectSave.setEnabled(false);
+        }
+    }//GEN-LAST:event_jSelectStudent1ItemStateChanged
+
+    private void jExistingSubjectsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jExistingSubjectsItemStateChanged
+        // TODO add your handling code here:
+        if (jSelectStudent1.getSelectedItem() != null && jExistingSubjects.getSelectedItem() != null) {
+            bAddSubjectSave.setEnabled(true);
+        } else {
+            bAddSubjectSave.setEnabled(false);
+        }
+    }//GEN-LAST:event_jExistingSubjectsItemStateChanged
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Grade;
+    private javax.swing.JLabel K1;
+    private javax.swing.JLabel K2;
+    private javax.swing.JLabel K3;
+    private javax.swing.JLabel K4;
+    private javax.swing.JLabel K5;
+    private javax.swing.JLabel K6;
     private javax.swing.JLabel NewFirstName;
     private javax.swing.JLabel NewIndex;
     private javax.swing.JLabel NewJmbg;
@@ -1306,15 +1791,13 @@ public class AdminMenuScreen extends MenuScreen {
     private javax.swing.JLabel RepeatNewPassword;
     private javax.swing.JLabel Role;
     private javax.swing.JLabel SelectAdmin;
+    private javax.swing.JLabel SelectExistingSubject;
     private javax.swing.JLabel SelectStudent;
     private javax.swing.JLabel SelectStudent1;
     private javax.swing.JLabel SelectSubject;
     private javax.swing.JLabel Summary;
-    private javax.swing.JLabel T1;
-    private javax.swing.JLabel T2;
-    private javax.swing.JLabel Z1;
-    private javax.swing.JLabel Z2;
-    private javax.swing.JButton bNewSubjectSave;
+    private javax.swing.JButton bAddSubjectSave;
+    private javax.swing.JButton bNewSubjectSave1;
     private javax.swing.JButton bNewUserSave;
     private javax.swing.JButton bSave;
     private javax.swing.JButton bUpdateAdminData;
@@ -1324,17 +1807,43 @@ public class AdminMenuScreen extends MenuScreen {
     private javax.swing.JLabel jAdminUsername;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jExistingSubjects;
     private javax.swing.JLabel jFullname;
     private javax.swing.JTextField jGrade;
-    private javax.swing.JTextField jInputNewSubject;
     private javax.swing.JLabel jJmbg;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTextField jK1;
+    private javax.swing.JTextField jK2;
+    private javax.swing.JTextField jK3;
+    private javax.swing.JTextField jK4;
+    private javax.swing.JTextField jK5;
+    private javax.swing.JTextField jK6;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JTextField jNewCategory1;
+    private javax.swing.JTextField jNewCategory2;
+    private javax.swing.JTextField jNewCategory3;
+    private javax.swing.JTextField jNewCategory4;
+    private javax.swing.JTextField jNewCategory5;
+    private javax.swing.JTextField jNewCategory6;
     private javax.swing.JTextField jNewFirstName;
     private javax.swing.JTextField jNewIndex;
     private javax.swing.JTextField jNewJmbg;
     private javax.swing.JTextField jNewLastName;
+    private javax.swing.JTextField jNewMaxPts;
+    private javax.swing.JTextField jNewMaxPts1;
+    private javax.swing.JTextField jNewMaxPts2;
+    private javax.swing.JTextField jNewMaxPts3;
+    private javax.swing.JTextField jNewMaxPts4;
+    private javax.swing.JTextField jNewMaxPts5;
+    private javax.swing.JTextField jNewMinPts1;
+    private javax.swing.JTextField jNewMinPts2;
+    private javax.swing.JTextField jNewMinPts3;
+    private javax.swing.JTextField jNewMinPts4;
+    private javax.swing.JTextField jNewMinPts5;
+    private javax.swing.JTextField jNewMinPts6;
     private javax.swing.JTextField jNewPassword;
+    private javax.swing.JTextField jNewSubject;
     private javax.swing.JPanel jNewSubjectPanel;
+    private javax.swing.JPanel jNewSubjectPanel1;
     private javax.swing.JTextField jNewUserName;
     private javax.swing.JPanel jNewUserPanel;
     private javax.swing.JTextField jRepeatNewPassword;
@@ -1346,19 +1855,37 @@ public class AdminMenuScreen extends MenuScreen {
     private javax.swing.JComboBox<String> jSelectStudentSubject;
     private javax.swing.JLabel jStudentFullname;
     private javax.swing.JLabel jStudentFullname1;
+    private javax.swing.JLabel jStudentFullname2;
     private javax.swing.JPanel jStudentGradesPanel;
     private javax.swing.JLabel jStudentIndex;
     private javax.swing.JLabel jStudentIndex1;
+    private javax.swing.JLabel jStudentIndex2;
     private javax.swing.JLabel jStudentJmbg;
     private javax.swing.JLabel jStudentJmbg1;
+    private javax.swing.JLabel jStudentJmbg2;
     private javax.swing.JLabel jStudentUsername1;
+    private javax.swing.JLabel jStudentUsername2;
     private javax.swing.JTextField jSummary;
-    private javax.swing.JTextField jT1;
-    private javax.swing.JTextField jT2;
     private javax.swing.JTabbedPane jTabbedPanel;
     private javax.swing.JLabel jUsername;
-    private javax.swing.JTextField jZ1;
-    private javax.swing.JTextField jZ2;
+    private javax.swing.JLabel newCategory1;
+    private javax.swing.JLabel newCategory2;
+    private javax.swing.JLabel newCategory3;
+    private javax.swing.JLabel newCategory4;
+    private javax.swing.JLabel newCategory5;
+    private javax.swing.JLabel newCategory6;
+    private javax.swing.JLabel newMaxPts;
+    private javax.swing.JLabel newMaxPts1;
+    private javax.swing.JLabel newMaxPts2;
+    private javax.swing.JLabel newMaxPts3;
+    private javax.swing.JLabel newMaxPts4;
+    private javax.swing.JLabel newMaxPts5;
+    private javax.swing.JLabel newMinPts1;
+    private javax.swing.JLabel newMinPts2;
+    private javax.swing.JLabel newMinPts3;
+    private javax.swing.JLabel newMinPts4;
+    private javax.swing.JLabel newMinPts5;
+    private javax.swing.JLabel newMinPts6;
     // End of variables declaration//GEN-END:variables
 
 }

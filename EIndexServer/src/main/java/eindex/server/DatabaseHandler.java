@@ -16,6 +16,7 @@ public class DatabaseHandler {
     // filenames
     final private static String USERS_FILENAME = "users.txt";
     final private static String USERS_INDEX_FILENAME = "users_index.txt";
+    final private static String SUBJECTS_FILENAME = "subjects.txt";
     
     public DatabaseHandler() {}
 
@@ -103,6 +104,8 @@ public class DatabaseHandler {
         bw.write("\n" + user.toString());
         bw.close();
     }
+
+    ///// user
 
     // read all users from extended database
     public JSONArray readAllUserIndex() throws IOException, ParseException {
@@ -204,4 +207,37 @@ public class DatabaseHandler {
         file.flush();
         file.close();
     }
+    ////// user index
+    
+    public JSONArray readAllSubjects() throws IOException, ParseException {
+        JSONParser parser = new JSONParser();
+        JSONArray out;
+        try (FileReader fr = new FileReader("./data/" + SUBJECTS_FILENAME)) {
+            out = (JSONArray)parser.parse(fr);
+        }
+        return out;
+    }
+    
+    public JSONObject readSubject(String subject) throws IOException, ParseException {
+        JSONArray array = readAllSubjects();
+        for (Object sub : array) {
+            JSONObject jSub = (JSONObject)sub;
+            if (jSub.get("subject").toString().equalsIgnoreCase(subject)) {
+                return jSub;
+            }
+        }
+        return null;
+    }
+    
+    public void writeSubject(JSONObject subject) throws IOException, ParseException {
+        JSONArray array = readAllSubjects();
+        array.add(subject);
+        
+        FileWriter file = new FileWriter("./data/" + SUBJECTS_FILENAME);
+        file.write(array.toJSONString()); 
+        file.flush();
+        file.close();
+    }
+    
+    ////// subject
 }

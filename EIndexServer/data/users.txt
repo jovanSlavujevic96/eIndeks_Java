@@ -3,3 +3,4 @@ ppetrovic;lozinka1234;student
 mmiric;student45;student
 pteodorovic;root;admin
 zireT;zz986x;admin
+a;a;admin

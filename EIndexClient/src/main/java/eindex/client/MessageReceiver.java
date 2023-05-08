@@ -12,10 +12,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-/**
- *
- * @author Jovan
- */
 public class MessageReceiver implements Runnable {
     final private BufferedReader br;
     final private PrintWriter pw;
@@ -123,7 +119,7 @@ public class MessageReceiver implements Runnable {
                         admenu.updateSelectedSubject();
                     }
                 } else if (method.equalsIgnoreCase("crateNewUser") ||
-                           method.equalsIgnoreCase("addNewSubject")) {
+                           method.equalsIgnoreCase("addSubject")) {
                     // "createNewUser" or "addNewSubject" are admin methods only
                     // for succesfull response for these methods just request data refresh in background,
                     // which means no dialog on server response

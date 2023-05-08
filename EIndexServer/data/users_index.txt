@@ -9,38 +9,15 @@
 		"subjects" : [
 			{
 				"subject" : "Analogna Elektronika",
-				"T1" : "11",
-				"T2" : "20",
-				"Z1" : "24",
-				"Z2" : "25"
+				"Z1" : "11",
+				"Z2" : "20",
+				"T" : "24",
 			},
 			{
 				"subject" : "Digitalna Elektronika",
-				"T1" : "25",
-				"T2" : "20",
-				"Z1" : "21",
-				"Z2" : "25"
-			},
-			{
-				"subject" : "Algebra",
-				"T1" : "8",
-				"T2" : "15",
-				"Z1" : "6",
-				"Z2" : "21"
-			},
-			{
-				"subject" : "Engleski Jezik",
-				"T1" : "24",
-				"T2" : "22.5",
-				"Z1" : "23",
-				"Z2" : "17"
-			},
-			{
-				"subject" : "Mehatronika",
-				"T1" : "0",
-				"T2" : "0",
-				"Z1" : "13",
-				"Z2" : "0"
+				"L1" : "10",
+				"L2" : "10",
+				"I" : "80"
 			},
 		],
 	},
@@ -52,6 +29,13 @@
 		"jmbg" : "0506984004786",
 	},
 	{
+		"role" : "admin",
+		"username" : "a",
+		"first name" : "A",
+		"last name" : "A",
+		"jmbg" : "0506994004786",
+	},
+	{
 		"role" : "student",
 		"username" : "ppetrovic",
 		"first name" : "Petar",
@@ -60,32 +44,8 @@
 		"index" : "E2/2023",
 		"subjects" : [
 			{
-				"subject" : "Objektno programiranje",
-				"T1" : "15",
-				"T2" : "14.5",
-				"Z1" : "25",
-				"Z2" : "25"
-			},
-			{
-				"subject" : "Sistemi i Signali",
-				"T1" : "10",
-				"T2" : "17",
-				"Z1" : "0",
-				"Z2" : "20"
-			},
-			{
-				"subject" : "Algebra",
-				"T1" : "18",
-				"T2" : "22",
-				"Z1" : "13.5",
-				"Z2" : "23.5"
-			},
-			{
 				"subject" : "Engleski Jezik",
-				"T1" : "0",
-				"T2" : "0",
-				"Z1" : "11",
-				"Z2" : "12.5"
+				"I" : "60",
 			},
 		],
 	},

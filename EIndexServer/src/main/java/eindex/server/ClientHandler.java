@@ -170,6 +170,7 @@ public class ClientHandler implements Runnable {
                                 if (jUserInfo.get("username").toString().equalsIgnoreCase(userName)) {
                                     usersInfo.remove(jUserInfo);
                                     jUserInfo.put("users", usersInfo);
+                                    jUserInfo.put("subjects DB", dbHandler.readAllSubjects());
                                     break;
                                 }
                             }
@@ -276,8 +277,7 @@ public class ClientHandler implements Runnable {
                     out.put("status", "401");
                     out.put("message", "Korisnik " + userName + " nema pristup ovoj metodi");
                 }
-            } else if (method.equalsIgnoreCase("addNewSubject")) { // addNewSubject method
-                // user must be admin
+            } else if (method.equalsIgnoreCase("addSubject")) {
                 if (user.getRole().equalsIgnoreCase("admin")) {
                     String student = in.get("target username").toString();
                     String newSubject = in.get("subject").toString();
@@ -319,8 +319,42 @@ public class ClientHandler implements Runnable {
                     String subjectName = jSubject.get("subject").toString();
                     out.put("message", user.getRole() + " " + userName + " je uspesno dodao predmet " + subjectName + " za " + student);
                     out.put("role", user.getRole());
-                    out.put("method", "addNewSubject");
-                    out.put("background", in.get("background")); // nullable
+                    out.put("method", "addSubject");
+                    out.put("background", in.get("background"));
+                }  else {
+                    out.put("status", "401");
+                    out.put("message", "Korisnik " + userName + " nema pristup ovoj metodi");
+                }
+            } else if (method.equalsIgnoreCase("createNewSubject")) {
+                if (user.getRole().equalsIgnoreCase("admin")) {
+                    JSONObject newSubject = (JSONObject)in.get("new subject");
+                    String newSubjectStr = newSubject.get("subject").toString();
+                    if (dbHandler.readSubject(newSubjectStr) != null) {
+                        out.put("status", "409");
+                        out.put("message", "Zeljeni predmet " + newSubjectStr + " vec postoji");
+                        return out.toJSONString();
+                    }
+                    JSONArray categories = (JSONArray)newSubject.get("categories");
+                    if (categories == null) {
+                        out.put("status", "404");
+                        out.put("message", "Na poslatom zahtevu nedostaju kategorije");
+                        return out.toJSONString();
+                    }
+                    float sum = 0;
+                    for (Object category : categories) {
+                        JSONObject jCategory = (JSONObject)category;
+                        String max_points = jCategory.get("max_points").toString();
+                        sum += Float.parseFloat(max_points);
+                    }
+                    if (sum != 100.0) {
+                        out.put("status", "401");
+                        out.put("message", "Na poslatom zahtevu kategorije nemaju ukupnih maksimalnih 100 poena");
+                        return out.toJSONString();
+                    }
+                    dbHandler.writeSubject(newSubject);
+                }  else {
+                    out.put("status", "401");
+                    out.put("message", "Korisnik " + userName + " nema pristup ovoj metodi");
                 }
             } else {
                 // bad role
