@@ -18,7 +18,7 @@ public class MessageReceiver implements Runnable {
     final private StartupScreen parent;
     private MenuScreen menu; // current instance of menu screen
     private JFrame focusedScreen; // screen to whom are dialog messages are going to be linked
-    private JSONObject jUserData; // up-to-date JSON data from server
+    private JSONObject jsonUserData = null; // up-to-date JSON data from server
     
     public MessageReceiver(StartupScreen parent) {
         this.parent = parent;
@@ -37,10 +37,10 @@ public class MessageReceiver implements Runnable {
     }
     
     public JSONObject getJUserData() {
-        return jUserData;
+        return jsonUserData;
     }
     public void setJUserData(JSONObject jUserData) {
-        this.jUserData = jUserData;
+        this.jsonUserData = jUserData;
     }
     
     private String processMessage(String msg) {
@@ -48,13 +48,13 @@ public class MessageReceiver implements Runnable {
         JSONParser parser = new JSONParser();
         try {
             // parse string to JSON object
-            JSONObject in = (JSONObject)parser.parse(msg);
+            JSONObject jsonIn = (JSONObject)parser.parse(msg);
 
             // get mandatory JSON message props
-            String status = (in.get("status") != null) ? in.get("status").toString() : "";
-            String message = (in.get("message") != null) ? in.get("message").toString() : "";
-            String role = (in.get("role") != null) ? in.get("role").toString() : "";
-            String method = (in.get("method") != null) ? in.get("method").toString() : "";
+            String status = (jsonIn.get("status") != null) ? jsonIn.get("status").toString() : "";
+            String message = (jsonIn.get("message") != null) ? jsonIn.get("message").toString() : "";
+            String role = (jsonIn.get("role") != null) ? jsonIn.get("role").toString() : "";
+            String method = (jsonIn.get("method") != null) ? jsonIn.get("method").toString() : "";
 
             // if parent is disabled it means that menu is on focuse ...
             focusedScreen = parent.isEnabled() ? parent : menu.isEnabled() ? menu : null;
@@ -62,7 +62,9 @@ public class MessageReceiver implements Runnable {
             // checks for message dialog appearence
             if (status.contentEquals("") || message.contentEquals("") ||    // there always has to be status and message
                (status.contentEquals("200") && // if status code is 200 (success) -> method and role must exist
-                    (method.contentEquals("") || role.contentEquals("")))) {
+                (method.contentEquals("") || role.contentEquals("")))) {
+
+                // report warning because of missing parts
                 JOptionPane.showMessageDialog(
                     focusedScreen,
                     "Na poslati zahtev nije dobijen potpun odgovor od strane servera",
@@ -70,10 +72,11 @@ public class MessageReceiver implements Runnable {
                     JOptionPane.WARNING_MESSAGE
                 );
             } else if (status.contentEquals("200") &&
-                       in.get("background") != null &&
-                       in.get("background").toString().equalsIgnoreCase("true")) {
+                       jsonIn.get("background") != null &&
+                       jsonIn.get("background").toString().equalsIgnoreCase("true")) {
                 // if there is a background attribute just do nothing - don't show any dialog
             } else {
+                // report error or success
                 JOptionPane.showMessageDialog(
                     focusedScreen,
                     message,
@@ -91,7 +94,7 @@ public class MessageReceiver implements Runnable {
                     // make sure that both of them have their of menu screen opened (Admin or Student menu screen)
                     // disable and hide necessary UI facilities
                     if (role.equalsIgnoreCase("student") || role.equalsIgnoreCase("admin")) {
-                        jUserData = (JSONObject)in.get("data");
+                        jsonUserData = (JSONObject)jsonIn.get("data");
                         parent.showLogoutBtn(true);
                         parent.enableLogoutBtn(true);
                         parent.openMenuScreen();
@@ -101,14 +104,18 @@ public class MessageReceiver implements Runnable {
                     // replace list of subjects in student's JSON or users in admin's JSON
                     // make sure that data is updated visually
                     if (role.equalsIgnoreCase("student") && menu.getRole().equalsIgnoreCase("student")) {
-                        if (in.get("subjects") instanceof JSONArray jSubjects) {
-                            jUserData.replace("subjects", jSubjects);
-                            menu.updateData(jSubjects);
+                        if (jsonIn.get("subjects") instanceof JSONArray jsonSubjects) {
+                            jsonUserData.replace("subjects", jsonSubjects);
+                            menu.updateData(jsonSubjects);
                         }
                     } else if (role.equalsIgnoreCase("admin") && menu.getRole().equalsIgnoreCase("admin")) {
-                        if (in.get("users") instanceof JSONArray jUsers) {
-                            jUserData.replace("users", jUsers);
-                            menu.updateData(jUsers);
+                        if (jsonIn.get("users_index DB") instanceof JSONArray jsonUsersDB &&
+                            jsonIn.get("subjects DB") instanceof JSONArray jsonSubjectsDB) {
+
+                            // update data to JSON database storage
+                            jsonUserData.replace("users_index DB", jsonUsersDB);
+                            jsonUserData.replace("subjects DB", jsonSubjectsDB);
+                            menu.updateData(jsonUserData);
                         }
                     }
                 } else if (method.equalsIgnoreCase("updateSubject")) {
@@ -124,10 +131,10 @@ public class MessageReceiver implements Runnable {
                     // for succesfull response for these methods just request data refresh in background,
                     // which means no dialog on server response
                     if (role.equalsIgnoreCase("admin")) {
-                        JSONObject refreshDataReq = menu.formRefreshDataReq();
-                        refreshDataReq.put("background", "true");
+                        JSONObject jsonRefreshDataReq = menu.formRefreshDataReq();
+                        jsonRefreshDataReq.put("background", "true");
                         // return new JSON req in string form
-                        return refreshDataReq.toJSONString();
+                        return jsonRefreshDataReq.toJSONString();
                     }
                 }
             }

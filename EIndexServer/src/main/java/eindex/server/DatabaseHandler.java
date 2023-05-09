@@ -110,23 +110,23 @@ public class DatabaseHandler {
     // read all users from extended database
     public JSONArray readAllUserIndex() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        JSONArray out;
+        JSONArray jsonOut;
         try (FileReader fr = new FileReader("./data/" + USERS_INDEX_FILENAME)) {
-            out = (JSONArray)parser.parse(fr);
+            jsonOut = (JSONArray)parser.parse(fr);
         }
-        return out;
+        return jsonOut;
     }
 
     // read desired user from extended database 
     public JSONObject readUserIndexPer(String value, String key) throws IOException, ParseException {
-        JSONArray array = readAllUserIndex();
-        for (Object obj : array) {
-            JSONObject jObj = (JSONObject)obj;
-            if (jObj.get(key).toString().equalsIgnoreCase(value)) {
-                return jObj;
+        JSONArray jsonArray = readAllUserIndex();
+        for (Object object : jsonArray) {
+            JSONObject jObject = (JSONObject)object;
+            if (jObject.get(key).toString().equalsIgnoreCase(value)) {
+                return jObject;
             }
         }
-        return new JSONObject();
+        return null;
     }
 
     // update user's subject within extended database
@@ -207,6 +207,7 @@ public class DatabaseHandler {
         file.flush();
         file.close();
     }
+
     ////// user index
     
     public JSONArray readAllSubjects() throws IOException, ParseException {

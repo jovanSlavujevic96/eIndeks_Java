@@ -9,22 +9,22 @@ import org.json.simple.JSONObject;
 public class StudentMenuScreen extends MenuScreen {
 
     final private String index;
-    private JSONArray jSubjects;
+    private JSONArray jsonStudentSubjects;
     
     /**
      * Creates new form StudentMenuScreen
      * @param parent - ref to startup screen
-     * @param jIndex - data structure received from server
+     * @param jsonIndex - data structure received from server
      */
-    public StudentMenuScreen(StartupScreen parent, JSONObject jIndex) {
-        super(parent, jIndex, "Studentski Meni");
+    public StudentMenuScreen(StartupScreen parent, JSONObject jsonIndex) {
+        super(parent, jsonIndex, "Studentski Meni");
 
-        index = jIndex.get("index").toString();
+        index = jsonIndex.get("index").toString();
         
         initComponents();
         
         // must be called after initComponents()
-        setSubjects((JSONArray)jIndex.get("subjects"));
+        setSubjects((JSONArray)jsonIndex.get("subjects"));
     }
     
     @Override
@@ -32,7 +32,7 @@ public class StudentMenuScreen extends MenuScreen {
         setSubjects((JSONArray)data);
     }
     
-    final void setSubjects(JSONArray jSubjects) {
+    final void setSubjects(JSONArray jsonSubjects) {
         // read earlier existing value from selector (if it existed)
         String selectedSub = getSelectedString(jSelectSubject);
 
@@ -40,10 +40,10 @@ public class StudentMenuScreen extends MenuScreen {
         jSelectSubject.setModel(new DefaultComboBoxModel<>());
 
         // add subjects to subject selector
-        this.jSubjects = jSubjects;
-        for (Object sub : jSubjects) {
-            JSONObject jSub = (JSONObject)sub;
-            jSelectSubject.addItem(jSub.get("subject").toString());
+        this.jsonStudentSubjects = jsonSubjects;
+        for (Object subject : jsonSubjects) {
+            JSONObject jsonSubject = (JSONObject)subject;
+            jSelectSubject.addItem(jsonSubject.get("subject").toString());
         }
 
         // set earlier selected item
@@ -59,13 +59,13 @@ public class StudentMenuScreen extends MenuScreen {
         String selectedSub = getSelectedString(jSelectSubject);
         if (selectedSub != null) {
             // iterate through subjects and when you find it fill category input
-            for (Object sub : jSubjects) {
-                JSONObject jSub = (JSONObject)sub;
-                if (jSub.get("subject").toString().contentEquals(selectedSub)) {
-                    jT1.setText(jSub.get("T1").toString());
-                    jT2.setText(jSub.get("T2").toString());
-                    jZ1.setText(jSub.get("Z1").toString());
-                    jZ2.setText(jSub.get("Z2").toString());
+            for (Object subject : jsonStudentSubjects) {
+                JSONObject jsonSubject = (JSONObject)subject;
+                if (jsonSubject.get("subject").toString().contentEquals(selectedSub)) {
+                    jT1.setText(jsonSubject.get("T1").toString());
+                    jT2.setText(jsonSubject.get("T2").toString());
+                    jZ1.setText(jsonSubject.get("Z1").toString());
+                    jZ2.setText(jsonSubject.get("Z2").toString());
                     break;
                 }
             }

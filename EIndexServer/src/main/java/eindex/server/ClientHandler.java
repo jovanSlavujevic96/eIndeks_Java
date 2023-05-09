@@ -78,68 +78,69 @@ public class ClientHandler implements Runnable {
     }
     
     public String processMessage(String msg) {
-        JSONObject out = new JSONObject();
+        JSONObject jsonOut = new JSONObject();
         JSONParser parser = new JSONParser();
 		
         try {
             // parse JSON Object
-            JSONObject in = (JSONObject)parser.parse(msg);
+            JSONObject jsonIn = (JSONObject)parser.parse(msg);
 
             // look for method
             String method;
-            if (in.get("method") != null) {
-                method = in.get("method").toString();
+            if (jsonIn.get("method") != null) {
+                method = jsonIn.get("method").toString();
             } else {
-                out.put("status", "400");
-                out.put("message", "Zahtev nije poslat");
-                return out.toJSONString();
+                jsonOut.put("status", "400");
+                jsonOut.put("message", "Zahtev nije poslat");
+                return jsonOut.toJSONString();
             }
             
             // get username
-            userName = "";
-            if (in.get("username") != null) {
-                userName = in.get("username").toString();
+            userName = ""; // reset username
+            if (jsonIn.get("username") != null) {
+                userName = jsonIn.get("username").toString();
             } else {
-                out.put("status", "400");
-                out.put("message", "Korisnicko ime nije poslato");
-                return out.toJSONString();
+                jsonOut.put("status", "400");
+                jsonOut.put("message", "Korisnicko ime nije poslato");
+                return jsonOut.toJSONString();
             }
             
             // try to find a user within database
             User user = dbHandler.readUserPer(userName, 0);
             if (user == null) {
-                out.put("status", "404");
-                out.put("message", "Korisnik " + userName + " nije pronadjen");
-                userName = "";
-                return out.toJSONString();
+                userName = ""; // reset username
+
+                jsonOut.put("status", "404");
+                jsonOut.put("message", "Korisnik " + userName + " nije pronadjen");
+                return jsonOut.toJSONString();
             }
 
             if (method.equalsIgnoreCase("login")) { // login method
                 // get password
                 String password;
-                if (in.get("password") != null) {
-                    password = in.get("password").toString();
+                if (jsonIn.get("password") != null) {
+                    password = jsonIn.get("password").toString();
                 } else {
-                    out.put("status", "400");
-                    out.put("message", "Lozinka nije poslata");
-                    return out.toJSONString();
+                    jsonOut.put("status", "400");
+                    jsonOut.put("message", "Lozinka nije poslata");
+                    return jsonOut.toJSONString();
                 }
                 
                 // get role
                 String role;
-                if (in.get("role") != null) {
-                    role = in.get("role").toString();
+                if (jsonIn.get("role") != null) {
+                    role = jsonIn .get("role").toString();
                 } else {
-                    out.put("status", "400");
-                    out.put("message", "Korisnicka rola nije poslata");
-                    return out.toJSONString();
+                    jsonOut.put("status", "400");
+                    jsonOut.put("message", "Korisnicka rola nije poslata");
+                    return jsonOut.toJSONString();
                 }
                 
                 // check is role a good one
                 if (!role.equalsIgnoreCase("admin") && !role.equalsIgnoreCase("student")) {
-                    out.put("status", "401");
-                    out.put("message", "Poslata je nepostojeca rola " + role);
-                    return out.toJSONString();
+                    jsonOut.put("status", "401");
+                    jsonOut.put("message", "Poslata je nepostojeca rola " + role);
+                    return jsonOut.toJSONString();
                 }
                 
                 // role from database and passed role must match
@@ -150,223 +151,250 @@ public class ClientHandler implements Runnable {
                     // check does password match
                     if (hashedDbPass.contentEquals(password)) {
                         // form response
-                        out.put("status", "200");
-                        out.put("message", user.getRole() + " " + userName + " je uspesno prijavljen");
-                        out.put("role", role);
-                        out.put("method", "login");
-                        out.put("background", in.get("background")); // nullable
+                        jsonOut.put("status", "200");
+                        jsonOut.put("message", user.getRole() + " " + userName + " je uspesno prijavljen");
+                        jsonOut.put("role", role);
+                        jsonOut.put("method", "login");
+                        jsonOut.put("background", jsonIn.get("background")); // nullable
 
-                        // data prop difference between student and admi
+                        // data prop difference between student and admin
+                        JSONObject jsonUserData = null;
                         if (role.equalsIgnoreCase("student")) {
-                            JSONObject studentInfo = dbHandler.readUserIndexPer(userName, "username");
-                            out.put("data", studentInfo);
+                            jsonUserData = dbHandler.readUserIndexPer(userName, "username");
                         } else if (role.equalsIgnoreCase("admin")) {
-                            JSONArray usersInfo = dbHandler.readAllUserIndex();
+                            JSONArray jsonUsersData = dbHandler.readAllUserIndex();
 
                             // find admin user which requested login and remove him from JSON Array
-                            JSONObject jUserInfo = null;
-                            for (Object userInfo : usersInfo) {
-                                jUserInfo = (JSONObject)userInfo;
-                                if (jUserInfo.get("username").toString().equalsIgnoreCase(userName)) {
-                                    usersInfo.remove(jUserInfo);
-                                    jUserInfo.put("users", usersInfo);
-                                    jUserInfo.put("subjects DB", dbHandler.readAllSubjects());
+                            for (Object userData : jsonUsersData) {
+                                jsonUserData = (JSONObject)userData;
+                                if (jsonUserData.get("username").toString().equalsIgnoreCase(userName)) {
+                                    jsonUsersData.remove(jsonUserData);
+
+                                    // put JSON users and subjects arrays into JSON admin which sent request
+                                    jsonUserData.put("users_index DB", jsonUsersData);
+                                    jsonUserData.put("subjects DB", dbHandler.readAllSubjects());
                                     break;
                                 }
                             }
-                            out.put("data", jUserInfo);
                         }
+                        // put JSON user data into main reply JSON
+                        jsonOut.put("data", jsonUserData);
                     } else {
                         // bad password
-                        out.put("status", "401");
-                        out.put("message", "Nije uneta dobra lozinka za korisnika " + userName);
+                        jsonOut.put("status", "401");
+                        jsonOut.put("message", "Nije uneta dobra lozinka za korisnika " + userName);
                     }
                 } else {
                     // user not found according to role
-                    out.put("status", "404");
-                    out.put("message", "Nije pronadjen korisnik " + userName + " sa rolom " + role);
+                    jsonOut.put("status", "404");
+                    jsonOut.put("message", "Nije pronadjen korisnik " + userName + " sa rolom " + role);
                 }
             } else if (method.equalsIgnoreCase("refresh")) { // refresh method
                 // form response
-                out.put("status", "200");
-                out.put("role", user.getRole());
-                out.put("method", "refresh");
-                out.put("background", in.get("background")); // nullable
+                jsonOut.put("status", "200");
+                jsonOut.put("role", user.getRole());
+                jsonOut.put("method", "refresh");
+                jsonOut.put("background", jsonIn.get("background")); // nullable
 
                 // different response handling between student & admin
                 if (user.getRole().equalsIgnoreCase("student")) {
-                    out.put("message", "Student " + userName + " je uspesno osvezio predmete");
+                    jsonOut.put("message", "Student " + userName + " je uspesno osvezio predmete");
 
-                    JSONObject userIndex = dbHandler.readUserIndexPer(userName, "username");
-                    JSONArray userSubjects = (JSONArray)userIndex.get("subjects");
-                    out.put("subjects", userSubjects);
+                    JSONObject jsonUserData = dbHandler.readUserIndexPer(userName, "username");
+                    JSONArray jsonUserSubjects = (JSONArray)jsonUserData.get("subjects");
+                    jsonOut.put("subjects", jsonUserSubjects);
                 } else if (user.getRole().equalsIgnoreCase("admin")) {
-                    out.put("message", "Admin " + userName + " je uspesno osvezio korisnike");
+                    jsonOut.put("message", "Admin " + userName + " je uspesno osvezio korisnike");
 
-                    JSONArray usersInfo = dbHandler.readAllUserIndex();
+                    // get all users from users_index database
+                    JSONArray jsonUsersData = dbHandler.readAllUserIndex();
+
                     // find admin user which requested login and remove him from JSON Array
-                    for (Object userInfo : usersInfo) {
-                        JSONObject jUserInfo = (JSONObject)userInfo;
-                        if (jUserInfo.get("username").toString().equalsIgnoreCase(userName)) {
-                            usersInfo.remove(jUserInfo);
+                    for (Object userData : jsonUsersData) {
+                        JSONObject jsonUserData = (JSONObject)userData;
+                        if (jsonUserData.get("username").toString().equalsIgnoreCase(userName)) {
+                            jsonUsersData.remove(jsonUserData);
                             break;
                         }
                     }
-                    out.put("users", usersInfo);
+                    jsonOut.put("users_index DB", jsonUsersData);
+                    jsonOut.put("subjects DB", dbHandler.readAllSubjects());
                 }
             } else if (method.equalsIgnoreCase("updateSubject")) { // updateSubject method
                 // user must be admin
                 if (user.getRole().equalsIgnoreCase("admin")) {
-                    JSONObject jSubject = (JSONObject)in.get("subject");
-                    String student = in.get("target username").toString();
+                    JSONObject jsonSubject = (JSONObject)jsonIn.get("subject");
+                    String student = jsonIn.get("target username").toString();
 
                     if (dbHandler.readUserPer(student, 0) == null) {
-                        out.put("status", "404");
-                        out.put("message", "Student sa korisnickim imenom " + student + " ne postoji");
-                        return out.toJSONString();
+                        jsonOut.put("status", "404");
+                        jsonOut.put("message", "Student sa korisnickim imenom " + student + " ne postoji");
+                        return jsonOut.toJSONString();
                     }
 
-                    dbHandler.updateUserIndexSubject(jSubject, student);
+                    // can throw exception
+                    dbHandler.updateUserIndexSubject(jsonSubject, student);
                     
-                    out.put("status", "200");
-                    String subjectName = jSubject.get("subject").toString();
-                    out.put("message", user.getRole() + " " + userName + " je uspesno azurirao ocenu " + subjectName + " za " + student);
-                    out.put("role", user.getRole());
-                    out.put("method", "updateSubject");
-                    out.put("background", in.get("background")); // nullable
+                    jsonOut.put("status", "200");
+                    String subjectName = jsonSubject.get("subject").toString();
+                    jsonOut.put("message", user.getRole() + " " + userName + " je uspesno azurirao ocenu " + subjectName + " za " + student);
+                    jsonOut.put("role", user.getRole());
+                    jsonOut.put("method", "updateSubject");
+                    jsonOut.put("background", jsonIn.get("background")); // nullable
                 } else {
                     // bad role
-                    out.put("status", "401");
-                    out.put("message", "Korisnik " + userName + " nema pristup ovoj metodi");
+                    jsonOut.put("status", "401");
+                    jsonOut.put("message", "Korisnik " + userName + " nema pristup ovoj metodi");
                 }
             } else if (method.equalsIgnoreCase("crateNewUser")) { // createNewUser method
                 // user must be admin
                 if (user.getRole().equalsIgnoreCase("admin")) {
-                    JSONObject jNewUser = (JSONObject)in.get("new user");
-                    String newUsername = jNewUser.get("username").toString();
+                    JSONObject jsonNewUser = (JSONObject)jsonIn.get("new user");
+                    String newUsername = jsonNewUser.get("username").toString();
                     
                     // try to find user within database -> should not exist
                     if (dbHandler.readUserPer(newUsername, 0) != null) {
-                        out.put("status", "409");
-                        out.put("message", "Korisnik sa korisnickim imenom " + newUsername + " vec postoji");
-                        return out.toJSONString();
+                        jsonOut.put("status", "409");
+                        jsonOut.put("message", "Korisnik sa korisnickim imenom " + newUsername + " vec postoji");
+                        return jsonOut.toJSONString();
                     }
 
                     // write new user within database
-                    String newRole = jNewUser.get("role").toString();
+                    String newRole = jsonNewUser.get("role").toString();
                     dbHandler.writeUser(new User(
                             newUsername,
-                            jNewUser.get("password").toString(),
+                            jsonNewUser.get("password").toString(),
                             newRole
                     ));
 
-                    jNewUser.remove("password"); // remove password from JSON
-                    jNewUser.put("subjects", new JSONArray()); // add empty JSON array
+                    jsonNewUser.remove("password"); // remove password from JSON
+                    jsonNewUser.put("subjects", new JSONArray()); // add empty JSON array
 
                     // write user within extended (detailed) database
-                    dbHandler.writeUserIndex(jNewUser);
+                    // can throw exception
+                    dbHandler.writeUserIndex(jsonNewUser);
 
                     // provide response
-                    out.put("status", "200");
-                    out.put("message", user.getRole() + " " + userName + " je uspesno kreirao korisnika (" + newRole + ") " + newUsername);
-                    out.put("role", user.getRole());
-                    out.put("method", "crateNewUser");
-                    out.put("background", in.get("background")); // nullable
+                    jsonOut.put("status", "200");
+                    jsonOut.put("message", user.getRole() + " " + userName + " je uspesno kreirao korisnika (" + newRole + ") " + newUsername);
+                    jsonOut.put("role", user.getRole());
+                    jsonOut.put("method", "crateNewUser");
+                    jsonOut.put("background", jsonIn.get("background")); // nullable
                 } else {
                     // bad role
-                    out.put("status", "401");
-                    out.put("message", "Korisnik " + userName + " nema pristup ovoj metodi");
+                    jsonOut.put("status", "401");
+                    jsonOut.put("message", "Korisnik " + userName + " nema pristup ovoj metodi");
                 }
             } else if (method.equalsIgnoreCase("addSubject")) {
                 if (user.getRole().equalsIgnoreCase("admin")) {
-                    String student = in.get("target username").toString();
-                    String newSubject = in.get("subject").toString();
+                    String student = jsonIn.get("target username").toString();
+                    String newStudentSubject = jsonIn.get("subject").toString();
 
-                    // targeting user must exist in database
-                    if (dbHandler.readUserPer(student, 0) == null) {
-                        out.put("status", "404");
-                        out.put("message", "Student sa korisnickim imenom " + student + " ne postoji");
-                        return out.toJSONString();
+                    // targeting user must exist in databases
+                    JSONObject jsonStudent = dbHandler.readUserIndexPer(student, "username");
+                    if (jsonStudent == null || dbHandler.readUserPer(student, 0) == null) {
+                        jsonOut.put("status", "404");
+                        jsonOut.put("message", "Student sa korisnickim imenom " + student + " ne postoji");
+                        return jsonOut.toJSONString();
+                    }
+
+                    // try to find desired subject within subjects database 
+                    // can throw exception
+                    JSONObject jsonSubjectDb = dbHandler.readSubject(newStudentSubject);
+                    if (jsonSubjectDb == null) {
+                        jsonOut.put("status", "404");
+                        jsonOut.put("message", "Predmet " + newStudentSubject + " ne postoji");
+                        return jsonOut.toJSONString();
                     }
 
                     // take user form extended database
-                    JSONObject jStudent = dbHandler.readUserIndexPer(student, "username");
-                    for (Object subject : (JSONArray)jStudent.get("subjects")) {
-                        JSONObject jSubject = (JSONObject)subject;
+                    for (Object subject : (JSONArray)jsonStudent.get("subjects")) {
+                        JSONObject jsonSubject = (JSONObject)subject;
 
                         // subject should not exist within database
-                        if (jSubject.get("subject").toString().equalsIgnoreCase(newSubject)) {
-                            out.put("status", "409");
-                            out.put("message", "Korisnik vec poseduje predmet " + newSubject + " u bazi");
-                            return out.toJSONString();
+                        if (jsonSubject.get("subject").toString().equalsIgnoreCase(newStudentSubject)) {
+                            jsonOut.put("status", "409");
+                            jsonOut.put("message", "Korisnik vec poseduje predmet " + newStudentSubject + " u bazi");
+                            return jsonOut.toJSONString();
                         }
                     }
 
                     // create new JSON subject
-                    JSONObject jSubject = new JSONObject();
-                    jSubject.put("subject", in.get("subject"));
-                    // by default all subject categories shall be 0
-                    jSubject.put("T1", "0");
-                    jSubject.put("T2", "0");
-                    jSubject.put("Z1", "0");
-                    jSubject.put("Z2", "0");
+                    JSONObject jsonSubject = new JSONObject();
+                    jsonSubject.put("subject", newStudentSubject);
+
+                    // iterate through all categories for that subject
+                    JSONArray jsonCategoriesDb = (JSONArray)jsonSubjectDb.get("categories");
+                    for (Object categoryDb : jsonCategoriesDb) {
+                        // by default all subject categories shall be 0
+                        JSONObject jsonCategoryDb = (JSONObject)categoryDb;
+                        String key = jsonCategoryDb.get("category").toString();
+                        jsonSubject.put(key, "0") ;
+                    } 
 
                     // add new JSON subject to extended database
-                    dbHandler.addSubjectToUserIndex(jSubject, student);
+                    dbHandler.addSubjectToUserIndex(jsonSubject, student);
 
                     // provide response
-                    out.put("status", "200");
-                    String subjectName = jSubject.get("subject").toString();
-                    out.put("message", user.getRole() + " " + userName + " je uspesno dodao predmet " + subjectName + " za " + student);
-                    out.put("role", user.getRole());
-                    out.put("method", "addSubject");
-                    out.put("background", in.get("background"));
+                    jsonOut.put("status", "200");
+                    jsonOut.put("message", user.getRole() + " " + userName + " je uspesno dodao predmet " + newStudentSubject + " za " + student);
+                    jsonOut.put("role", user.getRole());
+                    jsonOut.put("method", "addSubject");
+                    jsonOut.put("background", jsonIn.get("background"));
                 }  else {
-                    out.put("status", "401");
-                    out.put("message", "Korisnik " + userName + " nema pristup ovoj metodi");
+                    jsonOut.put("status", "401");
+                    jsonOut.put("message", "Korisnik " + userName + " nema pristup ovoj metodi");
                 }
             } else if (method.equalsIgnoreCase("createNewSubject")) {
                 if (user.getRole().equalsIgnoreCase("admin")) {
-                    JSONObject newSubject = (JSONObject)in.get("new subject");
-                    String newSubjectStr = newSubject.get("subject").toString();
-                    if (dbHandler.readSubject(newSubjectStr) != null) {
-                        out.put("status", "409");
-                        out.put("message", "Zeljeni predmet " + newSubjectStr + " vec postoji");
-                        return out.toJSONString();
+                    JSONObject jsonNewSubject = (JSONObject)jsonIn.get("new subject");
+                    String newSubject = jsonNewSubject.get("subject").toString();
+
+                    // check is that subject already exist
+                    if (dbHandler.readSubject(newSubject) != null) {
+                        // if exists -> return error to admin client
+                        jsonOut.put("status", "409");
+                        jsonOut.put("message", "Zeljeni predmet " + newSubject + " vec postoji");
+                        return jsonOut.toJSONString();
                     }
-                    JSONArray categories = (JSONArray)newSubject.get("categories");
-                    if (categories == null) {
-                        out.put("status", "404");
-                        out.put("message", "Na poslatom zahtevu nedostaju kategorije");
-                        return out.toJSONString();
+
+                    // get categories
+                    JSONArray jsonCategories = (JSONArray)jsonNewSubject.get("categories");
+                    if (jsonCategories == null) {
+                        jsonOut.put("status", "404");
+                        jsonOut.put("message", "Na poslatom zahtevu nedostaju kategorije");
+                        return jsonOut.toJSONString();
                     }
-                    float sum = 0;
-                    for (Object category : categories) {
-                        JSONObject jCategory = (JSONObject)category;
-                        String max_points = jCategory.get("max_points").toString();
-                        sum += Float.parseFloat(max_points);
+
+                    // check is categories points sum equal to 100.0 exactly or not
+                    float sumPts = 0;
+                    for (Object category : jsonCategories) {
+                        JSONObject jsonCategory = (JSONObject)category;
+                        String max_points = jsonCategory.get("max_points").toString();
+                        sumPts += Float.parseFloat(max_points);
                     }
-                    if (sum != 100.0) {
-                        out.put("status", "401");
-                        out.put("message", "Na poslatom zahtevu kategorije nemaju ukupnih maksimalnih 100 poena");
-                        return out.toJSONString();
+                    if (sumPts != 100.0) {
+                        jsonOut.put("status", "401");
+                        jsonOut.put("message", "Na poslatom zahtevu kategorije nemaju ukupnih maksimalnih 100 poena");
+                        return jsonOut.toJSONString();
                     }
-                    dbHandler.writeSubject(newSubject);
+
+                    dbHandler.writeSubject(jsonNewSubject);
                 }  else {
-                    out.put("status", "401");
-                    out.put("message", "Korisnik " + userName + " nema pristup ovoj metodi");
+                    jsonOut.put("status", "401");
+                    jsonOut.put("message", "Korisnik " + userName + " nema pristup ovoj metodi");
                 }
             } else {
                 // bad role
-                out.put("status", "405");
-                out.put("message", "Uneti zahtev nije podrzan ili ne postoji");
+                jsonOut.put("status", "405");
+                jsonOut.put("message", "Uneti zahtev nije podrzan ili ne postoji");
             }
         } catch (ParseException | IOException pe) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, pe);
-            out.put("status", "500");
-            out.put("message", "Interna serverska greska... Pokusajte kasnije");
+            jsonOut.put("status", "500");
+            jsonOut.put("message", "Interna serverska greska... Pokusajte kasnije");
         }
-        return out.toJSONString();
+        return jsonOut.toJSONString();
     }
     
     @Override

@@ -5,8 +5,6 @@ import java.awt.Font;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,45 +18,46 @@ import org.json.simple.JSONObject;
 public class AdminMenuScreen extends MenuScreen {
 
     // JSON storage helpers to data structure received from server
-    private final JSONArray jStudents = new JSONArray();
-    private final JSONArray jAdmins = new JSONArray();
-    private JSONObject jSelectedStudent = null;
-    private JSONObject jSelectedSubject = null;
+    private final JSONArray jsonStudents = new JSONArray();
+    private final JSONArray jsonAdmins = new JSONArray();
+    private JSONObject jsonSelectedStudent = null;
+    private JSONObject jsonSelectedSubject = null;
 
-    private JSONArray jSubjectsDB = null;
-    private JSONObject jSelectedSubjectDB = null;
-    
+    private JSONArray jsonSubjectsDB = null;
+    private JSONObject jsonSelectedSubjectDB = null;
+
     /**
      * Creates new form AdminMenuScreen
      * @param parent - ref to startup screen
-     * @param jAdminData - data structure received from server
+     * @param jsonAdminData - data structure received from server
      */
-    public AdminMenuScreen(StartupScreen parent, JSONObject jAdminData) {
-        super(parent, jAdminData, "Admin Meni");
+    public AdminMenuScreen(StartupScreen parent, JSONObject jsonAdminData) {
+        super(parent, jsonAdminData, "Admin Meni");
         
-        jSubjectsDB = (JSONArray)jAdminData.get("subjects DB");
         initComponents();
         
         // must be called after initComponents()
-        setInfo((JSONArray)jAdminData.get("users"));
+        updateData(jsonAdminData);
     }
     
     @Override
     final public void updateData(Object data) {
-        setInfo((JSONArray)data);
+        JSONObject jsonData = (JSONObject)data;
+        jsonSubjectsDB = (JSONArray)jsonData.get("subjects DB");
+        setInfo((JSONArray)jsonData.get("users_index DB"));
     }
     
-    final void setInfo(JSONArray jUsers) {
+    final void setInfo(JSONArray jsonUsers) {
         // read earlier values from selector (if they existed)
         String selectedStudent = getSelectedString(jSelectStudent);
         String selectedStudent1 = getSelectedString(jSelectStudent1);
         String selectedAdmin = getSelectedString(jSelectAdmin);
         
         // reset JSON storages
-        jStudents.clear();
-        jAdmins.clear();
-        jSelectedStudent = null;
-        jSelectedSubject = null;
+        jsonStudents.clear();
+        jsonAdmins.clear();
+        jsonSelectedStudent = null;
+        jsonSelectedSubject = null;
         
         // reset selectors
         jSelectStudent.setModel(new DefaultComboBoxModel<>());
@@ -66,16 +65,16 @@ public class AdminMenuScreen extends MenuScreen {
         jSelectAdmin.setModel(new DefaultComboBoxModel<>());
         
         // add items to admin & student selectors
-        for (Object user : jUsers) {
-            JSONObject jUser = (JSONObject)user;
-            String userRole = jUser.get("role").toString();
+        for (Object user : jsonUsers) {
+            JSONObject jsonUser = (JSONObject)user;
+            String userRole = jsonUser.get("role").toString();
             if (userRole.equalsIgnoreCase("student")) {
-                jStudents.add(jUser);
-                jSelectStudent.addItem(jUser.get("username").toString());
-                jSelectStudent1.addItem(jUser.get("username").toString());
+                jsonStudents.add(jsonUser);
+                jSelectStudent.addItem(jsonUser.get("username").toString());
+                jSelectStudent1.addItem(jsonUser.get("username").toString());
             } else if (userRole.equalsIgnoreCase("admin")) {
-                jAdmins.add(jUser);
-                jSelectAdmin.addItem(jUser.get("username").toString());
+                jsonAdmins.add(jsonUser);
+                jSelectAdmin.addItem(jsonUser.get("username").toString());
             }
         }
         
@@ -110,12 +109,13 @@ public class AdminMenuScreen extends MenuScreen {
 
         if (selectedAdmin != null) {
             // if there is any admin find him in JSON storage and fill his data to UI inputs
-            for (Object admin : jAdmins) {
-                JSONObject jAdmin = (JSONObject)admin;
-                if (jAdmin.get("username").toString().equalsIgnoreCase(selectedAdmin)) {
-                    jAdminFullname.setText(jAdmin.get("first name").toString() + " " + jAdmin.get("last name").toString());
+            for (Object admin : jsonAdmins) {
+                JSONObject jsonAdmin = (JSONObject)admin;
+                if (jsonAdmin.get("username").toString().equalsIgnoreCase(selectedAdmin)) {
+                    jAdminFullname.setText(jsonAdmin.get("first name").toString() + " " + jsonAdmin.get("last name").toString());
                     jAdminFullname.setToolTipText("Puno ime");
-                    jAdminJmbg.setText(jAdmin.get("jmbg").toString());
+
+                    jAdminJmbg.setText(jsonAdmin.get("jmbg").toString());
                     jAdminJmbg.setToolTipText("JMBG");
                     break;
                 }
@@ -169,31 +169,31 @@ public class AdminMenuScreen extends MenuScreen {
         String selectedStudent = getSelectedString(jSelectStudent);
         
         // reset selected student
-        jSelectedStudent = null;
+        jsonSelectedStudent = null;
 
         if (selectedStudent != null) {
 
             // find JSON for selected student
-            for (Object student : jStudents) {
-                JSONObject jStudent = (JSONObject)student;
-                if (jStudent.get("username").toString().equalsIgnoreCase(selectedStudent)) {
-                    jSelectedStudent = jStudent;
+            for (Object student : jsonStudents) {
+                JSONObject jsonStudent = (JSONObject)student;
+                if (jsonStudent.get("username").toString().equalsIgnoreCase(selectedStudent)) {
+                    jsonSelectedStudent = jsonStudent;
                     break;
                 }
             }
             // selected student JSON is null -> should not happen
-            if (jSelectedStudent == null) {
+            if (jsonSelectedStudent == null) {
                 resetStudentInfo();
                 return;
             }
 
             // fill student info within input in Student Tab
-            jStudentFullname.setText(jSelectedStudent.get("first name").toString() +
-                    " " + jSelectedStudent.get("last name").toString());
+            jStudentFullname.setText(jsonSelectedStudent.get("first name").toString() +
+                    " " + jsonSelectedStudent.get("last name").toString());
             jStudentFullname.setToolTipText("Puno ime");
-            jStudentIndex.setText(jSelectedStudent.get("index").toString());
+            jStudentIndex.setText(jsonSelectedStudent.get("index").toString());
             jStudentIndex.setToolTipText("Indeks");
-            jStudentJmbg.setText(jSelectedStudent.get("jmbg").toString());
+            jStudentJmbg.setText(jsonSelectedStudent.get("jmbg").toString());
             jStudentJmbg.setToolTipText("JMBG");
 
             // get selected subject
@@ -204,13 +204,14 @@ public class AdminMenuScreen extends MenuScreen {
             
             // add subjects to selectors and check previous selection
             boolean bFoundSelectedSubject = false;
-            for (Object subject : (JSONArray)jSelectedStudent.get("subjects")) {
-                JSONObject jSubject = (JSONObject)subject;
-                String subjectStr = jSubject.get("subject").toString();
+            for (Object subject : (JSONArray)jsonSelectedStudent.get("subjects")) {
+                JSONObject jsonSubject = (JSONObject)subject;
 
+                String subjectStr = jsonSubject.get("subject").toString();
                 jSelectStudentSubject.addItem(subjectStr);
                 
                 if (!bFoundSelectedSubject && selectedSubject != null) {
+                    // check did you find selected subject within new subject list
                     bFoundSelectedSubject = subjectStr.contentEquals(selectedSubject);
                 }
             }
@@ -233,32 +234,32 @@ public class AdminMenuScreen extends MenuScreen {
         String selectedSubject = getSelectedString(jSelectStudentSubject);
         
         // reset selected student JSON
-        jSelectedSubject = null;
+        jsonSelectedSubject = null;
         
-        if (jSelectedStudent != null) {
+        if (jsonSelectedStudent != null) {
             // find SelectedSubject JSON
-            for (Object subject : (JSONArray)jSelectedStudent.get("subjects")) {
-                JSONObject jSubject = (JSONObject)subject;
-                if (jSubject.get("subject").toString().contentEquals(selectedSubject)) {
-                    jSelectedSubject = jSubject;
+            for (Object subject : (JSONArray)jsonSelectedStudent.get("subjects")) {
+                JSONObject jsonSubject = (JSONObject)subject;
+                if (jsonSubject.get("subject").toString().contentEquals(selectedSubject)) {
+                    jsonSelectedSubject = jsonSubject;
                     break;
                 }
             }
 
             // selected subject JSON is null -> should not happen
-            if (jSelectedSubject == null) {
+            if (jsonSelectedSubject == null) {
                 resetCategory();
                 return;
             }
             
-            for (Object subject : jSubjectsDB) {
-                JSONObject jSubject = (JSONObject)subject;
-                if (jSubject.get("subject").toString().contentEquals(selectedSubject)) {
-                    jSelectedSubjectDB = jSubject;
+            for (Object subject : jsonSubjectsDB) {
+                JSONObject jsonSubject = (JSONObject)subject;
+                if (jsonSubject.get("subject").toString().contentEquals(selectedSubject)) {
+                    jsonSelectedSubjectDB = jsonSubject;
                     break;
                 }
             }
-            if (jSelectedSubjectDB == null) {
+            if (jsonSelectedSubjectDB == null) {
                 // definetley not possible!!!
                 resetCategory();
                 return;
@@ -269,22 +270,22 @@ public class AdminMenuScreen extends MenuScreen {
             ArrayList<Float> min_pts = new ArrayList<>();
             
             int ctr = 0;
-            for (Object categoryDB : (JSONArray)jSelectedSubjectDB.get("categories")) {
-                JSONObject jCategoryDB = (JSONObject)categoryDB;
-                String categoryName = jCategoryDB.get("category").toString();
+            for (Object categoryDB : (JSONArray)jsonSelectedSubjectDB.get("categories")) {
+                JSONObject jsonCategoryDB = (JSONObject)categoryDB;
+                String categoryName = jsonCategoryDB.get("category").toString();
                 jKL[ctr].setVisible(true);
                 jKL[ctr].setText(categoryName);
                 jKS[ctr].setVisible(true);
                 jKS[ctr].setEnabled(true);
-                jKS[ctr].setText(jSelectedSubject.get(categoryName).toString());
-                String minP = jCategoryDB.get("min_points").toString();
-                String maxP = jCategoryDB.get("max_points").toString();
+                jKS[ctr].setText(jsonSelectedSubject.get(categoryName).toString());
+                String minP = jsonCategoryDB.get("min_points").toString();
+                String maxP = jsonCategoryDB.get("max_points").toString();
                 min_pts.add(Float.valueOf(minP));
                 jKS[ctr].setToolTipText("Unesite broj poena od 0-" + maxP);
                 ctr++;
             }
             
-            // rest of cateogry text inputs
+            // reset the rest of category text inputs
             for (int i = ctr; i < 6; i++) {
                 jKL[i].setVisible(false);
                 jKS[i].setEnabled(false);
@@ -292,6 +293,7 @@ public class AdminMenuScreen extends MenuScreen {
                 jKS[i].setToolTipText("");
             }
 
+            // make grade and summary (points) text inputs enabled
             jSummary.setEnabled(true);
             jGrade.setEnabled(true);
 
@@ -346,20 +348,23 @@ public class AdminMenuScreen extends MenuScreen {
      * @return is category updated
      */
     private boolean isThereCategoryChange() {
-        if (jSelectedSubject == null || jSelectStudentSubject.getSelectedItem() == null || jSelectedSubjectDB == null) {
+        if (jsonSelectedSubject == null ||
+            jsonSelectedSubjectDB == null ||
+            jSelectStudentSubject.getSelectedItem() == null) {
+ 
             return false;
         }
         JTextField[] jKS = {jK1, jK2, jK3, jK4, jK5, jK6};
-        JSONArray categs = (JSONArray)jSelectedSubjectDB.get("categories");
+        JSONArray jsonCategsDB = (JSONArray)jsonSelectedSubjectDB.get("categories");
         boolean isThereCatChange = true;
-        for (int i=0; i<6; i++) {
+        for (int i = 0; i < 6; i++) {
             JTextField tf = jKS[i];
-            JSONObject cat = (JSONObject)categs.get(i);
+            JSONObject jsonCat = (JSONObject)jsonCategsDB.get(i);
             if (!isThereCatChange) {
                 break;
             }
             if (tf.isVisible()) {
-                isThereCatChange = !tf.getText().contentEquals(jSelectedSubject.get(cat.get("category")).toString());
+                isThereCatChange = ! tf.getText().contentEquals(jsonSelectedSubject.get(jsonCat.get("category")).toString());
             } else {
                 break;
             }
@@ -871,11 +876,12 @@ public class AdminMenuScreen extends MenuScreen {
                 .addGap(18, 18, 18)
                 .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jStudentGradesPanelLayout.createSequentialGroup()
-                        .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(K1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(K2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jK2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jK1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jK1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(K1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(K2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jK2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jStudentGradesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jK3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1604,27 +1610,27 @@ public class AdminMenuScreen extends MenuScreen {
             }
             
             // create JSON req with necessary utilities
-            JSONObject req = new JSONObject();
-            req.put("method", "crateNewUser");
-            req.put("username", userName);
+            JSONObject jsonReq = new JSONObject();
+            jsonReq.put("method", "crateNewUser");
+            jsonReq.put("username", userName);
             
             // create new user JSON
-            JSONObject newUser = new JSONObject();
-            newUser.put("role", newRole);
-            newUser.put("username", jNewUserName.getText());
-            newUser.put("first name", jNewFirstName.getText());
-            newUser.put("last name", jNewLastName.getText());
-            newUser.put("jmbg", jNewJmbg.getText());
+            JSONObject jsonNewUser = new JSONObject();
+            jsonNewUser.put("role", newRole);
+            jsonNewUser.put("username", jNewUserName.getText());
+            jsonNewUser.put("first name", jNewFirstName.getText());
+            jsonNewUser.put("last name", jNewLastName.getText());
+            jsonNewUser.put("jmbg", jNewJmbg.getText());
             if (newRole.contentEquals("student")) {
-                newUser.put("index", jNewIndex.getText());
+                jsonNewUser.put("index", jNewIndex.getText());
             }
-            newUser.put("password", newPassword);
+            jsonNewUser.put("password", newPassword);
 
             // put new user JSON within req JSON
-            req.put("new user", newUser);
+            jsonReq.put("new user", jsonNewUser);
 
             // send JSON to server
-            pw.println(req);
+            pw.println(jsonReq);
 
             // disable save button
             bNewUserSave.setEnabled(false);
@@ -1636,52 +1642,57 @@ public class AdminMenuScreen extends MenuScreen {
         String selectedStudent = getSelectedString(jSelectStudent1);
         String selectedSubject = getSelectedString(jExistingSubjects);
         if (selectedStudent != null && selectedSubject != null) {
-            JSONObject req = new JSONObject();
-            req.put("method", "addSubject");
-            req.put("username", userName);
+            JSONObject jsonReq = new JSONObject();
 
-            req.put("target username", selectedStudent);
-            req.put("target subject", selectedSubject);
+            jsonReq.put("method", "addSubject");
+            jsonReq.put("username", userName);
+
+            jsonReq.put("target username", selectedStudent);
+            jsonReq.put("target subject", selectedSubject);
 
             // send JSON to server
-            pw.println(req);
+            pw.println(jsonReq);
+
+            // disable save button
             bAddSubjectSave.setEnabled(false);
         }
     }//GEN-LAST:event_bAddSubjectSaveActionPerformed
 
     private void jSelectStudent1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jSelectStudent1ItemStateChanged
         // TODO add your handling code here:
-        JSONObject target = null;
-        for (Object student : jStudents) {
-            JSONObject jStudent = (JSONObject)student;
-            if (jStudent.get("username").toString().equalsIgnoreCase(jSelectStudent1.getSelectedItem().toString())) {
-                target = jStudent;
+        JSONObject jsonTargetStudent = null;
+        for (Object student : jsonStudents) {
+            JSONObject jsonStudent = (JSONObject)student;
+            if (jsonStudent.get("username").toString().equalsIgnoreCase(jSelectStudent1.getSelectedItem().toString())) {
+                jsonTargetStudent = jsonStudent;
                 break;
             }
         }
-        if (target == null) {
+        if (jsonTargetStudent == null) {
             return;
         }
         
         // reset selector
         jExistingSubjects.setModel(new DefaultComboBoxModel<>());
 
-        for (Object subjectDB : jSubjectsDB) {
-            JSONObject jSubjectDB = (JSONObject)subjectDB;
-            String jSubjectDBName = jSubjectDB.get("subject").toString();
+        // update list of available subjects for target student
+        for (Object subjectDB : jsonSubjectsDB) {
+            JSONObject jsonSubjectDB = (JSONObject)subjectDB;
+            String subjectDbName = jsonSubjectDB.get("subject").toString();
             boolean found = false;
-            for (Object studentSubject : (JSONArray)target.get("subjects")) {
-                JSONObject jStudentSubject = (JSONObject)studentSubject;
-                if (jStudentSubject.get("subject").toString().equalsIgnoreCase(jSubjectDBName)) {
+            for (Object studentSubject : (JSONArray)jsonTargetStudent.get("subjects")) {
+                JSONObject jsonStudentSubject = (JSONObject)studentSubject;
+                if (jsonStudentSubject.get("subject").toString().equalsIgnoreCase(subjectDbName)) {
                     found = true;
                     break;
                 }
             }
             if (!found) {
-                jExistingSubjects.addItem(jSubjectDBName);
+                jExistingSubjects.addItem(subjectDbName);
             }
         }
-        
+
+        // enable/disable button
         if (jSelectStudent1.getSelectedItem() != null && jExistingSubjects.getSelectedItem() != null) {
             bAddSubjectSave.setEnabled(true);
         } else {
@@ -1699,75 +1710,66 @@ public class AdminMenuScreen extends MenuScreen {
     }//GEN-LAST:event_jExistingSubjectsItemStateChanged
 
     private void jK6PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jK6PropertyChange
-        // TODO add your handling code here:
+        // enable/disable save button if there is any difference with points
+        if (evt.getPropertyName().contentEquals("value")) {
+            bSave.setEnabled(isThereCategoryChange());
+        }
     }//GEN-LAST:event_jK6PropertyChange
 
     private void jK5PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jK5PropertyChange
-        // TODO add your handling code here:
+        // enable/disable save button if there is any difference with points
+        if (evt.getPropertyName().contentEquals("value")) {
+            bSave.setEnabled(isThereCategoryChange());
+        }
     }//GEN-LAST:event_jK5PropertyChange
 
-    private void bSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaveActionPerformed
-        // TODO add your handling code here:
-        JSONObject req = new JSONObject();
-        req.put("method", "updateSubject");
-        req.put("username", userName);
-        req.put("target username", jSelectStudent.getSelectedItem());
-
-        // update selected subject JSON
-        jSelectedSubject.put("T1", jK1.getText());
-        jSelectedSubject.put("T2", jK3.getText());
-        jSelectedSubject.put("Z1", jK2.getText());
-        jSelectedSubject.put("Z2", jK4.getText());
-
-        req.put("subject", jSelectedSubject);
-        pw.println(req);
-        bSave.setEnabled(false);
-    }//GEN-LAST:event_bSaveActionPerformed
-
     private void jK4PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jK4PropertyChange
-        // TODO add your handling code here:
+        // enable/disable save button if there is any difference with points
         if (evt.getPropertyName().contentEquals("value")) {
             bSave.setEnabled(isThereCategoryChange());
         }
     }//GEN-LAST:event_jK4PropertyChange
 
     private void jK2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jK2PropertyChange
-        // TODO add your handling code here:
+        // enable/disable save button if there is any difference with points
         if (evt.getPropertyName().contentEquals("value")) {
             bSave.setEnabled(isThereCategoryChange());
         }
     }//GEN-LAST:event_jK2PropertyChange
 
     private void jK3PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jK3PropertyChange
-        // TODO add your handling code here:
+        // enable/disable save button if there is any difference with points
         if (evt.getPropertyName().contentEquals("value")) {
             bSave.setEnabled(isThereCategoryChange());
         }
     }//GEN-LAST:event_jK3PropertyChange
 
     private void jK1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jK1PropertyChange
-        // TODO add your handling code here:
+        // enable/disable save button if there is any difference with points
         if (evt.getPropertyName().contentEquals("value")) {
             bSave.setEnabled(isThereCategoryChange());
         }
     }//GEN-LAST:event_jK1PropertyChange
 
     private void jSelectStudentSubjectItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jSelectStudentSubjectItemStateChanged
-        // TODO add your handling code here:
+        // update selected subject from Student tab
         updateSelectedSubject();
     }//GEN-LAST:event_jSelectStudentSubjectItemStateChanged
 
     private void jSelectStudentItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jSelectStudentItemStateChanged
-        // TODO add your handling code here:
+        // update selected student from Student tab
         updateSelectedStudent();
     }//GEN-LAST:event_jSelectStudentItemStateChanged
 
     private void bNewSubjectSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNewSubjectSave1ActionPerformed
-        // TODO add your handling code here:
+        // create brand new subject to database
+
+        // fill separate UI components into arrays for easier handling
         JTextField[] categories = {jNewCategory1, jNewCategory2, jNewCategory3, jNewCategory4, jNewCategory5, jNewCategory6};
         JTextField[] max_pts = {jNewMaxPts1, jNewMaxPts2, jNewMaxPts3, jNewMaxPts4, jNewMaxPts5, jNewMaxPts6};
         JTextField[] min_pts = {jNewMinPts1, jNewMinPts2, jNewMinPts3, jNewMinPts4, jNewMinPts5, jNewMinPts6};
 
+        // make sure that name for new subject is entered
         String subjectName = jNewSubject.getText();
         if (subjectName.contentEquals("")) {
             JOptionPane.showMessageDialog(
@@ -1779,29 +1781,34 @@ public class AdminMenuScreen extends MenuScreen {
             return;
         }
 
-        JSONObject req = new JSONObject();
-        req.put("method", "createNewSubject");
-        req.put("username", userName);
+        // create JSON request
+        JSONObject jsonReq = new JSONObject();
+        jsonReq.put("method", "createNewSubject");
+        jsonReq.put("username", userName);
 
-        JSONArray jCategories = new JSONArray();
-
-        boolean atLeastOneCategory = false;
+        JSONArray jsonCategories = new JSONArray();
         for (int i=0; i<6; i++) {
             String categoryName = categories[i].getText();
             String minPts = min_pts[i].getText();
             String maxPts = max_pts[i].getText();
+
             if (categoryName.contentEquals("") && maxPts.contentEquals("") && minPts.contentEquals("")) {
-                // do nothing
+                // if all text fields are empty it is OK
+                // just do nothing
             } else if (!categoryName.contentEquals("") && !maxPts.contentEquals("") && !minPts.contentEquals("")) {
-                atLeastOneCategory = true;
+                // if all text fileds are filled it is OK
 
-                JSONObject category = new JSONObject();
-                category.put("category", categoryName);
-                category.put("min_points", minPts);
-                category.put("max_points", maxPts);
+                // create JSON object for category
+                JSONObject jsonCategory = new JSONObject();
+                jsonCategory.put("category", categoryName);
+                jsonCategory.put("min_points", minPts);
+                jsonCategory.put("max_points", maxPts);
 
-                jCategories.add(category);
+                // fill JSON category to JSON array of categories
+                jsonCategories.add(jsonCategory);
             } else {
+                // if some of fields are filled and some aren't it is NOT OK
+                // report error and stop process for new subject creating
                 JOptionPane.showMessageDialog(
                     this,
                     "Unesite sva polja za potencijalnu kategoriju",
@@ -1812,7 +1819,9 @@ public class AdminMenuScreen extends MenuScreen {
             }
         }
 
-        if (!atLeastOneCategory) {
+        if (jsonCategories.isEmpty()) {
+            // if array of JSON categories is empty report error
+            // there must be at least one full category
             JOptionPane.showMessageDialog(
                 this,
                 "Morate uneti barem jendu kategoriju za novi predmet",
@@ -1820,15 +1829,51 @@ public class AdminMenuScreen extends MenuScreen {
                 JOptionPane.ERROR_MESSAGE
             );
         } else {
-            JSONObject jTargetSubject = new JSONObject();
-            jTargetSubject.put("categories", jCategories);
-            jTargetSubject.put("subject", subjectName);
+            JSONObject jsonTargetSubject = new JSONObject();
+            jsonTargetSubject.put("categories", jsonCategories);
+            jsonTargetSubject.put("subject", subjectName);
 
-            req.put("new subject", jTargetSubject);
-            pw.println(req);
+            // put array of JSON categories to JSON request object
+            jsonReq.put("new subject", jsonTargetSubject);
+
+            // send JSON to server
+            pw.println(jsonReq);
+
+            // disable save button
             bNewSubjectSave1.setEnabled(false);
         }
     }//GEN-LAST:event_bNewSubjectSave1ActionPerformed
+
+    private void bSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaveActionPerformed
+        // action for save button from Student tab
+        // button which updates grade for specific student's subject
+        JSONObject jsonReq = new JSONObject();
+        jsonReq.put("method", "updateSubject");
+        jsonReq.put("username", userName);
+        jsonReq.put("target username", jSelectStudent.getSelectedItem());
+
+        JTextField[] jKS = {jK1, jK2, jK3, jK4, jK5, jK6};
+        JLabel[] jKL = {K1, K2, K3, K4, K5, K6};
+
+        // update selected subject JSON
+        for (int i=0; i<6; i++) {
+            // only if text input is visible take data in consideration
+            if (jKS[i].isVisible()) {
+                String key = jKL[i].getText();
+                String val = jKS[i].getText();
+                jsonSelectedSubject.put(key, val);
+            }
+        }
+
+        // add updated selected JSON subject to request
+        jsonReq.put("subject", jsonSelectedSubject);
+
+        // send JSON to server
+        pw.println(jsonReq);
+
+        // disable save button
+        bSave.setEnabled(false);
+    }//GEN-LAST:event_bSaveActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -202,15 +202,15 @@ public class StartupScreen extends javax.swing.JFrame {
         // hash the password
         password = hash(password);
         
-        // packing user info to JSON req
-        JSONObject obj = new JSONObject();
-        obj.put("username", username.toLowerCase());
-        obj.put("password", password);
-        obj.put("role", role);
-        obj.put("method", "login");
+        // packing user info to JSON request
+        JSONObject jsonReq = new JSONObject();
+        jsonReq.put("username", username.toLowerCase());
+        jsonReq.put("password", password);
+        jsonReq.put("role", role);
+        jsonReq.put("method", "login");
 
         // send req to server
-        pw.println(obj);
+        pw.println(jsonReq);
     }
     
     private void connect() {

@@ -16,18 +16,18 @@ public abstract class MenuScreen extends javax.swing.JFrame {
     final protected StartupScreen parent;
     final protected PrintWriter pw;
     
-    public MenuScreen(StartupScreen parent, JSONObject jUserData, String screenName) {
+    public MenuScreen(StartupScreen parent, JSONObject jsonUserData, String screenName) {
         super(screenName);
 
         this.parent = parent;
         pw = parent.getPw();
         
         // set user info from JSON received from server
-        userName = jUserData.get("username").toString();
-        firstName = jUserData.get("first name").toString();
-        lastName = jUserData.get("last name").toString();
-        jmbg = jUserData.get("jmbg").toString();
-        role = jUserData.get("role").toString();
+        userName = jsonUserData.get("username").toString();
+        firstName = jsonUserData.get("first name").toString();
+        lastName = jsonUserData.get("last name").toString();
+        jmbg = jsonUserData.get("jmbg").toString();
+        role = jsonUserData.get("role").toString();
     }
 
     // abstract method which should be differently implemented for derived classes
@@ -68,10 +68,10 @@ public abstract class MenuScreen extends javax.swing.JFrame {
 
     // helper method to form refresh data JSON req
     public JSONObject formRefreshDataReq() {
-        JSONObject req = new JSONObject();
-        req.put("method", "refresh");
-        req.put("username", userName);
-        return req;
+        JSONObject jsonReq = new JSONObject();
+        jsonReq.put("method", "refresh");
+        jsonReq.put("username", userName);
+        return jsonReq;
     }
 
     // helper method to request refresh data from server
