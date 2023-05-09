@@ -380,6 +380,13 @@ public class ClientHandler implements Runnable {
                     }
 
                     dbHandler.writeSubject(jsonNewSubject);
+                    
+                    // provide response
+                    jsonOut.put("status", "200");
+                    jsonOut.put("message", user.getRole() + " " + userName + " je uspesno kreirao predmet " + newSubject);
+                    jsonOut.put("role", user.getRole());
+                    jsonOut.put("method", "createNewSubject");
+                    jsonOut.put("background", jsonIn.get("background"));
                 }  else {
                     jsonOut.put("status", "401");
                     jsonOut.put("message", "Korisnik " + userName + " nema pristup ovoj metodi");
