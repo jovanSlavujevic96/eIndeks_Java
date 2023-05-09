@@ -26,17 +26,17 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jRole" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
+                  <Component id="uiRole" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
                   <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                      <Component id="bUpdateAdminData" min="-2" max="-2" attributes="0"/>
+                      <Component id="uiRefresh" min="-2" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jFullname" alignment="0" min="-2" pref="207" max="-2" attributes="0"/>
-                              <Component id="jUsername" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
-                              <Component id="jJmbg" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
+                              <Component id="uiFullname" alignment="0" min="-2" pref="207" max="-2" attributes="0"/>
+                              <Component id="uiUsername" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
+                              <Component id="uiJmbg" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jTabbedPanel" min="-2" pref="474" max="-2" attributes="0"/>
+                          <Component id="uiTabbedPanel" min="-2" pref="474" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -48,47 +48,47 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jRole" min="-2" pref="27" max="-2" attributes="0"/>
+              <Component id="uiRole" min="-2" pref="27" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jUsername" min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="uiUsername" min="-2" pref="27" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jFullname" min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="uiFullname" min="-2" pref="27" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jJmbg" min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="uiJmbg" min="-2" pref="27" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jTabbedPanel" min="-2" pref="341" max="-2" attributes="0"/>
+                  <Component id="uiTabbedPanel" min="-2" pref="341" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="bUpdateAdminData" min="-2" max="-2" attributes="0"/>
+              <Component id="uiRefresh" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="30" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jRole">
+    <Component class="javax.swing.JLabel" name="uiRole">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jRole.setText(role);&#xd;&#xa;jRole.setToolTipText(&quot;Rola&quot;);&#xd;&#xa;Font fRole = jRole.getFont();&#xd;&#xa;jRole.setFont(fRole.deriveFont(fRole.getStyle() | Font.BOLD));"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="uiRole.setText(role);&#xd;&#xa;uiRole.setToolTipText(&quot;Rola&quot;);&#xd;&#xa;Font fRole = uiRole.getFont();&#xd;&#xa;uiRole.setFont(fRole.deriveFont(fRole.getStyle() | Font.BOLD));"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="jUsername">
+    <Component class="javax.swing.JLabel" name="uiUsername">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jUsername.setText(userName);&#xd;&#xa;jUsername.setToolTipText(&quot;Korisnicko ime&quot;);&#xd;&#xa;"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="uiUsername.setText(userName);&#xd;&#xa;uiUsername.setToolTipText(&quot;Korisnicko ime&quot;);&#xd;&#xa;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="jFullname">
+    <Component class="javax.swing.JLabel" name="uiFullname">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jFullname.setText(firstName + &quot; &quot; + lastName);&#xd;&#xa;jFullname.setToolTipText(&quot;Puno ime&quot;);&#xd;&#xa;Font fFullname = jFullname.getFont();&#xd;&#xa;jFullname.setFont(fFullname.deriveFont(fFullname.getStyle() | Font.BOLD));"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="uiFullname.setText(firstName + &quot; &quot; + lastName);&#xd;&#xa;uiFullname.setToolTipText(&quot;Puno ime&quot;);&#xd;&#xa;Font fFullname = uiFullname.getFont();&#xd;&#xa;uiFullname.setFont(fFullname.deriveFont(fFullname.getStyle() | Font.BOLD));"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="jJmbg">
+    <Component class="javax.swing.JLabel" name="uiJmbg">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jJmbg.setText(jmbg);&#xd;&#xa;jJmbg.setToolTipText(&quot;JMBG&quot;);&#xd;&#xa;Font fJmbg = jJmbg.getFont();&#xd;&#xa;jJmbg.setFont(fJmbg.deriveFont(fJmbg.getStyle() | Font.BOLD));"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="uiJmbg.setText(jmbg);&#xd;&#xa;uiJmbg.setToolTipText(&quot;JMBG&quot;);&#xd;&#xa;Font fJmbg = uiJmbg.getFont();&#xd;&#xa;uiJmbg.setFont(fJmbg.deriveFont(fJmbg.getStyle() | Font.BOLD));"/>
       </AuxValues>
     </Component>
-    <Container class="javax.swing.JTabbedPane" name="jTabbedPanel">
+    <Container class="javax.swing.JTabbedPane" name="uiTabbedPanel">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
@@ -99,9 +99,9 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="jStudentGradesPanel">
+        <Container class="javax.swing.JPanel" name="uiStudentPanel">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jStudentGradesPanel.setVisible(false);&#xd;&#xa;"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="uiStudentPanel.setVisible(false);&#xd;&#xa;"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
@@ -119,58 +119,58 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="bSave" min="-2" max="-2" attributes="0"/>
+                              <Component id="uiSave_StudentPanel" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="SelectStudent" min="-2" pref="105" max="-2" attributes="0"/>
+                              <Component id="cSelectStudent_StudentPanel" min="-2" pref="105" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="SelectSubject" min="-2" pref="171" max="-2" attributes="0"/>
+                              <Component id="cSelectSubject_StudentPanel" min="-2" pref="171" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jSelectStudent" min="-2" pref="170" max="-2" attributes="0"/>
-                                  <Component id="jStudentIndex" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
-                                  <Component id="jStudentFullname" min="-2" pref="148" max="-2" attributes="0"/>
-                                  <Component id="jStudentJmbg" min="-2" pref="148" max="-2" attributes="0"/>
+                                  <Component id="uiSelectStudent_StudentPanel" min="-2" pref="170" max="-2" attributes="0"/>
+                                  <Component id="uiIndex_StudentPanel" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
+                                  <Component id="uiFullname_StudentPanel" min="-2" pref="148" max="-2" attributes="0"/>
+                                  <Component id="uiJmbg_StudentPanel" min="-2" pref="148" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jSelectStudentSubject" min="-2" pref="171" max="-2" attributes="0"/>
+                                  <Component id="uiSelectSubject_StudentPanel" min="-2" pref="171" max="-2" attributes="0"/>
                                   <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="K3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="uiC3Label_StudentPanel" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="32767" attributes="0"/>
-                                                  <Component id="jK3" max="-2" attributes="0"/>
+                                                  <Component id="uiC3Input_StudentPanel" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="K1" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="uiC1Label_StudentPanel" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="32767" attributes="0"/>
-                                                  <Component id="jK1" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="uiC1Input_StudentPanel" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" attributes="0">
-                                                  <Component id="K5" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="uiC5Label_StudentPanel" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="32767" attributes="0"/>
-                                                  <Component id="jK5" max="-2" attributes="0"/>
+                                                  <Component id="uiC5Input_StudentPanel" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <EmptySpace type="separate" max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="K4" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="uiC4Label_StudentPanel" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="32767" attributes="0"/>
-                                                  <Component id="jK4" max="-2" attributes="0"/>
+                                                  <Component id="uiC4Input_StudentPanel" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="K2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="uiC2Label_StudentPanel" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="32767" attributes="0"/>
-                                                  <Component id="jK2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="uiC2Input_StudentPanel" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" attributes="0">
-                                                  <Component id="K6" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="uiC6Label_StudentPanel" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="32767" attributes="0"/>
-                                                  <Component id="jK6" max="-2" attributes="0"/>
+                                                  <Component id="uiC6Input_StudentPanel" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
@@ -178,14 +178,14 @@
                                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="1" attributes="0">
                                               <Group type="102" attributes="0">
-                                                  <Component id="Grade" min="-2" pref="49" max="-2" attributes="0"/>
+                                                  <Component id="cGrade_StudentPanel" min="-2" pref="49" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jGrade" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="uiGrade_StudentPanel" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="1" attributes="0">
-                                                  <Component id="Summary" min="-2" pref="49" max="-2" attributes="0"/>
+                                                  <Component id="cPointsSum_StudentPanel" min="-2" pref="49" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jSummary" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="uiPointsSum_StudentPanel" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
@@ -202,125 +202,110 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="SelectStudent" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="SelectSubject" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="cSelectStudent_StudentPanel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="cSelectSubject_StudentPanel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jSelectStudent" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jSelectStudentSubject" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                          <Component id="uiSelectStudent_StudentPanel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="uiSelectSubject_StudentPanel" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jK1" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="uiC1Input_StudentPanel" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="K1" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                                      <Component id="K2" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                                      <Component id="jK2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="uiC1Label_StudentPanel" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                      <Component id="uiC2Label_StudentPanel" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                      <Component id="uiC2Input_StudentPanel" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jK3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="K3" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                                  <Component id="K4" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                                  <Component id="jK4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="uiC3Input_StudentPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="uiC3Label_StudentPanel" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="uiC4Label_StudentPanel" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="uiC4Input_StudentPanel" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jK5" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="K5" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                                  <Component id="K6" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                                  <Component id="jK6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="uiC5Input_StudentPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="uiC5Label_StudentPanel" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="uiC6Label_StudentPanel" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="uiC6Input_StudentPanel" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="jStudentFullname" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="uiFullname_StudentPanel" min="-2" pref="29" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jStudentIndex" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="uiIndex_StudentPanel" min="-2" pref="29" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jStudentJmbg" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="uiJmbg_StudentPanel" min="-2" pref="29" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jSummary" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="Summary" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiPointsSum_StudentPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cPointsSum_StudentPanel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jGrade" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="Grade" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiGrade_StudentPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cGrade_StudentPanel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="32767" attributes="0"/>
-                      <Component id="bSave" min="-2" max="-2" attributes="0"/>
+                      <Component id="uiSave_StudentPanel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="17" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="SelectStudent">
+            <Component class="javax.swing.JLabel" name="cSelectStudent_StudentPanel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Izaberite Studenta"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="jSelectStudent">
+            <Component class="javax.swing.JComboBox" name="uiSelectStudent_StudentPanel">
               <Events>
-                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jSelectStudentItemStateChanged"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="uiSelectStudent_StudentPanelItemStateChanged"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="jStudentFullname">
+            <Component class="javax.swing.JLabel" name="uiFullname_StudentPanel">
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="Font fStudentFullname = jStudentFullname.getFont();&#xd;&#xa;jStudentFullname.setFont(fStudentFullname.deriveFont(&#xd;&#xa;    fStudentFullname.getStyle() | Font.BOLD&#xd;&#xa;));"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="Font fStudentFullname = uiFullname_StudentPanel.getFont();&#xd;&#xa;uiFullname_StudentPanel.setFont(fStudentFullname.deriveFont(&#xd;&#xa;    fStudentFullname.getStyle() | Font.BOLD&#xd;&#xa;));"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="jStudentIndex">
+            <Component class="javax.swing.JLabel" name="uiIndex_StudentPanel">
             </Component>
-            <Component class="javax.swing.JLabel" name="jStudentJmbg">
+            <Component class="javax.swing.JLabel" name="uiJmbg_StudentPanel">
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="Font fStudentJmbg = jStudentJmbg.getFont();&#xd;&#xa;jStudentJmbg.setFont(fStudentJmbg.deriveFont(&#xd;&#xa;    fStudentJmbg.getStyle() | Font.BOLD&#xd;&#xa;));"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="Font fStudentJmbg = uiJmbg_StudentPanel.getFont();&#xd;&#xa;uiJmbg_StudentPanel.setFont(fStudentJmbg.deriveFont(&#xd;&#xa;    fStudentJmbg.getStyle() | Font.BOLD&#xd;&#xa;));"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="SelectSubject">
+            <Component class="javax.swing.JLabel" name="cSelectSubject_StudentPanel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Izaberite predmet"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="jSelectStudentSubject">
+            <Component class="javax.swing.JComboBox" name="uiSelectSubject_StudentPanel">
               <Events>
-                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jSelectStudentSubjectItemStateChanged"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="uiSelectSubject_StudentPanelItemStateChanged"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="K1">
+            <Component class="javax.swing.JLabel" name="uiC1Label_StudentPanel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="K1:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="K3">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="K3:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="K2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="K2:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="K4">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="K4:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jK1">
+            <Component class="javax.swing.JTextField" name="uiC1Input_StudentPanel">
               <Properties>
                 <Property name="actionCommand" type="java.lang.String" value="&lt;Not Set&gt;"/>
                 <Property name="alignmentX" type="float" value="0.0"/>
@@ -335,15 +320,47 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jK1PropertyChange"/>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="uiC1Input_StudentPanelPropertyChange"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJK1);"/>
                 <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJK1 = DecimalFormat.getInstance();&#xa;formatJK1.setGroupingUsed(false);&#xa;NumberFormatter formatterJK1 = new NumberFormatter(formatJK1);&#xa;formatterJK1.setValueClass(Float.class);&#xa;formatterJK1.setMinimum(0.0F);&#xa;formatterJK1.setMaximum(25.0F);&#xa;formatterJK1.setCommitsOnValidEdit(true);"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK1 = jK1.getFont();&#xd;&#xa;jK1.setFont(new Font(&#xd;&#xa;        jK1.getName(),&#xd;&#xa;        fK1.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK1 = uiC1Input_StudentPanel.getFont();&#xd;&#xa;uiC1Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC1Input_StudentPanel.getName(),&#xd;&#xa;        fK1.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JTextField" name="jK3">
+            <Component class="javax.swing.JLabel" name="uiC2Label_StudentPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="K2:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiC2Input_StudentPanel">
+              <Properties>
+                <Property name="alignmentX" type="float" value="0.0"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[64, 29]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[64, 29]"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[64, 29]"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="uiC2Input_StudentPanelPropertyChange"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJK2);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJK2 = DecimalFormat.getInstance();&#xa;formatJK2.setGroupingUsed(false);&#xa;NumberFormatter formatterJK2 = new NumberFormatter(formatJK2);&#xa;formatterJK2.setValueClass(Float.class);&#xa;formatterJK2.setMinimum(0.0F);&#xa;formatterJK2.setMaximum(25.0F);&#xa;formatterJK2.setCommitsOnValidEdit(true);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK2 = uiC2Input_StudentPanel.getFont();&#xd;&#xa;uiC2Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC2Input_StudentPanel.getName(),&#xd;&#xa;        fK2.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="uiC3Label_StudentPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="K3:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiC3Input_StudentPanel">
               <Properties>
                 <Property name="actionCommand" type="java.lang.String" value="&lt;Not Set&gt;"/>
                 <Property name="alignmentX" type="float" value="0.0"/>
@@ -359,15 +376,20 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jK3PropertyChange"/>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="uiC3Input_StudentPanelPropertyChange"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJK3);"/>
                 <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJK3 = DecimalFormat.getInstance();&#xa;formatJK3.setGroupingUsed(false);&#xa;NumberFormatter formatterJK3 = new NumberFormatter(formatJK3);&#xa;formatterJK3.setValueClass(Float.class);&#xa;formatterJK3.setMinimum(0.0F);&#xa;formatterJK3.setMaximum(25.0F);&#xa;formatterJK3.setCommitsOnValidEdit(true);"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK3 = jK3.getFont();&#xd;&#xa;jK3.setFont(new Font(&#xd;&#xa;        jK3.getName(),&#xd;&#xa;        fK3.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK3 = uiC3Input_StudentPanel.getFont();&#xd;&#xa;uiC3Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC3Input_StudentPanel.getName(),&#xd;&#xa;        fK3.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JTextField" name="jK2">
+            <Component class="javax.swing.JLabel" name="uiC4Label_StudentPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="K4:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiC4Input_StudentPanel">
               <Properties>
                 <Property name="alignmentX" type="float" value="0.0"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -381,148 +403,126 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jK2PropertyChange"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJK2);"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJK2 = DecimalFormat.getInstance();&#xa;formatJK2.setGroupingUsed(false);&#xa;NumberFormatter formatterJK2 = new NumberFormatter(formatJK2);&#xa;formatterJK2.setValueClass(Float.class);&#xa;formatterJK2.setMinimum(0.0F);&#xa;formatterJK2.setMaximum(25.0F);&#xa;formatterJK2.setCommitsOnValidEdit(true);"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK2 = jK2.getFont();&#xd;&#xa;jK2.setFont(new Font(&#xd;&#xa;        jK2.getName(),&#xd;&#xa;        fK2.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jK4">
-              <Properties>
-                <Property name="alignmentX" type="float" value="0.0"/>
-                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[64, 29]"/>
-                </Property>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[64, 29]"/>
-                </Property>
-                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[64, 29]"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jK4PropertyChange"/>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="uiC4Input_StudentPanelPropertyChange"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJK4);"/>
                 <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJK4 = DecimalFormat.getInstance();&#xa;formatJK4.setGroupingUsed(false);&#xa;NumberFormatter formatterJK4 = new NumberFormatter(formatJK4);&#xa;formatterJK4.setValueClass(Float.class);&#xa;formatterJK4.setMinimum(0.0F);&#xa;formatterJK4.setMaximum(25.0F);&#xa;formatterJK4.setCommitsOnValidEdit(true);"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK4 = jK4.getFont();&#xd;&#xa;jK4.setFont(new Font(&#xd;&#xa;        jK4.getName(),&#xd;&#xa;        fK4.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK4 = uiC4Input_StudentPanel.getFont();&#xd;&#xa;uiC4Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC4Input_StudentPanel.getName(),&#xd;&#xa;        fK4.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JTextField" name="jSummary">
-              <Properties>
-                <Property name="alignmentX" type="float" value="0.0"/>
-                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[64, 29]"/>
-                </Property>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[64, 29]"/>
-                </Property>
-                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[64, 29]"/>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jSummary.setEditable(false);&#xd;&#xa;Font fSummary = jSummary.getFont();&#xd;&#xa;jSummary.setFont(new Font(&#xd;&#xa;        jSummary.getName(),&#xd;&#xa;        fSummary.getStyle() | Font.BOLD,&#xd;&#xa;        18&#xd;&#xa;));"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jGrade">
-              <Properties>
-                <Property name="alignmentX" type="float" value="0.0"/>
-                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[64, 29]"/>
-                </Property>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[64, 29]"/>
-                </Property>
-                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[64, 29]"/>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jGrade.setEditable(false);&#xd;&#xa;Font fGrade = jGrade.getFont();&#xd;&#xa;jGrade.setFont(new Font(&#xd;&#xa;        jGrade.getName(),&#xd;&#xa;        fGrade.getStyle() | Font.BOLD,&#xd;&#xa;        18&#xd;&#xa;));"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JLabel" name="Grade">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Ocena:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="Summary">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Ukupno:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="bSave">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Sacuvaj"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bSaveActionPerformed"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="bSave.setEnabled(false);&#xd;&#xa;"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jK5">
-              <Properties>
-                <Property name="alignmentX" type="float" value="0.0"/>
-                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[64, 29]"/>
-                </Property>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[64, 29]"/>
-                </Property>
-                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[64, 29]"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jK5PropertyChange"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJK5);"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJK5 = DecimalFormat.getInstance();&#xa;formatJK5.setGroupingUsed(false);&#xa;NumberFormatter formatterJK5 = new NumberFormatter(formatJK5);&#xa;formatterJK5.setValueClass(Float.class);&#xa;formatterJK5.setMinimum(0.0F);&#xa;formatterJK5.setMaximum(25.0F);&#xa;formatterJK5.setCommitsOnValidEdit(true);"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK5 = jK5.getFont();&#xd;&#xa;jK5.setFont(new Font(&#xd;&#xa;        jK5.getName(),&#xd;&#xa;        fK5.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jK6">
-              <Properties>
-                <Property name="alignmentX" type="float" value="0.0"/>
-                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[64, 29]"/>
-                </Property>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[64, 29]"/>
-                </Property>
-                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[64, 29]"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jK6PropertyChange"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJK6);"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJK6 = DecimalFormat.getInstance();&#xa;formatJK6.setGroupingUsed(false);&#xa;NumberFormatter formatterJK6 = new NumberFormatter(formatJK6);&#xa;formatterJK6.setValueClass(Float.class);&#xa;formatterJK6.setMinimum(0.0F);&#xa;formatterJK6.setMaximum(25.0F);&#xa;formatterJK6.setCommitsOnValidEdit(true);"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK6 = jK6.getFont();&#xd;&#xa;jK6.setFont(new Font(&#xd;&#xa;        jK6.getName(),&#xd;&#xa;        fK6.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JLabel" name="K5">
+            <Component class="javax.swing.JLabel" name="uiC5Label_StudentPanel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="K5:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="K6">
+            <Component class="javax.swing.JTextField" name="uiC5Input_StudentPanel">
+              <Properties>
+                <Property name="alignmentX" type="float" value="0.0"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[64, 29]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[64, 29]"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[64, 29]"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="uiC5Input_StudentPanelPropertyChange"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJK5);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJK5 = DecimalFormat.getInstance();&#xa;formatJK5.setGroupingUsed(false);&#xa;NumberFormatter formatterJK5 = new NumberFormatter(formatJK5);&#xa;formatterJK5.setValueClass(Float.class);&#xa;formatterJK5.setMinimum(0.0F);&#xa;formatterJK5.setMaximum(25.0F);&#xa;formatterJK5.setCommitsOnValidEdit(true);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK5 = uiC5Input_StudentPanel.getFont();&#xd;&#xa;uiC5Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC5Input_StudentPanel.getName(),&#xd;&#xa;        fK5.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="uiC6Label_StudentPanel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="K6:"/>
               </Properties>
             </Component>
+            <Component class="javax.swing.JTextField" name="uiC6Input_StudentPanel">
+              <Properties>
+                <Property name="alignmentX" type="float" value="0.0"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[64, 29]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[64, 29]"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[64, 29]"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="uiC6Input_StudentPanelPropertyChange"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJK6);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJK6 = DecimalFormat.getInstance();&#xa;formatJK6.setGroupingUsed(false);&#xa;NumberFormatter formatterJK6 = new NumberFormatter(formatJK6);&#xa;formatterJK6.setValueClass(Float.class);&#xa;formatterJK6.setMinimum(0.0F);&#xa;formatterJK6.setMaximum(25.0F);&#xa;formatterJK6.setCommitsOnValidEdit(true);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK6 = uiC6Input_StudentPanel.getFont();&#xd;&#xa;uiC6Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC6Input_StudentPanel.getName(),&#xd;&#xa;        fK6.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="cPointsSum_StudentPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Ukupno:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiPointsSum_StudentPanel">
+              <Properties>
+                <Property name="alignmentX" type="float" value="0.0"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[64, 29]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[64, 29]"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[64, 29]"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="uiPointsSum_StudentPanel.setEditable(false);&#xd;&#xa;Font fSummary = uiPointsSum_StudentPanel.getFont();&#xd;&#xa;uiPointsSum_StudentPanel.setFont(new Font(&#xd;&#xa;        uiPointsSum_StudentPanel.getName(),&#xd;&#xa;        fSummary.getStyle() | Font.BOLD,&#xd;&#xa;        18&#xd;&#xa;));"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="cGrade_StudentPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Ocena:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiGrade_StudentPanel">
+              <Properties>
+                <Property name="alignmentX" type="float" value="0.0"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[64, 29]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[64, 29]"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[64, 29]"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="uiGrade_StudentPanel.setEditable(false);&#xd;&#xa;Font fGrade = uiGrade_StudentPanel.getFont();&#xd;&#xa;uiGrade_StudentPanel.setFont(new Font(&#xd;&#xa;        uiGrade_StudentPanel.getName(),&#xd;&#xa;        fGrade.getStyle() | Font.BOLD,&#xd;&#xa;        18&#xd;&#xa;));"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JButton" name="uiSave_StudentPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Sacuvaj"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="uiSave_StudentPanelActionPerformed"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="uiSave_StudentPanel.setEnabled(false);&#xd;&#xa;"/>
+              </AuxValues>
+            </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="jAdminPanel">
+        <Container class="javax.swing.JPanel" name="uiAdminPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Admin">
@@ -539,16 +539,16 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="SelectAdmin" min="-2" pref="105" max="-2" attributes="0"/>
+                                  <Component id="cSelectAdmin_AdminPanel" min="-2" pref="105" max="-2" attributes="0"/>
                                   <EmptySpace min="65" pref="65" max="-2" attributes="0"/>
                               </Group>
                               <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                  <Component id="jSelectAdmin" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
-                                  <Component id="jAdminUsername" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
+                                  <Component id="uiSelectAdmin_AdminPanel" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                                  <Component id="uiAdminUsername_AdminPanel" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Component id="jAdminFullname" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
-                          <Component id="jAdminJmbg" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
+                          <Component id="uiAdminFullname_AdminPanel" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
+                          <Component id="uiAdminJmbg_AdminPanel" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="294" max="32767" attributes="0"/>
                   </Group>
@@ -558,43 +558,43 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="SelectAdmin" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="cSelectAdmin_AdminPanel" min="-2" pref="25" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jSelectAdmin" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="uiSelectAdmin_AdminPanel" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jAdminUsername" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="uiAdminUsername_AdminPanel" min="-2" pref="29" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jAdminFullname" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="uiAdminFullname_AdminPanel" min="-2" pref="29" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jAdminJmbg" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="uiAdminJmbg_AdminPanel" min="-2" pref="29" max="-2" attributes="0"/>
                       <EmptySpace pref="122" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="SelectAdmin">
+            <Component class="javax.swing.JLabel" name="cSelectAdmin_AdminPanel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Izaberite Admina"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="jSelectAdmin">
+            <Component class="javax.swing.JComboBox" name="uiSelectAdmin_AdminPanel">
               <Events>
-                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jSelectAdminItemStateChanged"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="uiSelectAdmin_AdminPanelItemStateChanged"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="jAdminJmbg">
+            <Component class="javax.swing.JLabel" name="uiAdminJmbg_AdminPanel">
             </Component>
-            <Component class="javax.swing.JLabel" name="jAdminFullname">
+            <Component class="javax.swing.JLabel" name="uiAdminFullname_AdminPanel">
             </Component>
-            <Component class="javax.swing.JLabel" name="jAdminUsername">
+            <Component class="javax.swing.JLabel" name="uiAdminUsername_AdminPanel">
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="jNewUserPanel">
+        <Container class="javax.swing.JPanel" name="uiNewUserPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Novi Korisnik">
@@ -609,57 +609,57 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="NewFirstName" alignment="0" max="32767" attributes="0"/>
-                          <Component id="NewJmbg" alignment="0" max="32767" attributes="0"/>
-                          <Component id="NewLastName" alignment="0" pref="54" max="32767" attributes="0"/>
-                          <Component id="NewIndex" alignment="0" max="32767" attributes="0"/>
+                          <Component id="cFirstname_NewUserPanel" alignment="0" max="32767" attributes="0"/>
+                          <Component id="cJmbg_NewUserPanel" alignment="0" max="32767" attributes="0"/>
+                          <Component id="cLastname_NewUserPanel" alignment="0" pref="54" max="32767" attributes="0"/>
+                          <Component id="cIndex_NewUserPanel" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jNewJmbg" min="-2" max="-2" attributes="0"/>
+                                      <Component id="uiJmbg_NewUserPanel" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="NewPassword" min="-2" pref="89" max="-2" attributes="0"/>
+                                      <Component id="cPassword_NewUserPanel" min="-2" pref="89" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jNewIndex" max="-2" attributes="0"/>
+                                      <Component id="uiIndex_NewUserPanel" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="RepeatNewPassword" min="-2" pref="98" max="-2" attributes="0"/>
+                                      <Component id="cRepeatPassword_NewUserPanel" min="-2" pref="98" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jRepeatNewPassword" max="-2" attributes="0"/>
-                                  <Component id="bNewUserSave" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jNewPassword" alignment="0" max="-2" attributes="0"/>
+                                  <Component id="uiRepeatPassword_NewUserPanel" max="-2" attributes="0"/>
+                                  <Component id="uiSave_NewUserPanel" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="uiPassword_NewUserPanel" alignment="0" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jNewFirstName" min="-2" max="-2" attributes="0"/>
+                                      <Component id="uiFirstname_NewUserPanel" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="NewUserName" max="32767" attributes="0"/>
+                                      <Component id="cUsername_NewUserPanel" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jNewLastName" min="-2" max="-2" attributes="0"/>
+                                      <Component id="uiLastname_NewUserPanel" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="Role" min="-2" pref="101" max="-2" attributes="0"/>
+                                      <Component id="cSelectRole_NewUserPanel" min="-2" pref="101" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jSelectNewRole" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jNewUserName" max="-2" attributes="0"/>
+                                  <Component id="uiSelectRole_NewUserPanel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="uiUsername_NewUserPanel" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jButton1" min="-2" pref="31" max="-2" attributes="0"/>
-                          <Component id="jButton2" pref="0" max="32767" attributes="0"/>
+                          <Component id="uiShowHidePassword_NewUserPanel" min="-2" pref="31" max="-2" attributes="0"/>
+                          <Component id="uiShowHideRepeatPassword_NewUserPanel" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="16" max="32767" attributes="0"/>
                   </Group>
@@ -669,50 +669,50 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" pref="24" max="-2" attributes="0"/>
+                      <Component id="uiShowHidePassword_NewUserPanel" min="-2" pref="24" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton2" min="-2" pref="24" max="-2" attributes="0"/>
+                      <Component id="uiShowHideRepeatPassword_NewUserPanel" min="-2" pref="24" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jNewFirstName" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="NewFirstName" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="NewUserName" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewUserName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiFirstname_NewUserPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cFirstname_NewUserPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cUsername_NewUserPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiUsername_NewUserPanel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jNewLastName" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="NewLastName" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="uiLastname_NewUserPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cLastname_NewUserPanel" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                              <Component id="jSelectNewRole" min="-2" max="-2" attributes="0"/>
-                              <Component id="Role" min="-2" max="-2" attributes="0"/>
+                              <Component id="uiSelectRole_NewUserPanel" min="-2" max="-2" attributes="0"/>
+                              <Component id="cSelectRole_NewUserPanel" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jNewJmbg" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="NewJmbg" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="NewPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="uiJmbg_NewUserPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cJmbg_NewUserPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cPassword_NewUserPanel" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jNewIndex" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="NewIndex" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="RepeatNewPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="uiIndex_NewUserPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cIndex_NewUserPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cRepeatPassword_NewUserPanel" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="jNewPassword" min="-2" max="-2" attributes="0"/>
+                              <Component id="uiPassword_NewUserPanel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                              <Component id="jRepeatNewPassword" min="-2" max="-2" attributes="0"/>
+                              <Component id="uiRepeatPassword_NewUserPanel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="bNewUserSave" min="-2" max="-2" attributes="0"/>
+                              <Component id="uiSave_NewUserPanel" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -720,27 +720,75 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="NewFirstName">
+            <Component class="javax.swing.JLabel" name="cFirstname_NewUserPanel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ime:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="NewLastName">
+            <Component class="javax.swing.JTextField" name="uiFirstname_NewUserPanel">
+              <Properties>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[114, 22]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[114, 22]"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[114, 22]"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// Listen for changes in the text&#xd;&#xa;uiFirstname_NewUserPanel.getDocument().addDocumentListener(new DocumentListener() {&#xd;&#xa;  public void changedUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;  public void removeUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;  public void insertUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;&#xd;&#xa;  public void act() {&#xd;&#xa;    uiSave_NewUserPanel.setEnabled(isEverythingFilledForNewUser());&#xd;&#xa;  }&#xd;&#xa;});"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="cLastname_NewUserPanel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Prezime:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="NewJmbg">
+            <Component class="javax.swing.JTextField" name="uiLastname_NewUserPanel">
+              <Properties>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[114, 22]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[114, 22]"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[114, 22]"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;uiLastname_NewUserPanel.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        uiSave_NewUserPanel.setEnabled(isEverythingFilledForNewUser());&#xa;    }&#xa;});"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="cJmbg_NewUserPanel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="JMBG:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="NewIndex">
+            <Component class="javax.swing.JTextField" name="uiJmbg_NewUserPanel">
+              <Properties>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[114, 22]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[114, 22]"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[114, 22]"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;uiJmbg_NewUserPanel.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        uiSave_NewUserPanel.setEnabled(isEverythingFilledForNewUser());&#xa;    }&#xa;});"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="cIndex_NewUserPanel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Indeks:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jNewFirstName">
+            <Component class="javax.swing.JTextField" name="uiIndex_NewUserPanel">
               <Properties>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[114, 22]"/>
@@ -753,78 +801,15 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// Listen for changes in the text&#xd;&#xa;jNewFirstName.getDocument().addDocumentListener(new DocumentListener() {&#xd;&#xa;  public void changedUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;  public void removeUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;  public void insertUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;&#xd;&#xa;  public void act() {&#xd;&#xa;    bNewUserSave.setEnabled(isEverythingFilledForNewUser());&#xd;&#xa;  }&#xd;&#xa;});"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;uiIndex_NewUserPanel.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        uiSave_NewUserPanel.setEnabled(isEverythingFilledForNewUser());&#xa;    }&#xa;});"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JTextField" name="jNewLastName">
-              <Properties>
-                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[114, 22]"/>
-                </Property>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[114, 22]"/>
-                </Property>
-                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[114, 22]"/>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;jNewLastName.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        bNewUserSave.setEnabled(isEverythingFilledForNewUser());&#xa;    }&#xa;});"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewJmbg">
-              <Properties>
-                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[114, 22]"/>
-                </Property>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[114, 22]"/>
-                </Property>
-                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[114, 22]"/>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;jNewJmbg.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        bNewUserSave.setEnabled(isEverythingFilledForNewUser());&#xa;    }&#xa;});"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewIndex">
-              <Properties>
-                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[114, 22]"/>
-                </Property>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[114, 22]"/>
-                </Property>
-                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[114, 22]"/>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;jNewIndex.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        bNewUserSave.setEnabled(isEverythingFilledForNewUser());&#xa;    }&#xa;});"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JLabel" name="NewUserName">
+            <Component class="javax.swing.JLabel" name="cUsername_NewUserPanel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Korisnicko ime:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="Role">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Rola:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="NewPassword">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Lozinka:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="RepeatNewPassword">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Ponovite lozinku:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewUserName">
+            <Component class="javax.swing.JTextField" name="uiUsername_NewUserPanel">
               <Properties>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[114, 22]"/>
@@ -838,10 +823,15 @@
                 <Property name="requestFocusEnabled" type="boolean" value="false"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;jNewUserName.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        bNewUserSave.setEnabled(isEverythingFilledForNewUser());&#xa;    }&#xa;});"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;uiUsername_NewUserPanel.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        uiSave_NewUserPanel.setEnabled(isEverythingFilledForNewUser());&#xa;    }&#xa;});"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JComboBox" name="jSelectNewRole">
+            <Component class="javax.swing.JLabel" name="cSelectRole_NewUserPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Rola:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="uiSelectRole_NewUserPanel">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="2">
@@ -861,13 +851,18 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jSelectNewRoleItemStateChanged"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="uiSelectRole_NewUserPanelItemStateChanged"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JTextField" name="jNewPassword">
+            <Component class="javax.swing.JLabel" name="cPassword_NewUserPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Lozinka:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiPassword_NewUserPanel">
               <Properties>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[114, 22]"/>
@@ -881,10 +876,20 @@
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPasswordField()"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;jNewPassword.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        bNewUserSave.setEnabled(isEverythingFilledForNewUser());&#xa;    }&#xa;});"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;uiPassword_NewUserPanel.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        uiSave_NewUserPanel.setEnabled(isEverythingFilledForNewUser());&#xa;    }&#xa;});"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JTextField" name="jRepeatNewPassword">
+            <Component class="javax.swing.JButton" name="uiShowHidePassword_NewUserPanel">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ShowHideButton((javax.swing.JPasswordField)uiPassword_NewUserPanel);"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="cRepeatPassword_NewUserPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Ponovite lozinku:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiRepeatPassword_NewUserPanel">
               <Properties>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[114, 22]"/>
@@ -898,34 +903,29 @@
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPasswordField()"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;jRepeatNewPassword.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        bNewUserSave.setEnabled(isEverythingFilledForNewUser());&#xa;    }&#xa;});"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="// Listen for changes in the text&#xa;uiRepeatPassword_NewUserPanel.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        act();&#xa;    }&#xa;&#xa;    public void act() {&#xa;        uiSave_NewUserPanel.setEnabled(isEverythingFilledForNewUser());&#xa;    }&#xa;});"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="bNewUserSave">
+            <Component class="javax.swing.JButton" name="uiShowHideRepeatPassword_NewUserPanel">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ShowHideButton((javax.swing.JPasswordField)uiRepeatPassword_NewUserPanel);"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JButton" name="uiSave_NewUserPanel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Sacuvaj"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bNewUserSaveActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="uiSave_NewUserPanelActionPerformed"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="bNewUserSave.setEnabled(false);"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="bSave.setEnabled(false);&#xd;&#xa;"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ShowHideButton((javax.swing.JPasswordField)jNewPassword);"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButton2">
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ShowHideButton((javax.swing.JPasswordField)jRepeatNewPassword);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="uiSave_NewUserPanel.setEnabled(false);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="uiSave_StudentPanel.setEnabled(false);&#xd;&#xa;"/>
               </AuxValues>
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="jNewSubjectPanel">
+        <Container class="javax.swing.JPanel" name="uiAddSubjectPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Dodaj Predmet">
@@ -941,31 +941,31 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jStudentUsername1" min="-2" pref="120" max="-2" attributes="0"/>
+                              <Component id="uiUsername_AddSubjectPanel" min="-2" pref="120" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="bAddSubjectSave" min="-2" max="-2" attributes="0"/>
+                              <Component id="uiSave_AddSubjectPanel" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="SelectStudent1" min="-2" pref="105" max="-2" attributes="0"/>
+                                              <Component id="cSelectStudent_AddSubjectPanel" min="-2" pref="105" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="1" attributes="0">
-                                              <Component id="jSelectStudent1" min="-2" pref="170" max="-2" attributes="0"/>
+                                              <Component id="uiSelectStudent_AddSubjectPanel" min="-2" pref="170" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="SelectExistingSubject" min="-2" pref="132" max="-2" attributes="0"/>
-                                          <Component id="jExistingSubjects" min="-2" pref="170" max="-2" attributes="0"/>
+                                          <Component id="cSelectSubject_AddSubjectPanel" min="-2" pref="132" max="-2" attributes="0"/>
+                                          <Component id="uiSelectSubject_AddSubjectPanel" min="-2" pref="170" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Component id="jStudentIndex1" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
-                                  <Component id="jStudentFullname1" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
-                                  <Component id="jStudentJmbg1" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
+                                  <Component id="uiIndex_AddSubjectPanel" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
+                                  <Component id="uiFullname_AddSubjectPanel" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
+                                  <Component id="uiJmbg_AddSubjectPanel" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -979,28 +979,28 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="SelectStudent1" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="SelectExistingSubject" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="cSelectStudent_AddSubjectPanel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="cSelectSubject_AddSubjectPanel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jSelectStudent1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jExistingSubjects" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="uiSelectStudent_AddSubjectPanel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="uiSelectSubject_AddSubjectPanel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                              <Component id="jStudentUsername1" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="uiUsername_AddSubjectPanel" min="-2" pref="29" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                              <Component id="jStudentFullname1" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="uiFullname_AddSubjectPanel" min="-2" pref="29" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jStudentJmbg1" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="uiJmbg_AddSubjectPanel" min="-2" pref="29" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jStudentIndex1" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="uiIndex_AddSubjectPanel" min="-2" pref="29" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                              <Component id="bAddSubjectSave" min="-2" max="-2" attributes="0"/>
+                              <Component id="uiSave_AddSubjectPanel" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="50" max="32767" attributes="0"/>
@@ -1009,54 +1009,54 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="SelectStudent1">
+            <Component class="javax.swing.JLabel" name="cSelectStudent_AddSubjectPanel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Izaberite Studenta"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="jSelectStudent1">
+            <Component class="javax.swing.JComboBox" name="uiSelectStudent_AddSubjectPanel">
               <Events>
-                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jSelectStudent1ItemStateChanged"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="uiSelectStudent_AddSubjectPanelItemStateChanged"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="jStudentUsername1">
+            <Component class="javax.swing.JLabel" name="uiUsername_AddSubjectPanel">
             </Component>
-            <Component class="javax.swing.JLabel" name="jStudentFullname1">
+            <Component class="javax.swing.JLabel" name="uiFullname_AddSubjectPanel">
             </Component>
-            <Component class="javax.swing.JLabel" name="jStudentJmbg1">
+            <Component class="javax.swing.JLabel" name="uiJmbg_AddSubjectPanel">
             </Component>
-            <Component class="javax.swing.JLabel" name="jStudentIndex1">
+            <Component class="javax.swing.JLabel" name="uiIndex_AddSubjectPanel">
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jStudentIndex.setToolTipText(&quot;Indeks&quot;);&#xd;&#xa;"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="uiIndex_StudentPanel.setToolTipText(&quot;Indeks&quot;);&#xd;&#xa;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="SelectExistingSubject">
+            <Component class="javax.swing.JLabel" name="cSelectSubject_AddSubjectPanel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Izaberi Predmet"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="bAddSubjectSave">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Sacuvaj"/>
-              </Properties>
+            <Component class="javax.swing.JComboBox" name="uiSelectSubject_AddSubjectPanel">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bAddSubjectSaveActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="jExistingSubjects">
-              <Events>
-                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jExistingSubjectsItemStateChanged"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="uiSelectSubject_AddSubjectPanelItemStateChanged"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
+            <Component class="javax.swing.JButton" name="uiSave_AddSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Sacuvaj"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="uiSave_AddSubjectPanelActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="jNewSubjectPanel1">
+        <Container class="javax.swing.JPanel" name="uiNewSubjectPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Novi Predmet">
@@ -1070,108 +1070,95 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jStudentUsername2" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                                  <Component id="jStudentIndex2" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
-                                  <Component id="jStudentFullname2" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
-                                  <Component id="jStudentJmbg2" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="cCategory1_NewSubjectPanel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="uiCategory1_NewSubjectPanel" min="-2" pref="28" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="cMaxPts1_NewSubjectPanel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="uiMaxPts1_NewSubjectPanel" min="-2" pref="49" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="cMinPts1_NewSubjectPanel" min="-2" pref="94" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="cCategory2_NewSubjectPanel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="uiCategory2_NewSubjectPanel" min="-2" pref="28" max="-2" attributes="0"/>
+                                      <EmptySpace pref="15" max="32767" attributes="0"/>
+                                      <Component id="cMaxPts2_NewSubjectPanel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="uiMaxPts2_NewSubjectPanel" min="-2" pref="49" max="-2" attributes="0"/>
+                                      <EmptySpace pref="15" max="32767" attributes="0"/>
+                                      <Component id="cMinPts2_NewSubjectPanel" min="-2" pref="94" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="cCategory3_NewSubjectPanel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="uiCategory3_NewSubjectPanel" min="-2" pref="28" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="cMaxPts3_NewSubjectPanel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="uiMaxPts3_NewSubjectPanel" min="-2" pref="49" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="cMinPts3_NewSubjectPanel" min="-2" pref="94" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="cCategory4_NewSubjectPanel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="uiCategory4_NewSubjectPanel" min="-2" pref="28" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="cMaxPts4_NewSubjectPanel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="uiMaxPts4_NewSubjectPanel" min="-2" pref="49" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="cMinPts4_NewSubjectPanel" min="-2" pref="94" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="cCategory5_NewSubjectPanel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="uiCategory5_NewSubjectPanel" min="-2" pref="28" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="cMaxPts5_NewSubjectPanel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="uiMaxPts5_NewSubjectPanel" min="-2" pref="49" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="cMinPts5_NewSubjectPanel" min="-2" pref="94" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="cCategory6_NewSubjectPanel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="uiCategory6_NewSubjectPanel" min="-2" pref="28" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="cMaxPts6_NewSubjectPanel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="uiMaxPts6_NewSubjectPanel" min="-2" pref="49" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="cMinPts6_NewSubjectPanel" min="-2" pref="94" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="uiMinPts1_NewSubjectPanel" min="-2" pref="49" max="-2" attributes="0"/>
+                                  <Component id="uiMinPts2_NewSubjectPanel" min="-2" pref="49" max="-2" attributes="0"/>
+                                  <Component id="uiMinPts3_NewSubjectPanel" min="-2" pref="49" max="-2" attributes="0"/>
+                                  <Component id="uiMinPts4_NewSubjectPanel" min="-2" pref="49" max="-2" attributes="0"/>
+                                  <Component id="uiMinPts5_NewSubjectPanel" min="-2" pref="49" max="-2" attributes="0"/>
+                                  <Component id="uiMinPts6_NewSubjectPanel" min="-2" pref="49" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="newCategory1" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jNewCategory1" min="-2" pref="28" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="newMaxPts1" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="jNewMaxPts1" min="-2" pref="49" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="newMinPts1" min="-2" pref="94" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="newCategory2" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jNewCategory2" min="-2" pref="28" max="-2" attributes="0"/>
-                                              <EmptySpace pref="15" max="32767" attributes="0"/>
-                                              <Component id="newMaxPts2" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="jNewMaxPts2" min="-2" pref="49" max="-2" attributes="0"/>
-                                              <EmptySpace pref="15" max="32767" attributes="0"/>
-                                              <Component id="newMinPts2" min="-2" pref="94" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="newCategory3" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jNewCategory3" min="-2" pref="28" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="newMaxPts3" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="jNewMaxPts3" min="-2" pref="49" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="newMinPts3" min="-2" pref="94" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="newCategory4" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jNewCategory4" min="-2" pref="28" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="newMaxPts4" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="jNewMaxPts4" min="-2" pref="49" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="newMinPts4" min="-2" pref="94" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="newCategory5" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jNewCategory5" min="-2" pref="28" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="newMaxPts5" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="jNewMaxPts5" min="-2" pref="49" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="newMinPts5" min="-2" pref="94" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="newCategory6" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jNewCategory6" min="-2" pref="28" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="newMaxPts6" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="jNewMaxPts6" min="-2" pref="49" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="newMinPts6" min="-2" pref="94" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jNewMinPts1" min="-2" pref="49" max="-2" attributes="0"/>
-                                          <Component id="jNewMinPts2" min="-2" pref="49" max="-2" attributes="0"/>
-                                          <Component id="jNewMinPts3" min="-2" pref="49" max="-2" attributes="0"/>
-                                          <Component id="jNewMinPts4" min="-2" pref="49" max="-2" attributes="0"/>
-                                          <Component id="jNewMinPts5" min="-2" pref="49" max="-2" attributes="0"/>
-                                          <Component id="jNewMinPts6" min="-2" pref="49" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="jLabel2" max="32767" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jNewSubject" min="-2" pref="149" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="bNewSubjectSave1" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace pref="23" max="32767" attributes="0"/>
+                              <Component id="cSubject_NewSubjectPanel" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="uiSubject_NewSubjectPanel" min="-2" pref="149" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="uiSave_NewSubjectPanel" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace pref="23" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1180,243 +1167,224 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel2" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="jNewSubject" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="bNewSubjectSave1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cSubject_NewSubjectPanel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="uiSubject_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiSave_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="newCategory1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewCategory1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="newMaxPts1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewMaxPts1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="newMinPts1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewMinPts1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cCategory1_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiCategory1_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cMaxPts1_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiMaxPts1_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cMinPts1_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiMinPts1_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="newCategory2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewCategory2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="newMaxPts2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewMaxPts2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="newMinPts2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewMinPts2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cCategory2_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiCategory2_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cMaxPts2_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiMaxPts2_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cMinPts2_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiMinPts2_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="newCategory3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewCategory3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="newMaxPts3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewMaxPts3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="newMinPts3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewMinPts3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cCategory3_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiCategory3_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cMaxPts3_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiMaxPts3_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cMinPts3_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiMinPts3_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="newCategory4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewCategory4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="newMaxPts4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewMaxPts4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="newMinPts4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewMinPts4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cCategory4_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiCategory4_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cMaxPts4_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiMaxPts4_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cMinPts4_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiMinPts4_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="newCategory5" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewCategory5" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="newMaxPts5" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewMaxPts5" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="newMinPts5" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewMinPts5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cCategory5_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiCategory5_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cMaxPts5_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiMaxPts5_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cMinPts5_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiMinPts5_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="newCategory6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewCategory6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="newMaxPts6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewMaxPts6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="newMinPts6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jNewMinPts6" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cCategory6_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiCategory6_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cMaxPts6_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiMaxPts6_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cMinPts6_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="uiMinPts6_NewSubjectPanel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="475" max="-2" attributes="0"/>
-                      <Component id="jStudentUsername2" min="-2" pref="29" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                      <Component id="jStudentFullname2" min="-2" pref="29" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jStudentJmbg2" min="-2" pref="29" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jStudentIndex2" min="-2" pref="29" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="72" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jStudentUsername2">
-            </Component>
-            <Component class="javax.swing.JLabel" name="jStudentFullname2">
-            </Component>
-            <Component class="javax.swing.JLabel" name="jStudentJmbg2">
-            </Component>
-            <Component class="javax.swing.JLabel" name="jStudentIndex2">
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jStudentIndex.setToolTipText(&quot;Indeks&quot;);&#xd;&#xa;"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel2">
+            <Component class="javax.swing.JLabel" name="cSubject_NewSubjectPanel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Unesite Predmet"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="bNewSubjectSave1">
+            <Component class="javax.swing.JTextField" name="uiSubject_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="cCategory1_NewSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Naziv kategorije"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiCategory1_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="cMaxPts1_NewSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Max broj poena"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiMaxPts1_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="cMinPts1_NewSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Min broj poena"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiMinPts1_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="cCategory2_NewSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Naziv kategorije"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiCategory2_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="cMaxPts2_NewSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Max broj poena"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiMaxPts2_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="cMinPts2_NewSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Min broj poena"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiMinPts2_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="cCategory3_NewSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Naziv kategorije"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiCategory3_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="cMaxPts3_NewSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Max broj poena"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiMaxPts3_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="cMinPts3_NewSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Min broj poena"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiMinPts3_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="cCategory4_NewSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Naziv kategorije"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiCategory4_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="cMaxPts4_NewSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Max broj poena"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiMaxPts4_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="cMinPts4_NewSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Min broj poena"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiMinPts4_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="cCategory5_NewSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Naziv kategorije"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiCategory5_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="cMaxPts5_NewSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Max broj poena"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiMaxPts5_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="cMinPts5_NewSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Min broj poena"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiMinPts5_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="cCategory6_NewSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Naziv kategorije"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiCategory6_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="cMaxPts6_NewSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Max broj poena"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiMaxPts6_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="cMinPts6_NewSubjectPanel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Min broj poena"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="uiMinPts6_NewSubjectPanel">
+            </Component>
+            <Component class="javax.swing.JButton" name="uiSave_NewSubjectPanel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Sacuvaj"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bNewSubjectSave1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="uiSave_NewSubjectPanelActionPerformed"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="bSave.setEnabled(false);&#xd;&#xa;"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="uiSave_StudentPanel.setEnabled(false);&#xd;&#xa;"/>
               </AuxValues>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewSubject">
-            </Component>
-            <Component class="javax.swing.JLabel" name="newCategory1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Naziv kategorije"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewCategory1">
-            </Component>
-            <Component class="javax.swing.JLabel" name="newMaxPts1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Max broj poena"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewMaxPts1">
-            </Component>
-            <Component class="javax.swing.JLabel" name="newMinPts1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Min broj poena"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewMinPts1">
-            </Component>
-            <Component class="javax.swing.JLabel" name="newCategory2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Naziv kategorije"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewCategory2">
-            </Component>
-            <Component class="javax.swing.JLabel" name="newMaxPts2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Max broj poena"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewMaxPts2">
-            </Component>
-            <Component class="javax.swing.JLabel" name="newMinPts2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Min broj poena"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewMinPts2">
-            </Component>
-            <Component class="javax.swing.JLabel" name="newMinPts3">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Min broj poena"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewMinPts3">
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewCategory3">
-            </Component>
-            <Component class="javax.swing.JLabel" name="newMaxPts3">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Max broj poena"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewMaxPts3">
-            </Component>
-            <Component class="javax.swing.JLabel" name="newCategory3">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Naziv kategorije"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewMinPts4">
-            </Component>
-            <Component class="javax.swing.JLabel" name="newMaxPts4">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Max broj poena"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewMaxPts4">
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewCategory4">
-            </Component>
-            <Component class="javax.swing.JLabel" name="newCategory4">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Naziv kategorije"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="newMinPts4">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Min broj poena"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="newCategory5">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Naziv kategorije"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewMaxPts5">
-            </Component>
-            <Component class="javax.swing.JLabel" name="newMaxPts5">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Max broj poena"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewMinPts5">
-            </Component>
-            <Component class="javax.swing.JLabel" name="newMinPts5">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Min broj poena"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewCategory5">
-            </Component>
-            <Component class="javax.swing.JLabel" name="newCategory6">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Naziv kategorije"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewCategory6">
-            </Component>
-            <Component class="javax.swing.JLabel" name="newMaxPts6">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Max broj poena"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewMaxPts6">
-            </Component>
-            <Component class="javax.swing.JLabel" name="newMinPts6">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Min broj poena"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jNewMinPts6">
             </Component>
           </SubComponents>
         </Container>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="bUpdateAdminData">
+    <Component class="javax.swing.JButton" name="uiRefresh">
       <Properties>
         <Property name="text" type="java.lang.String" value="Azuriranje podataka"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bUpdateAdminDataActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="uiRefreshActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
