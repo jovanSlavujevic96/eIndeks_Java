@@ -323,8 +323,7 @@
                 <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="uiC1Input_StudentPanelPropertyChange"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJK1);"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJK1 = DecimalFormat.getInstance();&#xa;formatJK1.setGroupingUsed(false);&#xa;NumberFormatter formatterJK1 = new NumberFormatter(formatJK1);&#xa;formatterJK1.setValueClass(Float.class);&#xa;formatterJK1.setMinimum(0.0F);&#xa;formatterJK1.setMaximum(25.0F);&#xa;formatterJK1.setCommitsOnValidEdit(true);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(new DecimalFormat(&quot;#.0&quot;));"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK1 = uiC1Input_StudentPanel.getFont();&#xd;&#xa;uiC1Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC1Input_StudentPanel.getName(),&#xd;&#xa;        fK1.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
               </AuxValues>
             </Component>
@@ -350,8 +349,7 @@
                 <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="uiC2Input_StudentPanelPropertyChange"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJK2);"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJK2 = DecimalFormat.getInstance();&#xa;formatJK2.setGroupingUsed(false);&#xa;NumberFormatter formatterJK2 = new NumberFormatter(formatJK2);&#xa;formatterJK2.setValueClass(Float.class);&#xa;formatterJK2.setMinimum(0.0F);&#xa;formatterJK2.setMaximum(25.0F);&#xa;formatterJK2.setCommitsOnValidEdit(true);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(new DecimalFormat(&quot;#.0&quot;));"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK2 = uiC2Input_StudentPanel.getFont();&#xd;&#xa;uiC2Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC2Input_StudentPanel.getName(),&#xd;&#xa;        fK2.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
               </AuxValues>
             </Component>
@@ -379,8 +377,7 @@
                 <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="uiC3Input_StudentPanelPropertyChange"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJK3);"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJK3 = DecimalFormat.getInstance();&#xa;formatJK3.setGroupingUsed(false);&#xa;NumberFormatter formatterJK3 = new NumberFormatter(formatJK3);&#xa;formatterJK3.setValueClass(Float.class);&#xa;formatterJK3.setMinimum(0.0F);&#xa;formatterJK3.setMaximum(25.0F);&#xa;formatterJK3.setCommitsOnValidEdit(true);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(new DecimalFormat(&quot;#.0&quot;));"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK3 = uiC3Input_StudentPanel.getFont();&#xd;&#xa;uiC3Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC3Input_StudentPanel.getName(),&#xd;&#xa;        fK3.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
               </AuxValues>
             </Component>
@@ -406,8 +403,7 @@
                 <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="uiC4Input_StudentPanelPropertyChange"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJK4);"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJK4 = DecimalFormat.getInstance();&#xa;formatJK4.setGroupingUsed(false);&#xa;NumberFormatter formatterJK4 = new NumberFormatter(formatJK4);&#xa;formatterJK4.setValueClass(Float.class);&#xa;formatterJK4.setMinimum(0.0F);&#xa;formatterJK4.setMaximum(25.0F);&#xa;formatterJK4.setCommitsOnValidEdit(true);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(new DecimalFormat(&quot;#.0&quot;));"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK4 = uiC4Input_StudentPanel.getFont();&#xd;&#xa;uiC4Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC4Input_StudentPanel.getName(),&#xd;&#xa;        fK4.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
               </AuxValues>
             </Component>
@@ -433,8 +429,7 @@
                 <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="uiC5Input_StudentPanelPropertyChange"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJK5);"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJK5 = DecimalFormat.getInstance();&#xa;formatJK5.setGroupingUsed(false);&#xa;NumberFormatter formatterJK5 = new NumberFormatter(formatJK5);&#xa;formatterJK5.setValueClass(Float.class);&#xa;formatterJK5.setMinimum(0.0F);&#xa;formatterJK5.setMaximum(25.0F);&#xa;formatterJK5.setCommitsOnValidEdit(true);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(new DecimalFormat(&quot;#.0&quot;));"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK5 = uiC5Input_StudentPanel.getFont();&#xd;&#xa;uiC5Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC5Input_StudentPanel.getName(),&#xd;&#xa;        fK5.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
               </AuxValues>
             </Component>
@@ -460,8 +455,7 @@
                 <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="uiC6Input_StudentPanelPropertyChange"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(formatterJK6);"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat formatJK6 = DecimalFormat.getInstance();&#xa;formatJK6.setGroupingUsed(false);&#xa;NumberFormatter formatterJK6 = new NumberFormatter(formatJK6);&#xa;formatterJK6.setValueClass(Float.class);&#xa;formatterJK6.setMinimum(0.0F);&#xa;formatterJK6.setMaximum(25.0F);&#xa;formatterJK6.setCommitsOnValidEdit(true);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(new DecimalFormat(&quot;#.0&quot;));"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK6 = uiC6Input_StudentPanel.getFont();&#xd;&#xa;uiC6Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC6Input_StudentPanel.getName(),&#xd;&#xa;        fK6.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
               </AuxValues>
             </Component>

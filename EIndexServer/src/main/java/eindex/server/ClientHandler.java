@@ -288,7 +288,7 @@ public class ClientHandler implements Runnable {
             } else if (method.equalsIgnoreCase("addSubject")) {
                 if (user.getRole().equalsIgnoreCase("admin")) {
                     String student = jsonIn.get("target username").toString();
-                    String newStudentSubject = jsonIn.get("subject").toString();
+                    String newStudentSubject = jsonIn.get("target subject").toString();
 
                     // targeting user must exist in databases
                     JSONObject jsonStudent = dbHandler.readUserIndexPer(student, "username");

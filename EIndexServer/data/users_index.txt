@@ -11,7 +11,7 @@
 				"subject" : "Analogna Elektronika",
 				"Z1" : "11",
 				"Z2" : "20",
-				"T" : "24",
+				"T" : "24.5",
 			},
 			{
 				"subject" : "Digitalna Elektronika",
