@@ -223,10 +223,10 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="uiC3Input_StudentPanel" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="uiC3Label_StudentPanel" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                                   <Component id="uiC4Label_StudentPanel" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                                   <Component id="uiC4Input_StudentPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="uiC3Input_StudentPanel" alignment="1" min="-2" pref="29" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -319,12 +319,9 @@
                   <Dimension value="[64, 29]"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="uiC1Input_StudentPanelPropertyChange"/>
-              </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(new DecimalFormat(&quot;#.0&quot;));"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK1 = uiC1Input_StudentPanel.getFont();&#xd;&#xa;uiC1Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC1Input_StudentPanel.getName(),&#xd;&#xa;        fK1.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(new DecimalFormat());"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// bold font&#xd;&#xa;uiC1Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC1Input_StudentPanel.getName(),&#xd;&#xa;        uiC1Input_StudentPanel.getFont().getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));&#xd;&#xa;&#xd;&#xa;// Listen for changes in the text&#xd;&#xa;uiC1Input_StudentPanel.getDocument().addDocumentListener(new DocumentListener() {&#xd;&#xa;  public void changedUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;  public void removeUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;  public void insertUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;&#xd;&#xa;  public void act() {&#xd;&#xa;    uiSave_StudentPanel.setEnabled(isThereCategoryChange());&#xd;&#xa;  }&#xd;&#xa;});&#xd;&#xa;&#xd;&#xa;uiC1Input_StudentPanel.addKeyListener(new java.awt.event.KeyAdapter() {&#xd;&#xa;    public void keyTyped(KeyEvent e) {&#xd;&#xa;        char c = e.getKeyChar();&#xd;&#xa;        if (Character.isDigit(c) ||&#xd;&#xa;            c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE ||&#xd;&#xa;            c == &apos;.&apos; &amp;&amp; !uiC1Input_StudentPanel.getText().contains(&quot;.&quot;)) {&#xd;&#xa;        } else {&#xd;&#xa;            getToolkit().beep();&#xd;&#xa;            e.consume();&#xd;&#xa;        }&#xd;&#xa;    }&#xd;&#xa;});"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="uiC2Label_StudentPanel">
@@ -345,12 +342,9 @@
                   <Dimension value="[64, 29]"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="uiC2Input_StudentPanelPropertyChange"/>
-              </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(new DecimalFormat(&quot;#.0&quot;));"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK2 = uiC2Input_StudentPanel.getFont();&#xd;&#xa;uiC2Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC2Input_StudentPanel.getName(),&#xd;&#xa;        fK2.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(new DecimalFormat());"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// bold font&#xd;&#xa;uiC2Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC1Input_StudentPanel.getName(),&#xd;&#xa;        uiC1Input_StudentPanel.getFont().getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));&#xd;&#xa;&#xd;&#xa;// Listen for changes in the text&#xd;&#xa;uiC2Input_StudentPanel.getDocument().addDocumentListener(new DocumentListener() {&#xd;&#xa;  public void changedUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;  public void removeUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;  public void insertUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;&#xd;&#xa;  public void act() {&#xd;&#xa;    uiSave_StudentPanel.setEnabled(isThereCategoryChange());&#xd;&#xa;  }&#xd;&#xa;});&#xd;&#xa;"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="uiC3Label_StudentPanel">
@@ -373,12 +367,9 @@
                   <Dimension value="[64, 29]"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="uiC3Input_StudentPanelPropertyChange"/>
-              </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(new DecimalFormat(&quot;#.0&quot;));"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK3 = uiC3Input_StudentPanel.getFont();&#xd;&#xa;uiC3Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC3Input_StudentPanel.getName(),&#xd;&#xa;        fK3.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(new DecimalFormat());"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// bold font&#xd;&#xa;uiC3Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC1Input_StudentPanel.getName(),&#xd;&#xa;        uiC1Input_StudentPanel.getFont().getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));&#xd;&#xa;&#xd;&#xa;// Listen for changes in the text&#xd;&#xa;uiC3Input_StudentPanel.getDocument().addDocumentListener(new DocumentListener() {&#xd;&#xa;  public void changedUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;  public void removeUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;  public void insertUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;&#xd;&#xa;  public void act() {&#xd;&#xa;    uiSave_StudentPanel.setEnabled(isThereCategoryChange());&#xd;&#xa;  }&#xd;&#xa;});&#xd;&#xa;"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="uiC4Label_StudentPanel">
@@ -399,12 +390,9 @@
                   <Dimension value="[64, 29]"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="uiC4Input_StudentPanelPropertyChange"/>
-              </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(new DecimalFormat(&quot;#.0&quot;));"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK4 = uiC4Input_StudentPanel.getFont();&#xd;&#xa;uiC4Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC4Input_StudentPanel.getName(),&#xd;&#xa;        fK4.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(new DecimalFormat());"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// bold font&#xd;&#xa;uiC4Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC1Input_StudentPanel.getName(),&#xd;&#xa;        uiC1Input_StudentPanel.getFont().getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));&#xd;&#xa;&#xd;&#xa;// Listen for changes in the text&#xd;&#xa;uiC4Input_StudentPanel.getDocument().addDocumentListener(new DocumentListener() {&#xd;&#xa;  public void changedUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;  public void removeUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;  public void insertUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;&#xd;&#xa;  public void act() {&#xd;&#xa;    uiSave_StudentPanel.setEnabled(isThereCategoryChange());&#xd;&#xa;  }&#xd;&#xa;});&#xd;&#xa;"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="uiC5Label_StudentPanel">
@@ -425,12 +413,9 @@
                   <Dimension value="[64, 29]"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="uiC5Input_StudentPanelPropertyChange"/>
-              </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(new DecimalFormat(&quot;#.0&quot;));"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK5 = uiC5Input_StudentPanel.getFont();&#xd;&#xa;uiC5Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC5Input_StudentPanel.getName(),&#xd;&#xa;        fK5.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(new DecimalFormat());"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// bold font&#xd;&#xa;uiC5Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC1Input_StudentPanel.getName(),&#xd;&#xa;        uiC1Input_StudentPanel.getFont().getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));&#xd;&#xa;&#xd;&#xa;// Listen for changes in the text&#xd;&#xa;uiC5Input_StudentPanel.getDocument().addDocumentListener(new DocumentListener() {&#xd;&#xa;  public void changedUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;  public void removeUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;  public void insertUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;&#xd;&#xa;  public void act() {&#xd;&#xa;    uiSave_StudentPanel.setEnabled(isThereCategoryChange());&#xd;&#xa;  }&#xd;&#xa;});&#xd;&#xa;"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="uiC6Label_StudentPanel">
@@ -451,12 +436,9 @@
                   <Dimension value="[64, 29]"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="uiC6Input_StudentPanelPropertyChange"/>
-              </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(new DecimalFormat(&quot;#.0&quot;));"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Font fK6 = uiC6Input_StudentPanel.getFont();&#xd;&#xa;uiC6Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC6Input_StudentPanel.getName(),&#xd;&#xa;        fK6.getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(new DecimalFormat());"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// bold font&#xd;&#xa;uiC6Input_StudentPanel.setFont(new Font(&#xd;&#xa;        uiC1Input_StudentPanel.getName(),&#xd;&#xa;        uiC1Input_StudentPanel.getFont().getStyle() | Font.BOLD,&#xd;&#xa;        16&#xd;&#xa;));&#xd;&#xa;&#xd;&#xa;// Listen for changes in the text&#xd;&#xa;uiC6Input_StudentPanel.getDocument().addDocumentListener(new DocumentListener() {&#xd;&#xa;  public void changedUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;  public void removeUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;  public void insertUpdate(DocumentEvent e) {&#xd;&#xa;    act();&#xd;&#xa;  }&#xd;&#xa;&#xd;&#xa;  public void act() {&#xd;&#xa;    uiSave_StudentPanel.setEnabled(isThereCategoryChange());&#xd;&#xa;  }&#xd;&#xa;});&#xd;&#xa;"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="cPointsSum_StudentPanel">

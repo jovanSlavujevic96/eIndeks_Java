@@ -2,8 +2,8 @@ package eindex.client;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.NumberFormatter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -369,17 +368,42 @@ public class AdminMenuScreen extends MenuScreen {
  
             return false;
         }
-        JTextField[] jKS = {uiC1Input_StudentPanel, uiC2Input_StudentPanel, uiC3Input_StudentPanel, uiC4Input_StudentPanel, uiC5Input_StudentPanel, uiC6Input_StudentPanel};
+        JTextField[] jKS = {
+            uiC1Input_StudentPanel, uiC2Input_StudentPanel, uiC3Input_StudentPanel,
+            uiC4Input_StudentPanel, uiC5Input_StudentPanel, uiC6Input_StudentPanel
+        };
         JSONArray jsonCategsDB = (JSONArray)jsonSelectedSubjectDB.get("categories");
-        boolean isThereCatChange = true;
+        boolean isThereCatChange = false;
         for (int i = 0; i < 6; i++) {
             JTextField tf = jKS[i];
-            JSONObject jsonCat = (JSONObject)jsonCategsDB.get(i);
-            if (!isThereCatChange) {
+            JSONObject jsonCat;
+
+            // JSON Array can have less than 6 categories
+            // so trying to get JSON Array from some index which doesn't exist
+            // it is going to throw an exception
+            try {
+                jsonCat = (JSONObject)jsonCategsDB.get(i);
+            } catch (IndexOutOfBoundsException e) {
+                break;
+            }
+
+            if (isThereCatChange) {
                 break;
             }
             if (tf.isVisible()) {
-                isThereCatChange = ! tf.getText().contentEquals(jsonSelectedSubject.get(jsonCat.get("category")).toString());
+                try {
+                    String categoryName = jsonCat.get("category").toString();
+                    String currentDataStr = jsonSelectedSubject.get(categoryName).toString();
+                    float currentData = Float.parseFloat(currentDataStr);
+
+                    String newDataStr = tf.getText();
+                    float newData = Float.parseFloat(newDataStr);
+
+                    isThereCatChange = currentData != newData;
+                } catch (NumberFormatException e) {
+                    isThereCatChange = false;
+                    break;
+                }
             } else {
                 break;
             }
@@ -470,17 +494,17 @@ public class AdminMenuScreen extends MenuScreen {
         cSelectSubject_StudentPanel = new javax.swing.JLabel();
         uiSelectSubject_StudentPanel = new javax.swing.JComboBox<>();
         uiC1Label_StudentPanel = new javax.swing.JLabel();
-        uiC1Input_StudentPanel = new javax.swing.JFormattedTextField(new DecimalFormat("#.0"));
+        uiC1Input_StudentPanel = new javax.swing.JFormattedTextField(new DecimalFormat());
         uiC2Label_StudentPanel = new javax.swing.JLabel();
-        uiC2Input_StudentPanel = new javax.swing.JFormattedTextField(new DecimalFormat("#.0"));
+        uiC2Input_StudentPanel = new javax.swing.JFormattedTextField(new DecimalFormat());
         uiC3Label_StudentPanel = new javax.swing.JLabel();
-        uiC3Input_StudentPanel = new javax.swing.JFormattedTextField(new DecimalFormat("#.0"));
+        uiC3Input_StudentPanel = new javax.swing.JFormattedTextField(new DecimalFormat());
         uiC4Label_StudentPanel = new javax.swing.JLabel();
-        uiC4Input_StudentPanel = new javax.swing.JFormattedTextField(new DecimalFormat("#.0"));
+        uiC4Input_StudentPanel = new javax.swing.JFormattedTextField(new DecimalFormat());
         uiC5Label_StudentPanel = new javax.swing.JLabel();
-        uiC5Input_StudentPanel = new javax.swing.JFormattedTextField(new DecimalFormat("#.0"));
+        uiC5Input_StudentPanel = new javax.swing.JFormattedTextField(new DecimalFormat());
         uiC6Label_StudentPanel = new javax.swing.JLabel();
-        uiC6Input_StudentPanel = new javax.swing.JFormattedTextField(new DecimalFormat("#.0"));
+        uiC6Input_StudentPanel = new javax.swing.JFormattedTextField(new DecimalFormat());
         cPointsSum_StudentPanel = new javax.swing.JLabel();
         uiPointsSum_StudentPanel = new javax.swing.JTextField();
         uiPointsSum_StudentPanel.setEditable(false);
@@ -639,15 +663,40 @@ public class AdminMenuScreen extends MenuScreen {
         uiC1Input_StudentPanel.setMaximumSize(new java.awt.Dimension(64, 29));
         uiC1Input_StudentPanel.setMinimumSize(new java.awt.Dimension(64, 29));
         uiC1Input_StudentPanel.setPreferredSize(new java.awt.Dimension(64, 29));
-        Font fK1 = uiC1Input_StudentPanel.getFont();
+        // bold font
         uiC1Input_StudentPanel.setFont(new Font(
             uiC1Input_StudentPanel.getName(),
-            fK1.getStyle() | Font.BOLD,
+            uiC1Input_StudentPanel.getFont().getStyle() | Font.BOLD,
             16
         ));
-        uiC1Input_StudentPanel.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                uiC1Input_StudentPanelPropertyChange(evt);
+
+        // Listen for changes in the text
+        uiC1Input_StudentPanel.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                act();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                act();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                act();
+            }
+
+            public void act() {
+                uiSave_StudentPanel.setEnabled(isThereCategoryChange());
+            }
+        });
+
+        uiC1Input_StudentPanel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (Character.isDigit(c) ||
+                    c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE ||
+                    c == '.' && !uiC1Input_StudentPanel.getText().contains(".")) {
+                } else {
+                    getToolkit().beep();
+                    e.consume();
+                }
             }
         });
 
@@ -657,15 +706,27 @@ public class AdminMenuScreen extends MenuScreen {
         uiC2Input_StudentPanel.setMaximumSize(new java.awt.Dimension(64, 29));
         uiC2Input_StudentPanel.setMinimumSize(new java.awt.Dimension(64, 29));
         uiC2Input_StudentPanel.setPreferredSize(new java.awt.Dimension(64, 29));
-        Font fK2 = uiC2Input_StudentPanel.getFont();
+        // bold font
         uiC2Input_StudentPanel.setFont(new Font(
-            uiC2Input_StudentPanel.getName(),
-            fK2.getStyle() | Font.BOLD,
+            uiC1Input_StudentPanel.getName(),
+            uiC1Input_StudentPanel.getFont().getStyle() | Font.BOLD,
             16
         ));
-        uiC2Input_StudentPanel.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                uiC2Input_StudentPanelPropertyChange(evt);
+
+        // Listen for changes in the text
+        uiC2Input_StudentPanel.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                act();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                act();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                act();
+            }
+
+            public void act() {
+                uiSave_StudentPanel.setEnabled(isThereCategoryChange());
             }
         });
 
@@ -677,15 +738,27 @@ public class AdminMenuScreen extends MenuScreen {
         uiC3Input_StudentPanel.setMinimumSize(new java.awt.Dimension(64, 29));
         uiC3Input_StudentPanel.setName(""); // NOI18N
         uiC3Input_StudentPanel.setPreferredSize(new java.awt.Dimension(64, 29));
-        Font fK3 = uiC3Input_StudentPanel.getFont();
+        // bold font
         uiC3Input_StudentPanel.setFont(new Font(
-            uiC3Input_StudentPanel.getName(),
-            fK3.getStyle() | Font.BOLD,
+            uiC1Input_StudentPanel.getName(),
+            uiC1Input_StudentPanel.getFont().getStyle() | Font.BOLD,
             16
         ));
-        uiC3Input_StudentPanel.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                uiC3Input_StudentPanelPropertyChange(evt);
+
+        // Listen for changes in the text
+        uiC3Input_StudentPanel.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                act();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                act();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                act();
+            }
+
+            public void act() {
+                uiSave_StudentPanel.setEnabled(isThereCategoryChange());
             }
         });
 
@@ -695,15 +768,27 @@ public class AdminMenuScreen extends MenuScreen {
         uiC4Input_StudentPanel.setMaximumSize(new java.awt.Dimension(64, 29));
         uiC4Input_StudentPanel.setMinimumSize(new java.awt.Dimension(64, 29));
         uiC4Input_StudentPanel.setPreferredSize(new java.awt.Dimension(64, 29));
-        Font fK4 = uiC4Input_StudentPanel.getFont();
+        // bold font
         uiC4Input_StudentPanel.setFont(new Font(
-            uiC4Input_StudentPanel.getName(),
-            fK4.getStyle() | Font.BOLD,
+            uiC1Input_StudentPanel.getName(),
+            uiC1Input_StudentPanel.getFont().getStyle() | Font.BOLD,
             16
         ));
-        uiC4Input_StudentPanel.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                uiC4Input_StudentPanelPropertyChange(evt);
+
+        // Listen for changes in the text
+        uiC4Input_StudentPanel.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                act();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                act();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                act();
+            }
+
+            public void act() {
+                uiSave_StudentPanel.setEnabled(isThereCategoryChange());
             }
         });
 
@@ -713,15 +798,27 @@ public class AdminMenuScreen extends MenuScreen {
         uiC5Input_StudentPanel.setMaximumSize(new java.awt.Dimension(64, 29));
         uiC5Input_StudentPanel.setMinimumSize(new java.awt.Dimension(64, 29));
         uiC5Input_StudentPanel.setPreferredSize(new java.awt.Dimension(64, 29));
-        Font fK5 = uiC5Input_StudentPanel.getFont();
+        // bold font
         uiC5Input_StudentPanel.setFont(new Font(
-            uiC5Input_StudentPanel.getName(),
-            fK5.getStyle() | Font.BOLD,
+            uiC1Input_StudentPanel.getName(),
+            uiC1Input_StudentPanel.getFont().getStyle() | Font.BOLD,
             16
         ));
-        uiC5Input_StudentPanel.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                uiC5Input_StudentPanelPropertyChange(evt);
+
+        // Listen for changes in the text
+        uiC5Input_StudentPanel.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                act();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                act();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                act();
+            }
+
+            public void act() {
+                uiSave_StudentPanel.setEnabled(isThereCategoryChange());
             }
         });
 
@@ -731,15 +828,27 @@ public class AdminMenuScreen extends MenuScreen {
         uiC6Input_StudentPanel.setMaximumSize(new java.awt.Dimension(64, 29));
         uiC6Input_StudentPanel.setMinimumSize(new java.awt.Dimension(64, 29));
         uiC6Input_StudentPanel.setPreferredSize(new java.awt.Dimension(64, 29));
-        Font fK6 = uiC6Input_StudentPanel.getFont();
+        // bold font
         uiC6Input_StudentPanel.setFont(new Font(
-            uiC6Input_StudentPanel.getName(),
-            fK6.getStyle() | Font.BOLD,
+            uiC1Input_StudentPanel.getName(),
+            uiC1Input_StudentPanel.getFont().getStyle() | Font.BOLD,
             16
         ));
-        uiC6Input_StudentPanel.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                uiC6Input_StudentPanelPropertyChange(evt);
+
+        // Listen for changes in the text
+        uiC6Input_StudentPanel.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                act();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                act();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                act();
+            }
+
+            public void act() {
+                uiSave_StudentPanel.setEnabled(isThereCategoryChange());
             }
         });
 
@@ -852,10 +961,10 @@ public class AdminMenuScreen extends MenuScreen {
                                 .addComponent(uiC2Input_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(uiStudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(uiC3Input_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(uiC3Label_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(uiC4Label_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(uiC4Input_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(uiC4Input_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(uiC3Input_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(uiStudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(uiC5Input_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1659,48 +1768,6 @@ public class AdminMenuScreen extends MenuScreen {
             uiSave_AddSubjectPanel.setEnabled(false);
         }
     }//GEN-LAST:event_uiSelectSubject_AddSubjectPanelItemStateChanged
-
-    private void uiC6Input_StudentPanelPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_uiC6Input_StudentPanelPropertyChange
-        // enable/disable save button if there is any difference with points
-        if (evt.getPropertyName().contentEquals("value")) {
-            uiSave_StudentPanel.setEnabled(isThereCategoryChange());
-        }
-    }//GEN-LAST:event_uiC6Input_StudentPanelPropertyChange
-
-    private void uiC5Input_StudentPanelPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_uiC5Input_StudentPanelPropertyChange
-        // enable/disable save button if there is any difference with points
-        if (evt.getPropertyName().contentEquals("value")) {
-            uiSave_StudentPanel.setEnabled(isThereCategoryChange());
-        }
-    }//GEN-LAST:event_uiC5Input_StudentPanelPropertyChange
-
-    private void uiC4Input_StudentPanelPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_uiC4Input_StudentPanelPropertyChange
-        // enable/disable save button if there is any difference with points
-        if (evt.getPropertyName().contentEquals("value")) {
-            uiSave_StudentPanel.setEnabled(isThereCategoryChange());
-        }
-    }//GEN-LAST:event_uiC4Input_StudentPanelPropertyChange
-
-    private void uiC2Input_StudentPanelPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_uiC2Input_StudentPanelPropertyChange
-        // enable/disable save button if there is any difference with points
-        if (evt.getPropertyName().contentEquals("value")) {
-            uiSave_StudentPanel.setEnabled(isThereCategoryChange());
-        }
-    }//GEN-LAST:event_uiC2Input_StudentPanelPropertyChange
-
-    private void uiC3Input_StudentPanelPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_uiC3Input_StudentPanelPropertyChange
-        // enable/disable save button if there is any difference with points
-        if (evt.getPropertyName().contentEquals("value")) {
-            uiSave_StudentPanel.setEnabled(isThereCategoryChange());
-        }
-    }//GEN-LAST:event_uiC3Input_StudentPanelPropertyChange
-
-    private void uiC1Input_StudentPanelPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_uiC1Input_StudentPanelPropertyChange
-        // enable/disable save button if there is any difference with points
-        if (evt.getPropertyName().contentEquals("value")) {
-            uiSave_StudentPanel.setEnabled(isThereCategoryChange());
-        }
-    }//GEN-LAST:event_uiC1Input_StudentPanelPropertyChange
 
     private void uiSelectSubject_StudentPanelItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_uiSelectSubject_StudentPanelItemStateChanged
         // update selected subject from Student tab
