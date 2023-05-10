@@ -133,14 +133,23 @@ public class AdminMenuScreen extends MenuScreen {
         // reset selector
         uiSelectSubject_StudentPanel.setModel(new DefaultComboBoxModel<>());
 
-        uiC1Input_StudentPanel.setText("");
-        uiC1Input_StudentPanel.setEnabled(false);
-        uiC3Input_StudentPanel.setText("");
-        uiC3Input_StudentPanel.setEnabled(false);
-        uiC2Input_StudentPanel.setText("");
-        uiC2Input_StudentPanel.setEnabled(false);
-        uiC4Input_StudentPanel.setText("");
-        uiC4Input_StudentPanel.setEnabled(false);
+        JTextField[] jKS = {
+            uiC1Input_StudentPanel, uiC2Input_StudentPanel, uiC3Input_StudentPanel,
+            uiC4Input_StudentPanel, uiC5Input_StudentPanel, uiC6Input_StudentPanel
+        };
+        JLabel[] jKL = {
+            uiC1Label_StudentPanel, uiC2Label_StudentPanel, uiC3Label_StudentPanel,
+            uiC4Label_StudentPanel, uiC5Label_StudentPanel, uiC6Label_StudentPanel
+        };
+        for (int i=0; i<6; i++) {
+            jKS[i].setText("");
+            jKS[i].setEnabled(false);
+            jKS[i].setVisible(false);
+            jKS[i].setToolTipText("");
+
+            jKL[i].setText("");
+            jKL[i].setVisible(false);
+        }
         uiPointsSum_StudentPanel.setForeground(Color.black);
         uiPointsSum_StudentPanel.setText("");
         uiPointsSum_StudentPanel.setEnabled(false);
@@ -265,8 +274,14 @@ public class AdminMenuScreen extends MenuScreen {
                 return;
             }
 
-            JTextField[] jKS = {uiC1Input_StudentPanel, uiC2Input_StudentPanel, uiC3Input_StudentPanel, uiC4Input_StudentPanel, uiC5Input_StudentPanel, uiC6Input_StudentPanel};
-            JLabel[] jKL = {uiC1Label_StudentPanel, uiC2Label_StudentPanel, uiC3Label_StudentPanel, uiC4Label_StudentPanel, uiC5Label_StudentPanel, uiC6Label_StudentPanel};
+            JTextField[] jKS = {
+                uiC1Input_StudentPanel, uiC2Input_StudentPanel, uiC3Input_StudentPanel,
+                uiC4Input_StudentPanel, uiC5Input_StudentPanel, uiC6Input_StudentPanel
+            };
+            JLabel[] jKL = {
+                uiC1Label_StudentPanel, uiC2Label_StudentPanel, uiC3Label_StudentPanel,
+                uiC4Label_StudentPanel, uiC5Label_StudentPanel, uiC6Label_StudentPanel
+            };
             ArrayList<Float> min_pts = new ArrayList<>();
             
             int ctr = 0;
