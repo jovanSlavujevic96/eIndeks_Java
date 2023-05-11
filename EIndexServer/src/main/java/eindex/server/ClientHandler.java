@@ -247,8 +247,9 @@ public class ClientHandler implements Runnable {
             } else if (method.equalsIgnoreCase("updateSubject")) { // updateSubject method
                 // user must be admin
                 if (user.getRole().equalsIgnoreCase("admin")) {
-                    JSONObject jsonSubject = (JSONObject)jsonIn.get("subject");
+                    JSONObject jsonSubject = (JSONObject)jsonIn.get("target subject");
                     String student = jsonIn.get("target username").toString();
+                    String subject = jsonSubject.get("subject").toString();
 
                     if (dbHandler.readUserPer(student, 0) == null) {
                         jsonOut.put("status", "404");
@@ -256,6 +257,32 @@ public class ClientHandler implements Runnable {
                         return jsonOut.toJSONString();
                     }
 
+                    JSONObject jsonSubjectDb = dbHandler.readSubject(subject);
+                    if (jsonSubjectDb == null) {
+                        jsonOut.put("status", "404");
+                        jsonOut.put("message", "Predmet " + subject + " ne postoji");
+                        return jsonOut.toJSONString();
+                    }
+
+                    for (Object categoryDb : (JSONArray)jsonSubjectDb.get("categories")) {
+                        JSONObject jsonCategoryDb = (JSONObject)categoryDb;
+                        String categoryDbName = jsonCategoryDb.get("category").toString();
+
+                        if (!jsonSubject.containsKey(categoryDbName)) {
+                            jsonOut.put("status", "404");
+                            jsonOut.put("message", "Nedostaje kategorija " + categoryDbName);
+                            return jsonOut.toJSONString();
+                        }
+
+                        float max_pts = Float.parseFloat(jsonCategoryDb.get("max_points").toString());
+                        float pts = Float.parseFloat(jsonSubject.get(categoryDbName).toString());
+                        if (pts > max_pts) {
+                            jsonOut.put("status", "401");
+                            jsonOut.put("message", "Uneti bodovi za " + categoryDbName + " prelaze definisani limit od " + max_pts + " poena");
+                            return jsonOut.toJSONString();
+                        }
+                    }
+                    
                     // can throw exception
                     dbHandler.updateUserIndexSubject(jsonSubject, student);
                     

@@ -1881,7 +1881,7 @@ public class AdminMenuScreen extends MenuScreen {
         }
 
         // add updated selected JSON subject to request
-        jsonReq.put("subject", jsonSelectedSubject);
+        jsonReq.put("target subject", jsonSelectedSubject);
 
         // send JSON to server
         pw.println(jsonReq);
