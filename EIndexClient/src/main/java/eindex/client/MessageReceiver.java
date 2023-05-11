@@ -103,21 +103,17 @@ public class MessageReceiver implements Runnable {
                     // for succesfull "refresh" response
                     // replace list of subjects in student's JSON or users in admin's JSON
                     // make sure that data is updated visually
-                    if (role.equalsIgnoreCase("student") && menu.getRole().equalsIgnoreCase("student")) {
-                        if (jsonIn.get("subjects") instanceof JSONArray jsonSubjects) {
-                            jsonUserData.replace("subjects", jsonSubjects);
-                            menu.updateData(jsonSubjects);
-                        }
-                    } else if (role.equalsIgnoreCase("admin") && menu.getRole().equalsIgnoreCase("admin")) {
-                        if (jsonIn.get("users_index DB") instanceof JSONArray jsonUsersDB &&
-                            jsonIn.get("subjects DB") instanceof JSONArray jsonSubjectsDB) {
-
-                            // update data to JSON database storage
-                            jsonUserData.replace("users_index DB", jsonUsersDB);
-                            jsonUserData.replace("subjects DB", jsonSubjectsDB);
-                            menu.updateData(jsonUserData);
-                        }
+                    if (role.equalsIgnoreCase("student")) {
+                        jsonUserData.replace("subjects", jsonIn.get("subjects"));
+                    } else {
+                        // update data to JSON database storage
+                        jsonUserData.replace("users_index DB", jsonIn.get("users_index DB"));
                     }
+                    // both student and admin have subjects DB, except that admin has all subjects
+                    jsonUserData.replace("subjects DB", jsonIn.get("subjects DB"));
+
+                    // call for refresh of data
+                    menu.updateData(jsonUserData);
                 } else if (method.equalsIgnoreCase("updateSubject")) {
                     // "updateSubject" is admin method only
                     // for succesfull "updateSubject" response

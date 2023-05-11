@@ -77,6 +77,29 @@ public class ClientHandler implements Runnable {
         }
     }
     
+    public JSONArray getStudentsSubjectsDb(JSONObject jsonUserData) throws IOException, ParseException {
+        JSONArray subjectsDb = dbHandler.readAllSubjects();
+        int subjectDbSize = subjectsDb.size();
+        for (int i=0; i<subjectDbSize; i++) {
+            JSONObject jsonSubjectDb = (JSONObject)subjectsDb.get(i);
+            String subjectName = jsonSubjectDb.get("subject").toString();
+            boolean found = false;
+            for (Object subject : (JSONArray)jsonUserData.get("subjects")) {
+                JSONObject jsonSubject = (JSONObject)subject;
+                if (jsonSubject.get("subject").toString().contentEquals(subjectName)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                subjectsDb.remove(jsonSubjectDb);
+                subjectDbSize--;
+                i--;
+            }
+        }
+        return subjectsDb;
+    }
+    
     public String processMessage(String msg) {
         JSONObject jsonOut = new JSONObject();
         JSONParser parser = new JSONParser();
@@ -161,6 +184,7 @@ public class ClientHandler implements Runnable {
                         JSONObject jsonUserData = null;
                         if (role.equalsIgnoreCase("student")) {
                             jsonUserData = dbHandler.readUserIndexPer(userName, "username");
+                            jsonUserData.put("subjects DB", getStudentsSubjectsDb(jsonUserData));
                         } else if (role.equalsIgnoreCase("admin")) {
                             JSONArray jsonUsersData = dbHandler.readAllUserIndex();
 
@@ -201,8 +225,8 @@ public class ClientHandler implements Runnable {
                     jsonOut.put("message", "Student " + userName + " je uspesno osvezio predmete");
 
                     JSONObject jsonUserData = dbHandler.readUserIndexPer(userName, "username");
-                    JSONArray jsonUserSubjects = (JSONArray)jsonUserData.get("subjects");
-                    jsonOut.put("subjects", jsonUserSubjects);
+                    jsonOut.put("subjects", jsonUserData.get("subjects"));
+                    jsonOut.put("subjects DB", getStudentsSubjectsDb(jsonUserData));
                 } else if (user.getRole().equalsIgnoreCase("admin")) {
                     jsonOut.put("message", "Admin " + userName + " je uspesno osvezio korisnike");
 
@@ -407,26 +431,27 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         while (true) {
-            String msg;
+            String send_msg;
+            String recv_msg;
 
             // receive
             try {
-                msg = this.br.readLine();
+                recv_msg = this.br.readLine();
             } catch (IOException ex) {
                 System.out.println("Client \"" + userName + "\" disconnected");
                 break;
             }
-            if (msg == null) {
+            if (recv_msg == null) {
                 System.out.println("Message rcv for client \"" + userName + "\" is null");
                 break;
             }
 
             // process
-            msg = processMessage(msg);
+            send_msg = processMessage(recv_msg);
 
             // send
-            if (!msg.equals("")) {
-                pw.println(msg);
+            if (!send_msg.equals("")) {
+                pw.println(send_msg);
             }
         }
 
