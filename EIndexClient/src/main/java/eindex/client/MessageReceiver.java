@@ -126,7 +126,8 @@ public class MessageReceiver implements Runnable {
                         admenu.updateSelectedSubject();
                     }
                 } else if (method.equalsIgnoreCase("crateNewUser") ||
-                           method.equalsIgnoreCase("addSubject")) {
+                           method.equalsIgnoreCase("addSubject") ||
+                           method.equalsIgnoreCase("createNewSubject")) {
                     // "createNewUser" or "addNewSubject" are admin methods only
                     // for succesfull response for these methods just request data refresh in background,
                     // which means no dialog on server response

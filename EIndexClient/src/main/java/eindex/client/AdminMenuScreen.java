@@ -688,6 +688,7 @@ public class AdminMenuScreen extends MenuScreen {
         });
 
         uiC1Input_StudentPanel.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
                 if (Character.isDigit(c) ||
@@ -708,8 +709,8 @@ public class AdminMenuScreen extends MenuScreen {
         uiC2Input_StudentPanel.setPreferredSize(new java.awt.Dimension(64, 29));
         // bold font
         uiC2Input_StudentPanel.setFont(new Font(
-            uiC1Input_StudentPanel.getName(),
-            uiC1Input_StudentPanel.getFont().getStyle() | Font.BOLD,
+            uiC2Input_StudentPanel.getName(),
+            uiC2Input_StudentPanel.getFont().getStyle() | Font.BOLD,
             16
         ));
 
@@ -730,6 +731,19 @@ public class AdminMenuScreen extends MenuScreen {
             }
         });
 
+        uiC2Input_StudentPanel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (Character.isDigit(c) ||
+                    c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE ||
+                    c == '.' && !uiC1Input_StudentPanel.getText().contains(".")) {
+                } else {
+                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
+
         uiC3Label_StudentPanel.setText("K3:");
 
         uiC3Input_StudentPanel.setActionCommand("<Not Set>");
@@ -740,8 +754,8 @@ public class AdminMenuScreen extends MenuScreen {
         uiC3Input_StudentPanel.setPreferredSize(new java.awt.Dimension(64, 29));
         // bold font
         uiC3Input_StudentPanel.setFont(new Font(
-            uiC1Input_StudentPanel.getName(),
-            uiC1Input_StudentPanel.getFont().getStyle() | Font.BOLD,
+            uiC3Input_StudentPanel.getName(),
+            uiC3Input_StudentPanel.getFont().getStyle() | Font.BOLD,
             16
         ));
 
@@ -762,6 +776,19 @@ public class AdminMenuScreen extends MenuScreen {
             }
         });
 
+        uiC3Input_StudentPanel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (Character.isDigit(c) ||
+                    c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE ||
+                    c == '.' && !uiC1Input_StudentPanel.getText().contains(".")) {
+                } else {
+                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
+
         uiC4Label_StudentPanel.setText("K4:");
 
         uiC4Input_StudentPanel.setAlignmentX(0.0F);
@@ -770,8 +797,8 @@ public class AdminMenuScreen extends MenuScreen {
         uiC4Input_StudentPanel.setPreferredSize(new java.awt.Dimension(64, 29));
         // bold font
         uiC4Input_StudentPanel.setFont(new Font(
-            uiC1Input_StudentPanel.getName(),
-            uiC1Input_StudentPanel.getFont().getStyle() | Font.BOLD,
+            uiC4Input_StudentPanel.getName(),
+            uiC4Input_StudentPanel.getFont().getStyle() | Font.BOLD,
             16
         ));
 
@@ -792,6 +819,19 @@ public class AdminMenuScreen extends MenuScreen {
             }
         });
 
+        uiC4Input_StudentPanel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (Character.isDigit(c) ||
+                    c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE ||
+                    c == '.' && !uiC1Input_StudentPanel.getText().contains(".")) {
+                } else {
+                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
+
         uiC5Label_StudentPanel.setText("K5:");
 
         uiC5Input_StudentPanel.setAlignmentX(0.0F);
@@ -800,8 +840,8 @@ public class AdminMenuScreen extends MenuScreen {
         uiC5Input_StudentPanel.setPreferredSize(new java.awt.Dimension(64, 29));
         // bold font
         uiC5Input_StudentPanel.setFont(new Font(
-            uiC1Input_StudentPanel.getName(),
-            uiC1Input_StudentPanel.getFont().getStyle() | Font.BOLD,
+            uiC5Input_StudentPanel.getName(),
+            uiC5Input_StudentPanel.getFont().getStyle() | Font.BOLD,
             16
         ));
 
@@ -822,6 +862,19 @@ public class AdminMenuScreen extends MenuScreen {
             }
         });
 
+        uiC5Input_StudentPanel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (Character.isDigit(c) ||
+                    c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE ||
+                    c == '.' && !uiC1Input_StudentPanel.getText().contains(".")) {
+                } else {
+                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
+
         uiC6Label_StudentPanel.setText("K6:");
 
         uiC6Input_StudentPanel.setAlignmentX(0.0F);
@@ -830,8 +883,8 @@ public class AdminMenuScreen extends MenuScreen {
         uiC6Input_StudentPanel.setPreferredSize(new java.awt.Dimension(64, 29));
         // bold font
         uiC6Input_StudentPanel.setFont(new Font(
-            uiC1Input_StudentPanel.getName(),
-            uiC1Input_StudentPanel.getFont().getStyle() | Font.BOLD,
+            uiC6Input_StudentPanel.getName(),
+            uiC6Input_StudentPanel.getFont().getStyle() | Font.BOLD,
             16
         ));
 
@@ -852,6 +905,19 @@ public class AdminMenuScreen extends MenuScreen {
             }
         });
 
+        uiC6Input_StudentPanel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (Character.isDigit(c) ||
+                    c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE ||
+                    c == '.' && !uiC1Input_StudentPanel.getText().contains(".")) {
+                } else {
+                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
+
         cPointsSum_StudentPanel.setText("Ukupno:");
 
         uiPointsSum_StudentPanel.setAlignmentX(0.0F);
@@ -867,6 +933,7 @@ public class AdminMenuScreen extends MenuScreen {
         uiGrade_StudentPanel.setPreferredSize(new java.awt.Dimension(64, 29));
 
         uiSave_StudentPanel.setText("Sacuvaj");
+        uiSave_StudentPanel.setName(""); // NOI18N
         uiSave_StudentPanel.setEnabled(false);
         uiSave_StudentPanel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -960,11 +1027,12 @@ public class AdminMenuScreen extends MenuScreen {
                                 .addComponent(uiC2Label_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(uiC2Input_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(uiStudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(uiC3Label_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(uiC4Label_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(uiC4Input_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(uiC3Input_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(uiStudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(uiC3Input_StudentPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(uiStudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(uiC3Label_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(uiC4Label_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(uiC4Input_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(uiStudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(uiC5Input_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1129,7 +1197,6 @@ public class AdminMenuScreen extends MenuScreen {
         uiUsername_NewUserPanel.setMaximumSize(new java.awt.Dimension(114, 22));
         uiUsername_NewUserPanel.setMinimumSize(new java.awt.Dimension(114, 22));
         uiUsername_NewUserPanel.setPreferredSize(new java.awt.Dimension(114, 22));
-        uiUsername_NewUserPanel.setRequestFocusEnabled(false);
         // Listen for changes in the text
         uiUsername_NewUserPanel.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
@@ -1173,7 +1240,6 @@ public class AdminMenuScreen extends MenuScreen {
         uiRepeatPassword_NewUserPanel.setPreferredSize(new java.awt.Dimension(114, 22));
 
         uiSave_NewUserPanel.setText("Sacuvaj");
-        uiSave_StudentPanel.setEnabled(false);
         uiSave_NewUserPanel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 uiSave_NewUserPanelActionPerformed(evt);
