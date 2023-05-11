@@ -687,20 +687,6 @@ public class AdminMenuScreen extends MenuScreen {
             }
         });
 
-        uiC1Input_StudentPanel.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (Character.isDigit(c) ||
-                    c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE ||
-                    c == '.' && !uiC1Input_StudentPanel.getText().contains(".")) {
-                } else {
-                    getToolkit().beep();
-                    e.consume();
-                }
-            }
-        });
-
         uiC2Label_StudentPanel.setText("K2:");
 
         uiC2Input_StudentPanel.setAlignmentX(0.0F);
@@ -728,19 +714,6 @@ public class AdminMenuScreen extends MenuScreen {
 
             public void act() {
                 uiSave_StudentPanel.setEnabled(isThereCategoryChange());
-            }
-        });
-
-        uiC2Input_StudentPanel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (Character.isDigit(c) ||
-                    c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE ||
-                    c == '.' && !uiC1Input_StudentPanel.getText().contains(".")) {
-                } else {
-                    getToolkit().beep();
-                    e.consume();
-                }
             }
         });
 
@@ -776,19 +749,6 @@ public class AdminMenuScreen extends MenuScreen {
             }
         });
 
-        uiC3Input_StudentPanel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (Character.isDigit(c) ||
-                    c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE ||
-                    c == '.' && !uiC1Input_StudentPanel.getText().contains(".")) {
-                } else {
-                    getToolkit().beep();
-                    e.consume();
-                }
-            }
-        });
-
         uiC4Label_StudentPanel.setText("K4:");
 
         uiC4Input_StudentPanel.setAlignmentX(0.0F);
@@ -816,19 +776,6 @@ public class AdminMenuScreen extends MenuScreen {
 
             public void act() {
                 uiSave_StudentPanel.setEnabled(isThereCategoryChange());
-            }
-        });
-
-        uiC4Input_StudentPanel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (Character.isDigit(c) ||
-                    c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE ||
-                    c == '.' && !uiC1Input_StudentPanel.getText().contains(".")) {
-                } else {
-                    getToolkit().beep();
-                    e.consume();
-                }
             }
         });
 
@@ -862,19 +809,6 @@ public class AdminMenuScreen extends MenuScreen {
             }
         });
 
-        uiC5Input_StudentPanel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (Character.isDigit(c) ||
-                    c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE ||
-                    c == '.' && !uiC1Input_StudentPanel.getText().contains(".")) {
-                } else {
-                    getToolkit().beep();
-                    e.consume();
-                }
-            }
-        });
-
         uiC6Label_StudentPanel.setText("K6:");
 
         uiC6Input_StudentPanel.setAlignmentX(0.0F);
@@ -905,19 +839,6 @@ public class AdminMenuScreen extends MenuScreen {
             }
         });
 
-        uiC6Input_StudentPanel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (Character.isDigit(c) ||
-                    c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE ||
-                    c == '.' && !uiC1Input_StudentPanel.getText().contains(".")) {
-                } else {
-                    getToolkit().beep();
-                    e.consume();
-                }
-            }
-        });
-
         cPointsSum_StudentPanel.setText("Ukupno:");
 
         uiPointsSum_StudentPanel.setAlignmentX(0.0F);
@@ -933,8 +854,9 @@ public class AdminMenuScreen extends MenuScreen {
         uiGrade_StudentPanel.setPreferredSize(new java.awt.Dimension(64, 29));
 
         uiSave_StudentPanel.setText("Sacuvaj");
-        uiSave_StudentPanel.setName(""); // NOI18N
+        uiSave_StudentPanel.setAutoscrolls(true);
         uiSave_StudentPanel.setEnabled(false);
+        uiSave_StudentPanel.setOpaque(true);
         uiSave_StudentPanel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 uiSave_StudentPanelActionPerformed(evt);
@@ -948,9 +870,6 @@ public class AdminMenuScreen extends MenuScreen {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, uiStudentPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(uiStudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(uiStudentPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(uiSave_StudentPanel))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, uiStudentPanelLayout.createSequentialGroup()
                         .addComponent(cSelectStudent_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -961,49 +880,52 @@ public class AdminMenuScreen extends MenuScreen {
                             .addComponent(uiIndex_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(uiFullname_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(uiJmbg_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(88, 88, 88)
-                        .addGroup(uiStudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(uiSelectSubject_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(uiStudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(uiStudentPanelLayout.createSequentialGroup()
-                                    .addGroup(uiStudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(uiStudentPanelLayout.createSequentialGroup()
-                                            .addComponent(uiC3Label_StudentPanel)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(uiC3Input_StudentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(uiStudentPanelLayout.createSequentialGroup()
-                                            .addComponent(uiC1Label_StudentPanel)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(uiC1Input_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(uiStudentPanelLayout.createSequentialGroup()
-                                            .addComponent(uiC5Label_StudentPanel)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(uiC5Input_StudentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGap(18, 18, Short.MAX_VALUE)
-                                    .addGroup(uiStudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(uiStudentPanelLayout.createSequentialGroup()
-                                            .addComponent(uiC4Label_StudentPanel)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(uiC4Input_StudentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(uiStudentPanelLayout.createSequentialGroup()
-                                            .addComponent(uiC2Label_StudentPanel)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(uiC2Input_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(uiStudentPanelLayout.createSequentialGroup()
-                                            .addComponent(uiC6Label_StudentPanel)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(uiC6Input_StudentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGroup(uiStudentPanelLayout.createSequentialGroup()
-                                    .addGap(0, 0, Short.MAX_VALUE)
-                                    .addGroup(uiStudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(uiStudentPanelLayout.createSequentialGroup()
-                                            .addComponent(cGrade_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(uiGrade_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(uiStudentPanelLayout.createSequentialGroup()
-                                            .addComponent(cPointsSum_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(uiPointsSum_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
+                        .addGroup(uiStudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(uiStudentPanelLayout.createSequentialGroup()
+                                .addGap(85, 85, 85)
+                                .addComponent(uiSelectSubject_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE))
+                            .addGroup(uiStudentPanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(uiStudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(uiStudentPanelLayout.createSequentialGroup()
+                                        .addComponent(uiC3Label_StudentPanel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(uiC3Input_StudentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(uiStudentPanelLayout.createSequentialGroup()
+                                        .addComponent(uiC1Label_StudentPanel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(uiC1Input_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(uiStudentPanelLayout.createSequentialGroup()
+                                        .addComponent(uiC5Label_StudentPanel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(uiC5Input_StudentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(41, 41, 41)
+                                .addGroup(uiStudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(uiStudentPanelLayout.createSequentialGroup()
+                                        .addComponent(uiC4Label_StudentPanel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(uiC4Input_StudentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(uiStudentPanelLayout.createSequentialGroup()
+                                        .addComponent(uiC2Label_StudentPanel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(uiC2Input_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(uiStudentPanelLayout.createSequentialGroup()
+                                        .addComponent(uiC6Label_StudentPanel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(uiC6Input_StudentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(uiStudentPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(uiStudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(uiSave_StudentPanel)
+                            .addGroup(uiStudentPanelLayout.createSequentialGroup()
+                                .addComponent(cPointsSum_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(uiPointsSum_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(uiStudentPanelLayout.createSequentialGroup()
+                                .addComponent(cGrade_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(uiGrade_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(16, 16, 16))
         );
         uiStudentPanelLayout.setVerticalGroup(
@@ -1045,7 +967,7 @@ public class AdminMenuScreen extends MenuScreen {
                         .addComponent(uiIndex_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(uiJmbg_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(uiStudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(uiPointsSum_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cPointsSum_StudentPanel))
@@ -1053,9 +975,9 @@ public class AdminMenuScreen extends MenuScreen {
                 .addGroup(uiStudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(uiGrade_StudentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cGrade_StudentPanel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(uiSave_StudentPanel)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         uiTabbedPanel.addTab("Student", uiStudentPanel);
@@ -1099,7 +1021,7 @@ public class AdminMenuScreen extends MenuScreen {
                 .addComponent(uiAdminFullname_AdminPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(uiAdminJmbg_AdminPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
 
         uiTabbedPanel.addTab("Admin", uiAdminPanel);
@@ -1108,6 +1030,7 @@ public class AdminMenuScreen extends MenuScreen {
 
         uiFirstname_NewUserPanel.setMaximumSize(new java.awt.Dimension(114, 22));
         uiFirstname_NewUserPanel.setMinimumSize(new java.awt.Dimension(114, 22));
+        uiFirstname_NewUserPanel.setNextFocusableComponent(uiLastname_NewUserPanel);
         uiFirstname_NewUserPanel.setPreferredSize(new java.awt.Dimension(114, 22));
         // Listen for changes in the text
         uiFirstname_NewUserPanel.getDocument().addDocumentListener(new DocumentListener() {
@@ -1130,6 +1053,7 @@ public class AdminMenuScreen extends MenuScreen {
 
         uiLastname_NewUserPanel.setMaximumSize(new java.awt.Dimension(114, 22));
         uiLastname_NewUserPanel.setMinimumSize(new java.awt.Dimension(114, 22));
+        uiLastname_NewUserPanel.setNextFocusableComponent(uiJmbg_NewUserPanel);
         uiLastname_NewUserPanel.setPreferredSize(new java.awt.Dimension(114, 22));
         // Listen for changes in the text
         uiLastname_NewUserPanel.getDocument().addDocumentListener(new DocumentListener() {
@@ -1152,6 +1076,7 @@ public class AdminMenuScreen extends MenuScreen {
 
         uiJmbg_NewUserPanel.setMaximumSize(new java.awt.Dimension(114, 22));
         uiJmbg_NewUserPanel.setMinimumSize(new java.awt.Dimension(114, 22));
+        uiJmbg_NewUserPanel.setNextFocusableComponent(uiIndex_NewUserPanel);
         uiJmbg_NewUserPanel.setPreferredSize(new java.awt.Dimension(114, 22));
         // Listen for changes in the text
         uiJmbg_NewUserPanel.getDocument().addDocumentListener(new DocumentListener() {
@@ -1174,6 +1099,7 @@ public class AdminMenuScreen extends MenuScreen {
 
         uiIndex_NewUserPanel.setMaximumSize(new java.awt.Dimension(114, 22));
         uiIndex_NewUserPanel.setMinimumSize(new java.awt.Dimension(114, 22));
+        uiIndex_NewUserPanel.setNextFocusableComponent(uiUsername_NewUserPanel);
         uiIndex_NewUserPanel.setPreferredSize(new java.awt.Dimension(114, 22));
         // Listen for changes in the text
         uiIndex_NewUserPanel.getDocument().addDocumentListener(new DocumentListener() {
@@ -1196,6 +1122,7 @@ public class AdminMenuScreen extends MenuScreen {
 
         uiUsername_NewUserPanel.setMaximumSize(new java.awt.Dimension(114, 22));
         uiUsername_NewUserPanel.setMinimumSize(new java.awt.Dimension(114, 22));
+        uiUsername_NewUserPanel.setNextFocusableComponent(cSelectRole_NewUserPanel);
         uiUsername_NewUserPanel.setPreferredSize(new java.awt.Dimension(114, 22));
         // Listen for changes in the text
         uiUsername_NewUserPanel.getDocument().addDocumentListener(new DocumentListener() {
@@ -1220,6 +1147,7 @@ public class AdminMenuScreen extends MenuScreen {
         uiSelectRole_NewUserPanel.setMaximumSize(new java.awt.Dimension(115, 22));
         uiSelectRole_NewUserPanel.setMinimumSize(new java.awt.Dimension(115, 22));
         uiSelectRole_NewUserPanel.setName(""); // NOI18N
+        uiSelectRole_NewUserPanel.setNextFocusableComponent(uiPassword_NewUserPanel);
         uiSelectRole_NewUserPanel.setPreferredSize(new java.awt.Dimension(115, 22));
         uiSelectRole_NewUserPanel.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -1231,12 +1159,14 @@ public class AdminMenuScreen extends MenuScreen {
 
         uiPassword_NewUserPanel.setMaximumSize(new java.awt.Dimension(114, 22));
         uiPassword_NewUserPanel.setMinimumSize(new java.awt.Dimension(114, 22));
+        uiPassword_NewUserPanel.setNextFocusableComponent(uiRepeatPassword_NewUserPanel);
         uiPassword_NewUserPanel.setPreferredSize(new java.awt.Dimension(114, 22));
 
         cRepeatPassword_NewUserPanel.setText("Ponovite lozinku:");
 
         uiRepeatPassword_NewUserPanel.setMaximumSize(new java.awt.Dimension(114, 22));
         uiRepeatPassword_NewUserPanel.setMinimumSize(new java.awt.Dimension(114, 22));
+        uiRepeatPassword_NewUserPanel.setNextFocusableComponent(uiSave_NewUserPanel);
         uiRepeatPassword_NewUserPanel.setPreferredSize(new java.awt.Dimension(114, 22));
 
         uiSave_NewUserPanel.setText("Sacuvaj");
@@ -1415,7 +1345,7 @@ public class AdminMenuScreen extends MenuScreen {
                     .addGroup(uiAddSubjectPanelLayout.createSequentialGroup()
                         .addGap(43, 43, 43)
                         .addComponent(uiSave_AddSubjectPanel)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         uiTabbedPanel.addTab("Dodaj Predmet", uiAddSubjectPanel);
@@ -1599,15 +1529,15 @@ public class AdminMenuScreen extends MenuScreen {
                     .addComponent(uiMaxPts5_NewSubjectPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cMinPts5_NewSubjectPanel)
                     .addComponent(uiMinPts5_NewSubjectPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(uiNewSubjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cCategory6_NewSubjectPanel)
                     .addComponent(uiCategory6_NewSubjectPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cCategory6_NewSubjectPanel)
                     .addComponent(cMaxPts6_NewSubjectPanel)
                     .addComponent(uiMaxPts6_NewSubjectPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cMinPts6_NewSubjectPanel)
                     .addComponent(uiMinPts6_NewSubjectPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         uiTabbedPanel.addTab("Novi Predmet", uiNewSubjectPanel);
@@ -1650,11 +1580,12 @@ public class AdminMenuScreen extends MenuScreen {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(uiFullname, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(uiJmbg, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(uiTabbedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(uiJmbg, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(uiTabbedPanel))
                 .addGap(18, 18, 18)
                 .addComponent(uiRefresh)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
         );
 
         pack();
